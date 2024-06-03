@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Welcome!
+			{% block title %}Bio Bloom Market
 			{% endblock %}
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
@@ -20,6 +20,81 @@
 		{% endblock %}
 	</head>
 	<body>
+		<nav class="navbar navbar-expand-lg bg-body-tertiary ">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">BioBloomMarket</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0  d-flex justify-content-between ">
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="#">Accueil</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Produits</a>
+						</li>
+						<li class="nav-item dropdown">
+							<button class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+								Catégories
+							</button>
+							<ul class="dropdown-menu ">
+								<li>
+									<a class="dropdown-item" href="#">Fruits et Légumes
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">Produits Laitiers et Oeufs
+									</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">
+										Épicerie Salée</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">
+										Épicerie Sucrée</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">
+										Boissons</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">
+										Voir plus</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a class="nav-link" href="#">Promotions</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Contact</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">A propos</a>
+						</li>
+						<li>
+							<a class="nav-link btn bg-success text-white" href="#">Connexion/Inscription</a>
+						</li>
+						<li>
+							<a class="nav-link " href="#"><img src="{{ asset('images/panier.png')}}" class="img-panier" alt="logo panier"></a>
+						</li>
+
+
+						{# <li>
+																																																																																																																																																																																																																															<a class="nav-link disabled" aria-disabled="true">Disabled</a>
+																																																																																																																																																																																																																														</li> #}
+
+					</ul>
+					<form class="d-flex" role="search">
+						<input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Rechercher</button>
+						{# <button class="btn btn-outline-success" type="submit">Compte</button> #}
+					</form>
+				</div>
+			</div>
+		</nav>
 		{% block body %}{% endblock %}
 	</body>
 </html>
