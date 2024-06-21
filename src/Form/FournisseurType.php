@@ -14,9 +14,8 @@ class FournisseurType extends AbstractType
         $builder
             ->add('nom')
             ->add('telephone')
-            ->add('mail')
-            ->add('service')
-        ;
+            ->add('email')
+            ->add('service');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

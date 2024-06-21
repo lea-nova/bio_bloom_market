@@ -4,18 +4,14 @@
 {% endblock %}
 
 {% block body %}
+	<small>Pas encore inscrit ?
+		<a href="{{path('app_register')}}">Cliquez ici</a>
+	</small>
 	<form class="container col-5 col-md-5 col-lg-2" method="post">
 		{% if error %}
 			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 		{% endif %}
 
-		{% if app.user %}
-			<div class="mb-3">
-				You are logged in as
-				{{ app.user.userIdentifier }},
-				<a href="{{ path('app_logout') }}">Logout</a>
-			</div>
-		{% endif %}
 
 		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 		<label for="inputEmail">Email</label>

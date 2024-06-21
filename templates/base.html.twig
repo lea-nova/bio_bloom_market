@@ -19,17 +19,17 @@
 
 		{% endblock %}
 	</head>
-	<body>
-		<nav class="navbar navbar-expand-lg bg-body-tertiary ">
+	<body class="d-flex flex-column min-vh-100">
+		<nav class=" navbar navbar-expand-lg bg-body-tertiary ">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">BioBloomMarket</a>
+				<a class="navbar-brand" href="{{path('app_main')}}"><img class="logo" src="{{asset("images/logo.jpg")}}"></a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0  d-flex justify-content-between ">
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="#">Accueil</a>
+							<a class="nav-link" aria-current="page" href=" {{path('app_main')}} ">Accueil</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#">Produits</a>
@@ -75,7 +75,7 @@
 							<a class="nav-link" href="#">A propos</a>
 						</li>
 						<li>
-							<a class="nav-link btn bg-success text-white" href="#">Connexion/Inscription</a>
+							<a class="nav-link btn bg-success text-white" href="{{path('app_login')}}">Connexion/Inscription</a>
 						</li>
 						<li>
 							<a class="nav-link " href="#"><img src="{{ asset('images/panier.png')}}" class="img-panier" alt="logo panier"></a>
@@ -83,8 +83,8 @@
 
 
 						{# <li>
-																																																																																																																																																																																																																															<a class="nav-link disabled" aria-disabled="true">Disabled</a>
-																																																																																																																																																																																																																														</li> #}
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		<a class="nav-link disabled" aria-disabled="true">Disabled</a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	</li> #}
 
 					</ul>
 					<form class="d-flex" role="search">
@@ -95,6 +95,38 @@
 				</div>
 			</div>
 		</nav>
-		{% block body %}{% endblock %}
+		{% block body %}
+
+			<div class="container flex-grow-1"></div>
+		{% endblock %}
+		{% if app.user %}
+			<div class="mb-3">
+				You are logged in as
+				{{ app.user.userIdentifier }},
+				<a href="{{ path('app_logout') }}">Logout</a>
+			</div>
+		{% endif %}
+		<div class="container-fluid bg-white mt-auto p-2">
+			<footer class="py-3 my-4">
+				<ul class="nav justify-content-center border-bottom pb-3 mb-3">
+					<li class="nav-item">
+						<a href="#" class="nav-link px-2 text-body-secondary">Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link px-2 text-body-secondary">Features</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link px-2 text-body-secondary">Pricing</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link px-2 text-body-secondary">FAQs</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" class="nav-link px-2 text-body-secondary">About</a>
+					</li>
+				</ul>
+				<p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+			</footer>
+		</div>
 	</body>
 </html>

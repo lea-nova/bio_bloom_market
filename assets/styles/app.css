@@ -1,5 +1,24 @@
 body {
-    background-color: skyblue;
+    background-color: #E0E0E0;
+    /* background-color: #FFFFFF; */
+}
+
+.logo {
+    height: 2.5rem;
+}
+
+.bg-success {
+    background-color: #4CAF50 !important;
+}
+
+.btn-outline-success {
+    color: #4CAF50 !important;
+    border-color: #4CAF50 !important;
+}
+
+.btn-outline-success:hover,
+.btn-outline-success:target {
+    background-color: white;
 }
 
 .img-panier {

@@ -25,7 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private array $roles = [];
 
     /**
@@ -33,26 +33,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
-
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 10, nullable: true)]
     private ?string $telephone = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $mail = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateNaissance = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $fideliteClient = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $prefAchat = null;
 
     public function getId(): ?int
@@ -135,10 +132,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(?string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -147,7 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): static
+    public function setPrenom(?string $prenom): static
     {
         $this->prenom = $prenom;
 
@@ -159,31 +155,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->telephone;
     }
 
-    public function setTelephone(string $telephone): static
+    public function setTelephone(?string $telephone): static
     {
         $this->telephone = $telephone;
 
         return $this;
     }
 
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
+    // public function getEmail(): ?string
+    // {
+    //     return $this->email;
+    // }
 
-    public function setMail(string $mail): static
-    {
-        $this->mail = $mail;
+    // public function setEmail(string $email): static
+    // {
+    //     $this->email = $email;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getDateNaissance(): ?\DateTimeInterface
     {
         return $this->dateNaissance;
     }
 
-    public function setDateNaissance(\DateTimeInterface $dateNaissance): static
+    public function setDateNaissance(?\DateTimeInterface $dateNaissance): static
     {
         $this->dateNaissance = $dateNaissance;
 
@@ -195,7 +191,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->fideliteClient;
     }
 
-    public function setFideliteClient(bool $fideliteClient): static
+    public function setFideliteClient(?bool $fideliteClient): static
     {
         $this->fideliteClient = $fideliteClient;
 
@@ -207,7 +203,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->prefAchat;
     }
 
-    public function setPrefAchat(string $prefAchat): static
+    public function setPrefAchat(?string $prefAchat): static
     {
         $this->prefAchat = $prefAchat;
 
