@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -44,6 +45,22 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('checkPassword', PasswordType::class, [
+                'mapped' => false, // champs pas lié à une prop de l'entité.
+                'label' => 'Vérif mdp'
+            ])
+            ->add('prenom', TextType::class)
+            ->add('nom', TextType::class)
+            ->add('telephone', TextType::class, [
+                'constraints' => [new Length([
+                    'min' => 10,
+                    'max' => 10,
+                    'exactMessage' => "Le champ doit contenir 10 caractères."
+                ])]
+            ])
+            ->add('dateNaissance', DateType::class, [
+                // 'format' => 'yyyy-MM-dd'
             ]);
     }
 

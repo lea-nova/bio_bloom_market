@@ -20,14 +20,14 @@
 		{% endblock %}
 	</head>
 	<body class="d-flex flex-column min-vh-100">
-		<nav class=" navbar navbar-expand-lg bg-body-tertiary ">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="{{path('app_main')}}"><img class="logo" src="{{asset("images/logo.jpg")}}"></a>
+		<nav class=" navbar navbar-expand-lg bg-body-tertiary fixed-top  ">
+			<div class="container-fluid ">
+				<a class=" navbar-brand" href=" {{path('app_main')}} "><img class="logo" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market"></a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0  d-flex justify-content-between ">
+				<div class="collapse navbar-collapse " id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between  ">
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href=" {{path('app_main')}} ">Accueil</a>
 						</li>
@@ -63,49 +63,53 @@
 									<a class="dropdown-item" href="#">
 										Voir plus</a>
 								</li>
-							</ul>
+							</li>
 						</li>
-						<li>
-							<a class="nav-link" href="#">Promotions</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Contact</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">A propos</a>
-						</li>
-						<li>
-							<a class="nav-link btn bg-success text-white" href="{{path('app_login')}}">Connexion/Inscription</a>
-						</li>
-						<li>
-							<a class="nav-link " href="#"><img src="{{ asset('images/panier.png')}}" class="img-panier" alt="logo panier"></a>
-						</li>
-
-
-						{# <li>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		<a class="nav-link disabled" aria-disabled="true">Disabled</a>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	</li> #}
-
 					</ul>
+				</li>
+				<li>
+					<a class="nav-link" href="#">Promotions</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Contact</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">A propos</a>
+				</li>
+				<li class="d-flex flex-row mb-3 justify-content-between">
+					{% if app.user %}
+						{# <span class="d-flex flex-row mb-3 justify-content-between d-flex align-items-center"> #}
+						<a class="nav-link btn bg-success text-white mx-2" href="#">Mon profil</a>
+						<a class="nav-link btn bg-success text-white mx-2 " href="{{path('app_logout')}}">Se déconnecter</a>
+						{# </span> #}
+					{% else %}
+						<a class="nav-link btn bg-success text-white" href="{{path('app_login')}}">Connexion/Inscription</a>
+					{% endif %}
+				</li>
+
+				<li>
+					<a class="nav-link " href="#"><img src="{{ asset('images/panier.png')}}" class="img-panier" alt="logo panier"></a>
+				</li>
+				<li>
 					<form class="d-flex" role="search">
 						<input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Search">
 						<button class="btn btn-outline-success" type="submit">Rechercher</button>
 						{# <button class="btn btn-outline-success" type="submit">Compte</button> #}
 					</form>
-				</div>
-			</div>
+				</li>
+			</ul>
 		</nav>
-		{% block body %}
+		<main class="container pt-5 mt-5">
+			{% block body %}
+				<div class="container flex-grow-1"></div>
+			{% endblock %}
 
-			<div class="container flex-grow-1"></div>
-		{% endblock %}
-		{% if app.user %}
-			<div class="mb-3">
-				You are logged in as
-				{{ app.user.userIdentifier }},
-				<a href="{{ path('app_logout') }}">Logout</a>
-			</div>
-		{% endif %}
+		</main>
+		{# {% if app.user %}
+																																									<div class="mb-3">You are logged in as
+																																										{{ app.user.userIdentifier }},<a href="{{ path('app_logout') }}">Logout</a>
+																																									</div>
+																																								{% endif %} #}
 		<div class="container-fluid bg-white mt-auto p-2">
 			<footer class="py-3 my-4">
 				<ul class="nav justify-content-center border-bottom pb-3 mb-3">
@@ -126,7 +130,13 @@
 					</li>
 				</ul>
 				<p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+				<p class="text-center text-body-secondary">
+					Image par
+					<a target="_blank" class=" px-2 text-body-secondary" href="https://pixabay.com/fr/users/pexels-2286921/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pexels</a>
+					de
+					<a target="_blank" class="  px-2 text-body-secondary" href="https://pixabay.com/fr//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pixabay</a>
+				</p>
 			</footer>
 		</div>
 	</body>
-</html>
+</html></body></body></html>

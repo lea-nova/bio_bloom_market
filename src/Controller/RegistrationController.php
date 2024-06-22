@@ -21,6 +21,9 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('plainPassword')->getData() !== $form->get("checkPassword")->getData()) {
+                return $this->redirectToRoute('app_register');
+            }
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(

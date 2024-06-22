@@ -1,15 +1,63 @@
+.text-secondary {
+    color: #E0E0E0 !important;
+}
+
+.bg-secondary {
+    background-color: #E0E0E0 !important;
+
+}
+
+.text-success {
+    color: #4CAF50 !important;
+}
+
+.bg-success {
+    background-color: #4CAF50 !important;
+
+}
+
+.text-brown {
+    color: #795548 !important;
+}
+
+.bg-brown {
+    background-color: #795548 !important;
+}
+
 body {
-    background-color: #E0E0E0;
+    background-color: #ffffff;
     /* background-color: #FFFFFF; */
+}
+
+/* h1 {
+    color: #4CAF50;
+}
+ */
+
+
+/* .container .banner-div {
+    background-color: #795548;
+} */
+.banner-div {
+    height: 25rem;
+}
+
+.container .banner-div h2 {
+    color: #E0E0E0;
 }
 
 .logo {
     height: 2.5rem;
 }
 
-.bg-success {
-    background-color: #4CAF50 !important;
+.banner {
+    height: 18rem;
 }
+
+
+/* .bg-success {
+    background-color: #4CAF50 !important;
+} */
 
 .btn-outline-success {
     color: #4CAF50 !important;

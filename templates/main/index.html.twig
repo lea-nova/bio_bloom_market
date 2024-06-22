@@ -5,13 +5,20 @@
 
 {% block body %}
 
-	<div class="container">
-		<h1>BioBloomMarket</h1>
-		<h2>Notre engagement pour une planète verte et florissante</h2>
-		<div class="example-wrapper">
-			<section>
-				<button class="btn bg-success text-white">Explorez notre boutique</button>
-			</section>
+	<div
+		class="container">
+		{# <h1 class="text-center mt-2 mb-5">BIO BLOOM MARKET</h1> #}
+		<div class="container banner-div d-flex row align-items-center justify-content-around bg-brown rounded-4">
+			<span class=" col-5 mx-4 px-4 ">
+				<h1 class="text-secondary fs-2">Notre engagement pour une planète verte et florissante</h1>
+				<button class=" btn bg-success text-white mt-2 mb-2">Explorez notre boutique</button>
+			</span>
+			<span class="col-5">
+				<img class="banner rounded-5" src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes.">
+			</span>
+		</div>
+		<div class="container">
+			<section class="example-wrapper d-flex row justify-content-between"></section>
 
 			<section>
 				<h3>Nos promotions en cours</h3>
@@ -21,12 +28,12 @@
 			</section>
 			<section>
 				<h3>Avis de nos clients</h3>
-
+				<p>
+					<em>Carousel de card avec des avis</em>
+				</p>
 			</section>
 			<section>
 				<h3>A propos</h3>
 
 			</section>
-		</div>
-	</div>
-{% endblock %}
+		{% endblock %}

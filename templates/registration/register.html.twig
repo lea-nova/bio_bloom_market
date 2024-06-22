@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
+	<div class="container pt-5">
 		<div class="row justify-content-center">
 			<div class="col-5 col-md-5 col-lg-2">
 				<h1 class="text-center">Register</h1>
@@ -12,15 +12,40 @@
 				{{ form_start(registrationForm) }}
 
 				<div class="form-group">
+					{{ form_label(registrationForm.prenom) }}
+					{{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(registrationForm.prenom) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(registrationForm.nom) }}
+					{{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(registrationForm.nom) }}
+				</div>
+				<div class="form-group">
 					{{ form_label(registrationForm.email) }}
 					{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
 					{{ form_errors(registrationForm.email) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(registrationForm.telephone) }}
+					{{ form_widget(registrationForm.telephone, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(registrationForm.telephone) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(registrationForm.dateNaissance) }}
+					{{ form_widget(registrationForm.dateNaissance, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(registrationForm.dateNaissance) }}
 				</div>
 
 				<div class="form-group">
 					{{ form_label(registrationForm.plainPassword) }}
 					{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
 					{{ form_errors(registrationForm.plainPassword) }}
+				</div>
+				<div class="form-group">
+					{{ form_label(registrationForm.checkPassword) }}
+					{{ form_widget(registrationForm.checkPassword, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(registrationForm.checkPassword) }}
 				</div>
 
 				<div class="form-group">
