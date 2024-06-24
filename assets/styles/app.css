@@ -11,7 +11,8 @@
     color: #4CAF50 !important;
 }
 
-.bg-success {
+.bg-success,
+.btn-success {
     background-color: #4CAF50 !important;
 
 }
@@ -50,17 +51,20 @@ body {
     height: 2.5rem;
 }
 
-.banner {
+/* .banner {
     height: 18rem;
-}
+} */
 
 
 /* .bg-success {
     background-color: #4CAF50 !important;
 } */
 
-.btn-outline-success {
+/* .btn-color-success {
     color: #4CAF50 !important;
+} */
+
+.btn-outline-success {
     border-color: #4CAF50 !important;
 }
 

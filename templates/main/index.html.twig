@@ -6,15 +6,20 @@
 {% block body %}
 
 	<div
-		class="container">
+		class="container pt-5">
 		{# <h1 class="text-center mt-2 mb-5">BIO BLOOM MARKET</h1> #}
+		{% if app.user %}
+			<h2>Bienvenue,
+				{{app.user.prenom}}
+			</h2>
+		{% endif %}
 		<div class="container banner-div d-flex row align-items-center justify-content-around bg-brown rounded-4">
-			<span class=" col-5 mx-4 px-4 ">
+			<span class=" col-5 mx-2 px-2 ">
 				<h1 class="text-secondary fs-2">Notre engagement pour une planète verte et florissante</h1>
 				<button class=" btn bg-success text-white mt-2 mb-2">Explorez notre boutique</button>
 			</span>
 			<span class="col-5">
-				<img class="banner rounded-5" src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes.">
+				<img class="banner rounded-5 col-12" src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes.">
 			</span>
 		</div>
 		<div class="container">

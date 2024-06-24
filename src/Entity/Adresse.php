@@ -27,6 +27,9 @@ class Adresse
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
 
+    #[ORM\Column(length: 4, nullable: true)]
+    private ?string $cedex = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +91,18 @@ class Adresse
     public function setPays(string $pays): static
     {
         $this->pays = $pays;
+
+        return $this;
+    }
+
+    public function getCedex(): ?string
+    {
+        return $this->cedex;
+    }
+
+    public function setCedex(?string $cedex): static
+    {
+        $this->cedex = $cedex;
 
         return $this;
     }

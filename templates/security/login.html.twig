@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Log in!
 {% endblock %}
 
@@ -7,29 +8,34 @@
 	<small>Pas encore inscrit ?
 		<a href="{{path('app_register')}}">Cliquez ici</a>
 	</small>
-	<form class="container col-5 col-md-5 col-lg-2" method="post">
-		{% if error %}
-			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-		{% endif %}
+	<div>
+		{# {{ render(controller('App\\Controller\\RegistrationController::register')) }} #}
 
 
-		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-		<label for="inputEmail">Email</label>
-		<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-		<label for="inputPassword">Password</label>
-		<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+		<form class="container col-5 col-md-5 col-lg-2" method="post">
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
 
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-		<div class="checkbox mb-3">
-			<label>
-				<input type="checkbox" name="_remember_me">
-				Remember me
-			</label>
-		</div>
+			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+			<label for="inputEmail">Email</label>
+			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+			<label for="inputPassword">Password</label>
+			<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-		<button class="btn btn-lg btn-primary" type="submit">
-			Sign in
-		</button>
-	</form>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+			<div class="checkbox mb-3">
+				<label>
+					<input type="checkbox" name="_remember_me">
+					Remember me
+				</label>
+			</div>
+
+			<button class="btn btn-success btn-outline-success text-white btn-block" type="submit">
+				Sign in
+			</button>
+		</form>
+	</div>
 {% endblock %}

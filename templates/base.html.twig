@@ -21,7 +21,7 @@
 	</head>
 	<body class="d-flex flex-column min-vh-100">
 		<nav class=" navbar navbar-expand-lg bg-body-tertiary fixed-top  ">
-			<div class="container-fluid ">
+			<div class="container-fluid  ">
 				<a class=" navbar-brand" href=" {{path('app_main')}} "><img class="logo" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market"></a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -77,9 +77,9 @@
 					<a class="nav-link" href="#">A propos</a>
 				</li>
 				<li class="d-flex flex-row mb-3 justify-content-between">
-					{% if app.user %}
+					{% if  app.user  %}
 						{# <span class="d-flex flex-row mb-3 justify-content-between d-flex align-items-center"> #}
-						<a class="nav-link btn bg-success text-white mx-2" href="#">Mon profil</a>
+						<a class="nav-link btn bg-success text-white mx-2" href="{{ path('app_user_show', {'id': app.user.id}) }}">Mon profil</a>
 						<a class="nav-link btn bg-success text-white mx-2 " href="{{path('app_logout')}}">Se déconnecter</a>
 						{# </span> #}
 					{% else %}
@@ -93,23 +93,35 @@
 				<li>
 					<form class="d-flex" role="search">
 						<input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Rechercher</button>
+						<button class="btn btn-outline-success text-success" type="submit">Rechercher</button>
 						{# <button class="btn btn-outline-success" type="submit">Compte</button> #}
 					</form>
 				</li>
 			</ul>
 		</nav>
-		<main class="container pt-5 mt-5">
-			{% block body %}
-				<div class="container flex-grow-1"></div>
-			{% endblock %}
-
+		<main>
+			<div
+				class="container pt-5 mt-4">
+				{# Affichage des messages flash #}
+				{% if app.user %}
+					<div class="mb-2">You are logged in as
+						{{ app.user.userIdentifier }},<a href="{{ path('app_logout') }}">Logout</a>
+						<small>
+							<em>A modifier</em>
+						</small>
+					</div>
+				{% endif %}
+				{% for type, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-{{ type }}">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+				{% block body %}{% endblock %}
+			</div>
 		</main>
-		{# {% if app.user %}
-																																									<div class="mb-3">You are logged in as
-																																										{{ app.user.userIdentifier }},<a href="{{ path('app_logout') }}">Logout</a>
-																																									</div>
-																																								{% endif %} #}
+
 		<div class="container-fluid bg-white mt-auto p-2">
 			<footer class="py-3 my-4">
 				<ul class="nav justify-content-center border-bottom pb-3 mb-3">

@@ -17,7 +17,7 @@ class AdresseType extends AbstractType
             ->add('codePostal')
             ->add('ville')
             ->add('pays')
-        ;
+            ->add('cedex');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
