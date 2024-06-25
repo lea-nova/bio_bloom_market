@@ -11,21 +11,21 @@
 	<table class="table">
 		<tbody>
 			{# <tr>
-																																										                <th>Id</th>
-																																										                <td>{{ user.id }}</td>
-																																										            </tr> #}
+																																																									                <th>Id</th>
+																																																									                <td>{{ user.id }}</td>
+																																																									            </tr> #}
 			<tr>
 				<th>Email</th>
 				<td>{{ user.email }}</td>
 			</tr>
 			{# <tr>
-																																											<th>Roles</th>
-																																											<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-																																										</tr> #}
+																																																										<th>Roles</th>
+																																																										<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+																																																									</tr> #}
 			{# <tr>
-																																								<th>Password</th>
-																																								<td>{{ user.password }}</td>
-																																							</tr> #}
+																																																							<th>Password</th>
+																																																							<td>{{ user.password }}</td>
+																																																						</tr> #}
 			<tr>
 				<th>Nom</th>
 				<td>{{ user.nom }}</td>
@@ -62,4 +62,5 @@
 	{% if is_granted('ROLE_ADMIN') %}
 		<a href="{{ path('app_user_index') }}">back to list</a>
 	{% endif %}
+
 {% endblock %}

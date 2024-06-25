@@ -4,35 +4,32 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Regex;
 
-class RegistrationFormType extends AbstractType
+class ResetPasswordFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [])
-            ->add('agreeTerms', CheckboxType::class, [
+            ->add('oldPassword', PasswordType::class, [
                 'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                    new NotBlank([
+                        'message' => 'Please enter a password',
+                    ]),
+                    new Regex([
+                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/',
+                        'message' => 'Votre mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial',
                     ]),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+            ->add('newPassword', PasswordType::class, [
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -51,21 +48,14 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('checkPassword', PasswordType::class, [
+            ->add('checkNewPassword', PasswordType::class, [
                 'mapped' => false, // champs pas lié à une prop de l'entité.
-                'label' => 'Vérif mdp'
-            ])
-            ->add('prenom', TextType::class)
-            ->add('nom', TextType::class)
-            ->add('telephone', TextType::class, [
-                'constraints' => [new Length([
-                    'min' => 10,
-                    'max' => 10,
-                    'exactMessage' => "Le champ doit contenir 10 caractères."
-                ])]
-            ])
-            ->add('dateNaissance', DateType::class, [
-                // 'format' => 'yyyy-MM-dd'
+                'label' => 'Vérif mdp',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez confirmer votre nouveau mot de passe',
+                    ]),
+                ],
             ]);
     }
 
