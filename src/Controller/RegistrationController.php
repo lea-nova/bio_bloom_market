@@ -23,6 +23,13 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
             if ($form->get('plainPassword')->getData() !== $form->get("checkPassword")->getData()) {
                 return $this->redirectToRoute('app_register');
             }
@@ -35,12 +42,6 @@ class RegistrationController extends AbstractController
                 return $this->redirectToRoute('app_register');
             }
             // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
 
             $entityManager->persist($user);
             $entityManager->flush();
