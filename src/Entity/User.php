@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -59,6 +61,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $prefAchat = null;
+
+    /**
+     * @var Collection<int, Adresse>
+     */
+    #[ORM\ManyToMany(targetEntity: Adresse::class, inversedBy: 'users')]
+    private Collection $adresses;
+
+    public function __construct()
+    {
+        $this->adresses = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -171,17 +186,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // public function getEmail(): ?string
-    // {
-    //     return $this->email;
-    // }
-
-    // public function setEmail(string $email): static
-    // {
-    //     $this->email = $email;
-
-    //     return $this;
-    // }
 
     public function getDateNaissance(): ?\DateTimeInterface
     {
@@ -215,6 +219,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrefAchat(?string $prefAchat): static
     {
         $this->prefAchat = $prefAchat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adresse>
+     */
+    public function getAdresses(): Collection
+    {
+        return $this->adresses;
+    }
+
+    public function addAdresse(Adresse $adresse): static
+    {
+        if (!$this->adresses->contains($adresse)) {
+            $this->adresses[] = $adresse;
+        }
+
+        return $this;
+    }
+
+    public function removeAdresse(Adresse $adresse): static
+    {
+        $this->adresses->removeElement($adresse);
 
         return $this;
     }

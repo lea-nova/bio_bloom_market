@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adresses de
+	{{ user.prenom }}
+{% endblock %}
+
+{% block body %}
+	<h1>Adresses de
+		{{ user.prenom }}</h1>
+
+	<ul>
+		{% for adresse in adresses %}
+			<li>
+				{{ adresse.id }}
+				-
+				{{ adresse.ligne1 }}
+				<a href="{{ path('app_user_adresses_update', {'id': user.id, 'id_adresse': adresse.id}) }}">Modifier</a>
+				<form action="{{ path('app_user_adresses_delete', {'id': user.id, 'id_adresse': adresse.id}) }}" method="POST" style="display: inline-block;">
+					<input type="hidden" name="_method" value="DELETE">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.id) }}">
+					<button type="submit">Supprimer</button>
+				</form>
+			</li>
+		{% endfor %}
+	</ul>
+
+	{# Ajouter des liens pour ajouter, modifier ou supprimer des adresses si nécessaire #}
+	<a href="{{ path('app_user_adresses_new', {'id': user.id}) }}">Ajouter une nouvelle adresse</a>
+{% endblock %}

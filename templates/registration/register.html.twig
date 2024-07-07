@@ -67,3 +67,10 @@
 		</div>
 	</div>
 {% endblock %}
+{% block form_errors %}
+	{% if errors|length > 0 %}
+		{% for error in errors %}
+			<small class="text-danger">{{ error.message }}</small>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

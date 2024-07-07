@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'Adresse
+{% endblock %}
+
+{% block body %}
+	<h1>Modifier l'Adresse</h1>
+
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+	<button type="submit">Enregistrer</button>
+	{{ form_end(form) }}
+
+	<a href="{{ path('app_user_adresses', {'id': user.id}) }}">Retour à la liste des adresses</a>
+{% endblock %}
