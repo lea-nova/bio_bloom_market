@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Supprimer une Adresse
+{% endblock %}
+
+{% block body %}
+	<h1>Supprimer l'Adresse</h1>
+	<p>Confirmez-vous la suppression de cette adresse ?</p>
+
+	{# Formulaire pour la suppression d'adresse #}
+	<form action="{{ path('app_user_adresses_delete', {'id': user.id, 'id_adresse': adresse.id}) }}" method="POST" onsubmit="return confirm('Confirmez-vous la suppression de cette adresse ?')">
+		{{ form_start(form) }}
+		{{ form_widget(form._token) }}
+
+		<button type="submit">Confirmer la suppression</button>
+	</form>
+
+	<a href="{{ path('app_user_adresses', {'id': user.id}) }}">Annuler</a>
+{% endblock %}

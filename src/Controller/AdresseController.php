@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adresse;
-use App\Form\AdresseType;
+use App\Form\Adresse1Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +29,7 @@ class AdresseController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $adresse = new Adresse();
-        $form = $this->createForm(AdresseType::class, $adresse);
+        $form = $this->createForm(Adresse1Type::class, $adresse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,7 +56,7 @@ class AdresseController extends AbstractController
     #[Route('/{id}/edit', name: 'app_adresse_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Adresse $adresse, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(AdresseType::class, $adresse);
+        $form = $this->createForm(Adresse1Type::class, $adresse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

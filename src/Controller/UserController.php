@@ -3,8 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Adresse;
+
+
 use App\Form\ResetPasswordFormType;
 use App\Form\UserType;
+use App\Form\AdresseType;
+
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,11 +26,21 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as HasherUserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+
 
 use function PHPUnit\Framework\isNull;
 
 class UserController extends AbstractController
 {
+
+    private $csrfTokenManager;
+
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+    {
+        $this->csrfTokenManager = $csrfTokenManager;
+    }
+
     #[Route('admin/user/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
@@ -65,6 +80,8 @@ class UserController extends AbstractController
 
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'adresses' => $user->getAdresses(),
+
         ]);
     }
 
@@ -159,6 +176,153 @@ class UserController extends AbstractController
         return $this->render('user/_change_password_form.html.twig', [
             'user' => $user,
             'editPassword' => $form->createView(),
+        ]);
+    }
+
+    #[Route('user/{id}/adresses', name: 'app_user_adresses', methods: ['GET'])]
+    public function showAdresses(): Response
+    {
+        $currentUser = $this->getUser();
+        $adresses = $currentUser->getAdresses();
+        return $this->render('user_adresse/show_adresses.html.twig', [
+            'user' => $currentUser,
+            'adresses' => $adresses,
+        ]);
+    }
+
+    #[Route('user/{id}/adresses/new', name: 'app_user_adresses_new', methods: ['GET', 'POST'])]
+    public function addAdresse(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $currentUser = $this->getUser();
+
+        if (!$currentUser) {
+            throw $this->createNotFoundException('Utilisateur non connecté');
+        }
+
+
+        // Créer une nouvelle instance d'Adresse
+        $adresse = new Adresse();
+        // Créer le formulaire
+        $form = $this->createForm(AdresseType::class, $adresse);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $newAdresse = $form->getData();
+
+            $adresseExiste = $entityManager->getRepository(Adresse::class)->findOneBy([
+                'ligne1' => $newAdresse->getLigne1(),
+                'ligne2' => $newAdresse->getLigne2(),
+                'codePostal' => $newAdresse->getCodePostal(),
+                'ville' => $newAdresse->getVille(),
+                'pays' => $newAdresse->getPays(),
+            ]);
+
+            if ($adresseExiste) {
+                $adresse = $adresseExiste;
+            } else {
+                $adresse = $newAdresse;
+            }
+            // Sauvegarder l'adresse dans la base de données
+            $adresse->addUser($currentUser);
+            $entityManager->persist($adresse);
+            $entityManager->flush();
+
+            // Rediriger vers la page des adresses de l'utilisateur après ajout
+            return $this->redirectToRoute('app_user_adresses', ['id' => $currentUser->getId()]);
+        }
+        // Lier l'adresse à l'utilisateur actuel
+        return $this->render('user_adresse/add_adresse.html.twig', [
+            'form' => $form->createView(), // Utiliser createView() pour générer le formulaire
+        ]);
+    }
+
+
+    #[Route('/user/{id}/adresses/{id_adresse}/delete', name: 'app_user_adresses_delete', methods: ['POST'])]
+    public function removeAdresse(int $id, int $id_adresse, Request $request,  EntityManagerInterface $entityManager): Response
+    {
+
+        $adresse = $entityManager->getRepository(Adresse::class)->find($id_adresse);
+
+        if (!$adresse) {
+            throw $this->createNotFoundException('Adresse non trouvée');
+        }
+
+        // // Vérifie que l'adresse appartient bien à l'utilisateur
+        // if ($adresse->getUsers()->getId() !== $id) {
+        //     throw $this->createAccessDeniedException('Vous n\'avez pas la permission de supprimer cette adresse');
+        // }
+
+        if ($request->isMethod('POST')) {
+            // Supprimer l'adresse si la méthode est POST
+            // $entityManager->removeAdresse($adresse);
+            $adresse->removeUser($this->getUser());
+            $entityManager->flush();
+
+            // Redirection vers la liste des adresses de l'utilisateur après suppression
+            return $this->redirectToRoute('app_user_adresses', ['id' => $id]);
+        }
+
+        // Si la méthode est GET (normalement, tu ne devrais pas avoir à gérer la suppression via GET, mais par sécurité)
+        // Tu peux rediriger ou afficher une page d'erreur
+        return $this->redirectToRoute('app_user_adresses', ['id' => $id]);
+    }
+
+    #[Route('/user/{id}/adresses/{id_adresse}/update', name: 'app_user_adresses_update', methods: ['GET', 'POST'])]
+    public function updateAdresse(User $user, int $id, int $id_adresse, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $currentUser = $this->getUser();
+        if ($currentUser->getId() !== $id) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas la permission de modifier cette adresse pour cet utilisateur');
+        }
+        $oldAdresse = $entityManager->getRepository(Adresse::class)->find($id_adresse);
+        if (!$oldAdresse) {
+            // throw $this->createNotFoundException('Adresse non trouvée.'); // arrete le programme
+            return $this->redirectToRoute('app_user_adresses', ['id' => $user->getId()]);
+        } else {
+            $autresUtilisateurs = $oldAdresse->getUsers();
+            if (count($autresUtilisateurs) > 1) {
+                // Si d'autres utilisateur il faut add une nouvelle adresse pas la modifier.
+                $newAdresse = new Adresse();
+                $newAdresse->setLigne1($oldAdresse->getLigne1());
+                $newAdresse->setLigne2($oldAdresse->getLigne2());
+                $newAdresse->setCodePostal($oldAdresse->getCodePostal());
+                $newAdresse->setVille($oldAdresse->getVille());
+                $newAdresse->setPays($oldAdresse->getPays());
+
+                // $oldAdresse->removeUser($currentUser)
+                $currentUser->removeAdresse($oldAdresse);
+                $form = $this->createForm(AdresseType::class, $newAdresse);
+            } else {
+                // personne n'a la même adresse il est possible de la modifier.
+                $form = $this->createForm(AdresseType::class, $oldAdresse);
+            }
+            $form->handleRequest($request);
+        }
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (count($autresUtilisateurs) > 1) {
+                $adresseExisteDeja = $entityManager->getRepository(Adresse::class)->findOneBy([
+                    'ligne1' => $newAdresse->getLigne1(),
+                    'ligne2' => $newAdresse->getLigne2(),
+                    'codePostal' => $newAdresse->getCodePostal(),
+                    'ville' => $newAdresse->getVille(),
+                    'pays' => $newAdresse->getPays(),
+                ]);
+
+                if ($adresseExisteDeja) {
+                    $newAdresse = $adresseExisteDeja;
+                } else {
+                    $entityManager->persist($newAdresse);
+                }
+                $user->addAdresse($newAdresse);
+            }
+            $entityManager->flush();
+            return $this->redirectToRoute('app_user_adresses', ['id' => $user->getId()]);
+        }
+
+        return $this->render('user_adresse/update_adresse.html.twig', [
+            'user' => $user,
+            // 'adresse' => $adresse,
+            'form' => $form->createView(),
         ]);
     }
 }
