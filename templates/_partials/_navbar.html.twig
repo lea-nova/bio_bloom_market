@@ -1,0 +1,154 @@
+<nav class=" flex flex-row items-center justify-between">
+	<a class="" href=" {{path('app_main')}} "><img class="logo h-10" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market"></a>
+	<!-- Mobile menu button-->
+	<button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+		<span class="absolute -inset-0.5"></span>
+		<span class="sr-only">Open main menu</span>
+	</button>
+
+	<ul class="hidden md:flex flex-row  justify-around items-center  w-screen h-20 ">
+		<li class="">
+			<a class="" aria-current="page" href=" {{path('app_main')}} ">Accueil</a>
+		</li>
+		<li class="">
+			<a class="" href="#">Produits</a>
+		</li>
+		<li class="">
+			<button class="" data-bs-toggle="dropdown" aria-expanded="false">
+				Catégories
+			</button>
+			<ul class="hidden">
+				<li>
+					<a class="" href="#">Fruits et Légumes
+					</a>
+				</li>
+				<li>
+					<a class="" href="#">Produits Laitiers et Oeufs
+					</a>
+				</li>
+				<li>
+					<a class="" href="#">
+						Épicerie Salée</a>
+				</li>
+				<li>
+					<a class="" href="#">
+						Épicerie Sucrée</a>
+				</li>
+				<li>
+					<a class="" href="#">
+						Boissons</a>
+				</li>
+				<li>
+					<a class="" href="#">
+						Voir plus</a>
+				</li>
+			</ul>
+
+		</li>
+		<li>
+			<a class="nav-link" href="#">Promotions</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Contact</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">A propos</a>
+		</li>
+		{% if  app.user  %}
+			{# <span class="d-flex flex-row mb-3 justify-content-between d-flex align-items-center"> #}
+			<li class="">
+				<a class="" href="{{ path('app_user_show', {'id': app.user.id}) }}">Mon profil</a>
+			</li>
+			<li class="">
+				<a class=" hidden lg:inline" href="{{path('app_logout')}}">Se déconnecter</a>
+				<a class="lg:hidden" href="{{path('app_logout')}}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+				</a>
+			</li>
+			{# </span> #}
+		{% else %}
+			<li>
+				<a class="" href="{{path('app_login')}}">Connexion/Inscription</a>
+			</li>
+		{% endif %}
+
+		<li>
+			<a class=" " href="#">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-basket"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></svg>
+			</a>
+		</li>
+		<li class="hidden lg:inline">
+			<form class="" role="search">
+				<input class="w-24" type="search" placeholder="Rechercher" aria-label="Search">
+				<button class="" type="submit">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+				</button>
+				{# <button class="btn btn-outline-success" type="submit">Compte</button> #}
+			</form>
+		</li>
+	</ul>
+	{# Bouton navbar fermé #}
+	<button type="button" class="md:hidden relative inline-flex items-center justify-end rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" id="navbar-toggle">
+		<span class="  "></span>
+		<span class="sr-only">Open main menu</span>
+		<svg class="block h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+		</svg>
+		<!--Icon when menu is open. Menu open: "block", Menu closed: "hidden"-->
+		<svg class="hidden h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+			<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+		</svg>
+		<div class="mt-2 space-y-2" id="disclosure-1"></div>
+	</nav>
+	<!-- Mobile menu, show/hide based on menu open state. -->
+	<div class="lg:hidden" role="dialog" aria-modal="true">
+		<!-- Background backdrop, show/hide based on slide-over state. -->
+		{# <div class="fixed inset-0 z-10"></div> #}
+		{# Classe à modifier avec le JS pour toggle #}
+			<div class="hidden fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10" id="navbar-right"> <div class="flex items-center justify-between">
+				<a class="" href=" {{path('app_main')}} ">
+					<span class="sr-only">Bio Bloom Market</span>
+					<img class="logo h-10" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market">
+				</a>
+				<button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700 " id="btn-close">
+					<span class="sr-only">Close menu</span>
+					<svg class="h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+					</svg>
+				</button>
+			</div>
+			<div class="mt-6 flow-root">
+				<div class="-my-6 divide-y divide-gray-500/10">
+					<div class="space-y-2 py-6">
+						<a class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" href="#">Produits</a>
+						<div class="-mx-3">
+							<button type="button" class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" aria-controls="disclosure-1" aria-expanded="false" id='btn-disclosure-1'>
+								Catégories
+								<!--Expandcollapse icon, toggle classes based on menu open state.Open: "rotate-180", Closed: ""														                -->
+								<svg class="h-5 w-5 flex-none" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+									<path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+								</svg>
+							</button>
+							<!-- 'Product' sub-menu, show/hide based on menu state. -->
+							<div class=" hidden mt-2 space-y-2" id="list-menu">
+								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Fruits et Légumes</a>
+								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Produits Laitiers et Oeufs</a>
+								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Épicerie Salée</a>
+								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Épicerie Sucrée</a>
+								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Boissons</a>
+								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Voir plus</a>
+
+							</div>
+						</div>
+
+						<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Promotions</a>
+						<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Contact</a>
+						<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">A propos</a>
+					</div>
+					<div class="py-6">
+						<a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
