@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adresse;
-use App\Form\Adresse1Type;
+use App\Form\AdresseType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +29,7 @@ class AdresseController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $adresse = new Adresse();
-        $form = $this->createForm(Adresse1Type::class, $adresse);
+        $form = $this->createForm(AdresseType::class, $adresse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,7 +56,7 @@ class AdresseController extends AbstractController
     #[Route('/{id}/edit', name: 'app_adresse_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Adresse $adresse, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Adresse1Type::class, $adresse);
+        $form = $this->createForm(AdresseType::class, $adresse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -74,7 +74,7 @@ class AdresseController extends AbstractController
     #[Route('/{id}', name: 'app_adresse_delete', methods: ['POST'])]
     public function delete(Request $request, Adresse $adresse, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$adresse->getId(), $request->getPayload()->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $adresse->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($adresse);
             $entityManager->flush();
         }
