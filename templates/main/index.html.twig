@@ -6,30 +6,26 @@
 {% block body %}
 
 	<div
-		class="container pt-5">
+		class="flex flex-col sm:justify-center items-center ">
 		{# <h1 class="text-center mt-2 mb-5">BIO BLOOM MARKET</h1> #}
 		{% if app.user %}
 			<h2>Bienvenue,
 				{{app.user.prenom}}
 			</h2>
 		{% endif %}
-		<div class="container banner-div d-flex row align-items-center justify-content-around bg-brown rounded-4">
-			<span class=" col-5 mx-2 px-2 ">
-				<h1 class="text-secondary fs-2">Notre engagement pour une planète verte et florissante</h1>
-				<button class=" btn bg-success text-white mt-2 mb-2">Explorez notre boutique</button>
+		<div class="w-full flex max-sm:flex-col flex-row bg-secondary-default text-center flex max-sm:align-middle flex-col md:flex-row items-center max-sm:justify-around  md:flex justify-around p-8  ">
+			<span class="ml-5 px-5 max-sm:pb-5 text-left ">
+				<h1 class="font-bold text-lg text-tertiary-light text-3xl mb-5  ">Notre engagement pour une planète verte et florissante</h1>
+				<button class="rounded-md bg-primary-default py-2 px-4 text-center text-sm text-white " type="button">
+					Explorez notre boutique
+				</button>
 			</span>
-			<span class="col-5">
-				<img class="banner rounded-5 col-12" src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes.">
+			<span class=" flex flex-row justify-center ">
+				<img class="rounded-2xl w-5/6 h-5/6 " src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes.">
 			</span>
 		</div>
-		<div
-			class="container">
-
-			{# <div class="bg-green-400  text-center p-8 rounded shadow-md">
-																Bienvenue sur mon site Symfony 7 !
-															</div> #}
-
-			<section class="example-wrapper d-flex row justify-content-between"></section>
+		<div class="container">
+			<section class=""></section>
 			<section>
 				<h3>Nos promotions en cours</h3>
 				<h3>Les produits favoris de nos clients</h3>
