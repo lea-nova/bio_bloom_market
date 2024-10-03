@@ -2,7 +2,7 @@
 # Bio Bloom Market 
 
 
-**Installation du projet**
+## Installation du projet
 Dépendance PHP : 
 ```
 composer install
