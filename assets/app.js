@@ -15,6 +15,9 @@ let btnCloseNavbar = document.getElementById('btn-close');
 
 let btnFirstListMenuMobile = document.getElementById('btn-disclosure-1');
 let firstListMenuMobile = document.getElementById('list-menu');
+
+let btnNavbarCategory = document.getElementById('btn-disclosure-category')
+let categoryList = document.getElementById('category-navbar');
 //  Action pour ouvrir/fermer le menu au format tablette/mobile
 btnNavbar.addEventListener('click', () => {
     navbar.classList.toggle('hidden');
@@ -26,5 +29,9 @@ btnCloseNavbar.addEventListener('click', () => {
 
 btnFirstListMenuMobile.addEventListener('click', () => {
     firstListMenuMobile.classList.toggle('hidden');
+
+})
+btnNavbarCategory.addEventListener('click', () => {
+    categoryList.classList.toggle('hidden')
 })
 // 

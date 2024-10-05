@@ -7,18 +7,23 @@
 		<span class="sr-only">Open main menu</span>
 	</button>
 
-	<ul class="hidden md:flex flex-row  justify-around items-center  w-screen h-20 ">
+	<ul class="hidden md:flex flex-row text-sm md:text-md lg:text-lg  justify-around items-center  w-screen h-20 ">
 		<li class="">
 			<a class="" aria-current="page" href=" {{path('app_main')}} ">Accueil</a>
 		</li>
 		<li class="">
 			<a class="" href="#">Produits</a>
+
 		</li>
 		<li class="">
-			<button class="" data-bs-toggle="dropdown" aria-expanded="false">
+			<button class="" id="btn-disclosure-category" data-bs-toggle="dropdown" aria-expanded="false">
 				Catégories
+				<svg class="h-5 w-5 flex-none inline" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+					<path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+				</svg>
 			</button>
-			<ul class="hidden">
+
+			<ul class=" absolute hidden bg-light-default p-5 border-radius-2 rounded-xl shadow-[0_2px_4px_-2px_rgba(0,0,0,0.3)]" id="category-navbar">
 				<li>
 					<a class="" href="#">Fruits et Légumes
 					</a>
@@ -80,7 +85,7 @@
 		</li>
 		<li class="hidden lg:inline">
 			<form class="" role="search">
-				<input class="w-24" type="search" placeholder="Rechercher" aria-label="Rechercher">
+				<input class="w-24 text-sm" type="search" placeholder="Rechercher" aria-label="Rechercher">
 				<button class="" type="submit" title="Cliquer ici pour rechercher">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
 				</button>
