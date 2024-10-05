@@ -2,6 +2,8 @@
 
 {% block title %}Bio Bloom Market
 {% endblock %}
+{% block meta_description %}Page d'accueil du site de produits bio en ligne Bio Bloom Market. Possiblilité de se balader sur la page pour avoir plusieurs informations sur les promotions, les nouveautés, les produits proposés par des professionnels.
+{% endblock %}
 
 {% block body %}
 
@@ -13,15 +15,17 @@
 				{{app.user.prenom}}
 			</h2>
 		{% endif %}
-		<div class="w-full flex max-sm:flex-col flex-row bg-secondary-default text-center flex max-sm:align-middle flex-col md:flex-row items-center max-sm:justify-around  md:flex justify-around p-8  ">
-			<span class="ml-5 px-5 max-sm:pb-5 text-left ">
-				<h1 class="font-bold text-lg text-tertiary-light text-3xl mb-5  ">Notre engagement pour une planète verte et florissante</h1>
-				<button class="rounded-md bg-primary-default py-2 px-4 text-center text-sm text-white " type="button">
+		<div class="w-full flex max-sm:flex-col  bg-secondary-default text-center max-sm:align-middle  md:flex-row items-center max-sm:justify-around justify-around md:flex p-8  ">
+			<span class="md:ml-7 lg:ml-7 px-5 max-sm:pb-5 text-left max-sm:w-screen md:w-4/6 md:h-4/6  lg:h-3/6 lg:w-3/6  ">
+				<h1 class="font-bold  max-md:text-center text-tertiary-light text-md md:text-md xl:text-3xl mb-5  ">Notre engagement pour une planète verte et florissante</h1>
+				<button class="rounded-md bg-primary-default max-sm:w-full py-2 px-4 text-center text-sm text-tertiary-darker font-semi-bold" type="button">
 					Explorez notre boutique
 				</button>
 			</span>
-			<span class=" flex flex-row justify-center ">
-				<img class="rounded-2xl w-5/6 h-5/6 " src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes.">
+			<span class=" flex flex-row justify-center md:ml-7">
+				<img
+				class="rounded-2xl md:w-4/6 md:h-4/6  lg:h-4/6 lg:w-5/6   " src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes.">
+			{# <img class="rounded-2xl md:w-5/6 md:h-5/6 lg:h-3/6 lg:w-3/6" src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes."> #}
 			</span>
 		</div>
 		<div class="container">

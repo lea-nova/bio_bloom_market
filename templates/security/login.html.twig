@@ -1,41 +1,48 @@
 {% extends 'base.html.twig' %}
 
 
-{% block title %}Log in!
+{% block title %}Se connecter | Bio Bloom Market
 {% endblock %}
 
 {% block body %}
-	<small>Pas encore inscrit ?
-		<a href="{{path('app_register')}}">Cliquez ici</a>
-	</small>
-	<div>
-		{# {{ render(controller('App\\Controller\\RegistrationController::register')) }} #}
+	<div class="bg-gradient-to-b from-light-default to-light-muted h-100">
+		<div
+			class=" flex flex-row lg:flex-col justify-center items-center ">
+			{# {{ render(controller('App\\Controller\\RegistrationController::register')) }} #}
+			<div class=" lg:h-[32rem] rounded-xl lg:w-4/6 flex flex-col lg:flex-row  justify-center items-center border-2 border-secondary-muted md:w-4/6 p-6 mt-8 mb-12 shadow-bottom ">
+
+				<form class=" flex flex-col mx-10" method="post">
+					{% if error %}
+						<div class="">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
 
 
-		<form class="container col-5 col-md-5 col-lg-2" method="post">
-			{% if error %}
-				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
+					<h1 class="text-5xl">Déjà client ?</h1>
+					<label for="inputEmail">Email :</label>
+					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+					<label for="inputPassword">Mot de passe :</label>
+					<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-			<label for="inputEmail">Email</label>
-			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-			<label for="inputPassword">Password</label>
-			<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+					<div class="checkbox mb-3">
+						<label>
+							<input type="checkbox" name="_remember_me">
+							Remember me
+						</label>
+					</div>
 
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-			<div class="checkbox mb-3">
-				<label>
-					<input type="checkbox" name="_remember_me">
-					Remember me
-				</label>
+					<button class="" type="submit">
+						Sign in
+					</button>
+				</form>
+				<div class="max-sm:h-96 md:h-dvh max-sm:object-contain lg:h-dvh mx-10 flex flex-col justify-center items-center ">
+					<small class="">Pas encore inscrit ?
+						<a class="font-semibold" href="{{path('app_register')}}">Cliquez ici</a>
+					</small>
+					<img class="rounded-2xl md:object-fit max-md:h-[22rem] md:h-[30rem] md:w-[20rem] " src="{{asset('images/border-login-1.png')}}" alt="cagettes de fruits et de légumes."></div>
 			</div>
+		</div>
 
-			<button class="btn btn-success btn-outline-success text-white btn-block" type="submit">
-				Sign in
-			</button>
-		</form>
 	</div>
 {% endblock %}

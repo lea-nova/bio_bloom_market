@@ -24,6 +24,7 @@ module.exports = {
           default: '#BDBDBD',
           accent: '#CFD8DC',
           dark: '#757575',
+          darker: '#0A0A0A', // A UTILISER POUR LE TEXTE FONCER
         },
         light: {
           default: '#FFFFFF',
