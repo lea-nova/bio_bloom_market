@@ -4,7 +4,7 @@
 - Implémentation des UUID dans l'entité `User`.
 - Mise à jour des URLs pour utiliser les UUID.
 - Comparaison des UUID en chaînes de caractères.
-
+- Fixtures pour l'entité ``User`` et test 
 ---
 
 ### Détails des Changements

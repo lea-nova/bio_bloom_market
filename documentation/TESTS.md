@@ -8,3 +8,5 @@ Vérifier que la création d'un utilisateur fonctionne correctement, y compris l
 - Créer une instance de l'entité `User`.
 - Définir les propriétés de l'utilisateur (UUID, dates, etc.).
 - Persister l'utilisateur et vérifier qu'il est correctement enregistré.
+- Utilisation de Fixture pour l'entité `User` dans une DB test. 
+
