@@ -1,4 +1,4 @@
-## [12-10-2024]
+## [2024-10-12]
 ### Résolutions
 - Correction du bug d'ID auto-incrémenté.
 - Implémentation des UUID dans l'entité `User`.
@@ -23,3 +23,6 @@
 
 #### 4. Comparaison des UUIDs
 - Conversion des UUIDs en chaînes de caractères avant comparaison pour garantir l'accès sécurisé.
+
+#### 5. Création fixtures pour l'entité ``User``
+
