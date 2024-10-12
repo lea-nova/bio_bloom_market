@@ -11,5 +11,5 @@
 	<button type="submit">Enregistrer</button>
 	{{ form_end(form) }}
 
-	<a href="{{ path('app_user_adresses', {'id': user.id}) }}">Retour à la liste des adresses</a>
+	<a href="{{ path('app_user_adresses', {'uuid': user.uuid}) }}">Retour à la liste des adresses</a>
 {% endblock %}

@@ -21,20 +21,30 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [])
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse e-mail :',
+                'attr' => [
+                    'placeholder' => 'Entrez votre mail'
+                ]
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'Acceptez les conditions d\'utilisation',
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter les conditions d\'utilsiation',
                     ]),
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label' => 'Mot de passe : ',
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'placeholder' => 'Entrez un mot de passe'
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -53,11 +63,28 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('checkPassword', PasswordType::class, [
                 'mapped' => false, // champs pas lié à une prop de l'entité.
-                'label' => 'Vérif mdp'
+                'label' => 'Confirmer le mot de passe :',
+                'attr' => [
+                    'placeholder' => "Confirmer le mot de passe",
+                ]
             ])
-            ->add('prenom', TextType::class)
-            ->add('nom', TextType::class)
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom :',
+                'attr' => [
+                    'placeholder' => 'Entrez votre prénom '
+                ]
+            ])
+            ->add('nom', TextType::class, [
+                'label' => 'Nom :',
+                'attr' => [
+                    'placeholder' => 'Entrez votre nom '
+                ]
+            ])
             ->add('telephone', TextType::class, [
+                'label' => 'Numéro de téléphone :',
+                'attr' => [
+                    'placeholder' => 'Numéro de téléphone '
+                ],
                 'constraints' => [new Length([
                     'min' => 10,
                     'max' => 10,
@@ -66,6 +93,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('dateNaissance', DateType::class, [
                 // 'format' => 'yyyy-MM-dd'
+                'label' => 'Date de naissance :'
             ]);
     }
 

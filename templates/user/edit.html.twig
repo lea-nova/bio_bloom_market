@@ -15,5 +15,5 @@
 	<h4>Modifier votre mot de passe ?
 	</h4>
 	{# {{ include('user/_change_password_form.html.twig') }} #}
-	<a href="{{path('app_user_edit_password', {'id': user.id})}}">Cliquez ici</a>
+	<a href="{{path('app_user_edit_password', {'uuid': user.uuid})}}">Cliquez ici</a>
 {% endblock %}

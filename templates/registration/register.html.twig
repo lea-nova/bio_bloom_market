@@ -1,68 +1,81 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register
+{% block title %}S'inscrire | Bio Bloom Market
 {% endblock %}
 
 {% block body %}
-	<div class="container pt-5 col-6">
-		<div class="row justify-content-center">
-			<div class="col-5 col-md-5 col-lg-24">
-				<h1 class="text-center">Register</h1>
-
-				{{ form_start(registrationForm) }}
-
-				<div class="form-group">
-					{{ form_label(registrationForm.prenom) }}
-					{{ form_widget(registrationForm.prenom, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(registrationForm.prenom) }}
-				</div>
-				<div class="form-group">
-					{{ form_label(registrationForm.nom) }}
-					{{ form_widget(registrationForm.nom, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(registrationForm.nom) }}
-				</div>
-				<div class="form-group">
-					{{ form_label(registrationForm.email) }}
-					{{ form_widget(registrationForm.email, {
+	<h1 class="text-5xl mb-6 text-center pt-5">S'inscrire</h1>
+	<h2 class="text-2xl text-center">Pour commander sur Bio Bloom Market</h2>
+	<div class="container pt-5 col-6 self-center relative">
+		<div class="flex items-center justify-around ">
+			<div class="col-5 col-md-5 col-lg-24  pb-10 w-[40%]  ">
+				<div class="form-container p-12 flex items-center justify-center border-2 rounded-md border-primary-accent     ">
+					{{ form_start(registrationForm) }}
+					<div class="flex flex-row  justify-between">
+						<div class=" ">
+							{{ form_label(registrationForm.prenom) }}
+							<br>
+							{{ form_widget(registrationForm.prenom, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+							{{ form_errors(registrationForm.prenom) }}
+						</div>
+						<div class="form-group">
+							{{ form_label(registrationForm.nom) }}
+							<br>
+							{{ form_widget(registrationForm.nom, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+							{{ form_errors(registrationForm.nom) }}
+						</div>
+					</div>
+					<div class="form-group ">
+						{{ form_label(registrationForm.email) }}
+						<br>
+						{{ form_widget(registrationForm.email, {
     'attr': {
-        'class': 'form-control',
+        'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8',
         'pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$'
     }
 }) }}
-					{{ form_errors(registrationForm.email) }}
+						{{ form_errors(registrationForm.email) }}
 
-				</div>
-				<div class="form-group">
-					{{ form_label(registrationForm.telephone) }}
-					{{ form_widget(registrationForm.telephone, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(registrationForm.telephone) }}
-				</div>
-				<div class="form-group">
-					{{ form_label(registrationForm.dateNaissance) }}
-					{{ form_widget(registrationForm.dateNaissance, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(registrationForm.dateNaissance) }}
-				</div>
+					</div>
+					<div class="form-group">
+						{{ form_label(registrationForm.telephone) }}
+						<br>
+						{{ form_widget(registrationForm.telephone, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+						{{ form_errors(registrationForm.telephone) }}
+					</div>
+					<div class="form-group">
+						{{ form_label(registrationForm.dateNaissance) }}
+						<br>
+						{{ form_widget(registrationForm.dateNaissance, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+						{{ form_errors(registrationForm.dateNaissance) }}
+					</div>
 
-				<div class="form-group">
-					{{ form_label(registrationForm.plainPassword) }}
-					{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(registrationForm.plainPassword) }}
-				</div>
-				<div class="form-group">
-					{{ form_label(registrationForm.checkPassword) }}
-					{{ form_widget(registrationForm.checkPassword, {'attr': {'class': 'form-control'}}) }}
-					{{ form_errors(registrationForm.checkPassword) }}
-				</div>
+					<div class="flex flex-row justify-between">
+						<div class="form-group">
+							{{ form_label(registrationForm.plainPassword) }}
+							<br>
+							{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+							{{ form_errors(registrationForm.plainPassword) }}
+						</div>
+						<div class="form-group  w-full text-center">
+							{{ form_label(registrationForm.checkPassword) }}
+							<br>
+							{{ form_widget(registrationForm.checkPassword, {'attr': {'class': ' rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+							{{ form_errors(registrationForm.checkPassword) }}
+						</div>
 
-				<div class="form-group">
-					{{ form_label(registrationForm.agreeTerms) }}
-					{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
-					{{ form_errors(registrationForm.agreeTerms) }}
+					</div>
+					<div class="form-group flex flex-row items-center">
+						{{ form_label(registrationForm.agreeTerms) }}
+						{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8 self-center'}}) }}
+						{{ form_errors(registrationForm.agreeTerms) }}
+					</div>
+					<span class="flex justify-center">
+						<button type=" submit" class=" rounded-md w-[50%] bg-primary-default max-sm:w-full py-2 px-4 text-center text-sm text-tertiary-darker font-semi-bold">S'inscrire</button>
+					</span>
+
+					{{ form_end(registrationForm) }}
 				</div>
-
-				<button type="submit" class="  btn btn-success btn-outline-success text-white btn-block">Register</button>
-
-				{{ form_end(registrationForm) }}
 			</div>
 		</div>
 	</div>
