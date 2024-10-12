@@ -35,11 +35,11 @@ use function PHPUnit\Framework\isNull;
 class UserController extends AbstractController
 {
 
-    private $csrfTokenManager;
-
-    public function __construct(CsrfTokenManagerInterface $csrfTokenManager)
+    // private $csrfTokenManager;
+    // CsrfTokenManagerInterface $csrfTokenManager
+    public function __construct()
     {
-        $this->csrfTokenManager = $csrfTokenManager;
+        // $this->csrfTokenManager = $csrfTokenManager;
     }
 
     #[Route('admin/user/', name: 'app_user_index', methods: ['GET'])]
