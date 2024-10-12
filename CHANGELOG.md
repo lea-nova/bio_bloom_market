@@ -1,4 +1,5 @@
 ## [2024-10-12]
+
 ### Résolutions
 - Correction du bug d'ID auto-incrémenté.
 - Implémentation des UUID dans l'entité `User`.

@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
 use App\DataFixtures\UserFixtures;
 
+
 class UserTest extends KernelTestCase
 {
 
@@ -18,6 +19,7 @@ class UserTest extends KernelTestCase
     {
         return Kernel::class;
     }
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -31,6 +33,7 @@ class UserTest extends KernelTestCase
         $loader->addFixture(new UserFixtures());
         // $executor->execute($loader->getFixtures(), true);
     }
+
     public function testUserCreation()
     {
         // Démarrer le noyau symfony
