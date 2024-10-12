@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\DateImmutableType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
+use App\DataFixtures\UserFixtures;
 
 class UserTest extends KernelTestCase
 {
@@ -17,6 +18,19 @@ class UserTest extends KernelTestCase
     {
         return Kernel::class;
     }
+    protected function setUp(): void
+    {
+        parent::setUp();
+        self::bootKernel();
+
+        $container = static::getContainer();
+        $entityManager = $container->get(EntityManagerInterface::class);
+        $loader = $container->get('doctrine.fixtures.loader');
+        // $executor = $container->get('doctrine.fixtures.executor');
+
+        $loader->addFixture(new UserFixtures());
+        // $executor->execute($loader->getFixtures(), true);
+    }
     public function testUserCreation()
     {
         // Démarrer le noyau symfony
@@ -24,6 +38,8 @@ class UserTest extends KernelTestCase
         // Récupérer le conteneur de services 
         $container = static::getContainer();
         $entityManager = $container->get(EntityManagerInterface::class);
+        // Récupérer tous les utilisateurs depuis la base de données
+
 
         // Créer une nouvelle instance de l'entité User
         $user = new User();
