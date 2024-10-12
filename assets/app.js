@@ -34,4 +34,39 @@ btnFirstListMenuMobile.addEventListener('click', () => {
 btnNavbarCategory.addEventListener('click', () => {
     categoryList.classList.toggle('hidden')
 })
-// 
+//
+
+// AFFICHER/CACHER mdp
+// let afficherMdp = document.querySelectorAll(".fa-eye")
+// let cacherMdp = document.querySelectorAll(".hidden")
+// let inputPassword = document.querySelector("#mdp")
+// let inputPasswordConf = document.querySelector("#confirmation")
+
+// const eventPassword = (nodeList) => {
+//     nodeList.forEach(element => {
+//         element.addEventListener("click", () => {
+//         })
+//     });
+// }
+// // eventPassword(afficherMdp)
+// // eventPassword(cacherMdp)
+
+// const motDePasseChamp = (elementUn, elementDeux, input) => {
+//     elementUn.addEventListener("click", () => {
+
+//         elementDeux.classList.remove("hidden")
+//         elementUn.style.display = "none"
+//         elementDeux.style.display = "inline"
+//         input.type = "text"
+
+//     })
+
+//     elementDeux.addEventListener('click', () => {
+//         elementUn.style.display = "inline"
+//         elementDeux.style.display = "none";
+//         input.type = "password"
+//     })
+// }
+// console.log(afficherMdp)
+// motDePasseChamp(afficherMdp[0], cacherMdp[0], inputPassword);
+// motDePasseChamp(afficherMdp[1], cacherMdp[1], inputPasswordConf);

@@ -10,7 +10,8 @@ body {
 }
 
 
-h1 {
+h1,
+h2 {
     font-family: Raleway;
 }
 
@@ -95,3 +96,12 @@ body {
 .shadow-bottom {
     box-shadow: 0 4px 6px -1px rgba(151, 151, 151, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
+
+/* 
+input[type=checkbox] {
+    border-radius: 4px;
+    height: 15px;
+    width: 15px;
+    background: #ff0000;
+    border: 1px solid #ff0000;
+} */

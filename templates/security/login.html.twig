@@ -5,43 +5,44 @@
 {% endblock %}
 
 {% block body %}
-	<div class="bg-gradient-to-b from-light-default to-light-muted h-100">
-		<div
-			class=" flex flex-row lg:flex-col justify-center items-center ">
+	<div class="bg-gradient-to-b from-light-default to-light-muted md:h-100">
+		<div class="md:h-dvh flex flex-row max-md:flex-col justify-center items-center">
 			{# {{ render(controller('App\\Controller\\RegistrationController::register')) }} #}
-			<div class=" lg:h-[32rem] rounded-xl lg:w-4/6 flex flex-col lg:flex-row  justify-center items-center border-2 border-secondary-muted md:w-4/6 p-6 mt-8 mb-12 shadow-bottom ">
+			{# <div class=" md:h-[90%] lg:h-[90%]  rounded-xl lg:w-4/6 flex max-md:flex-col lg:flex-row  justify-center items-center border-2 border-secondary-muted md:w-4/6  mt-5 mb- lg:shadow-bottom "> #}
 
-				<form class=" flex flex-col mx-10" method="post">
-					{% if error %}
-						<div class="">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-					{% endif %}
+				<form class=" flex flex-col mx-12 mb-12" method="post"> {% if error %}
+					<div class="">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
 
 
-					<h1 class="text-5xl">Déjà client ?</h1>
-					<label for="inputEmail">Email :</label>
-					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-					<label for="inputPassword">Mot de passe :</label>
-					<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+				<h1 class="text-5xl mb-12">Déjà client ?</h1>
+				<label for="inputEmail">Email :</label>
+				<input class="rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8" type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Entrez votre adresse mail ici" autocomplete="email" required autofocus>
+				<label for="inputPassword">Mot de passe :</label>
+				<input class="rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8" type="password" name="password" id="inputPassword" placeholder="Entrez votre mot de passe ici" autocomplete="current-password" required>
 
-					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-					<div class="checkbox mb-3">
-						<label>
-							<input type="checkbox" name="_remember_me">
-							Remember me
-						</label>
-					</div>
+				<div class="checkbox mb-3 relative inline-block ">
+					<input class="relative peer appearance-none shrink-0 h-5 w-5 border-2   checked:bg-secondary-dark checked:border- rounded-md border-secondary-dark mt-1 " type="checkbox" name="_remember_me">
+					<label>
+						Se souvenir de moi
+					</label>
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check hidden absolute top-1 left-0 text-white  peer-checked:block pointer-events-none  "><path d="M20 6 9 17l-5-5"/></svg>
+				</div>
 
-					<button class="" type="submit">
-						Sign in
-					</button>
-				</form>
-				<div class="max-sm:h-96 md:h-dvh max-sm:object-contain lg:h-dvh mx-10 flex flex-col justify-center items-center ">
-					<small class="">Pas encore inscrit ?
-						<a class="font-semibold" href="{{path('app_register')}}">Cliquez ici</a>
-					</small>
-					<img class="rounded-2xl md:object-fit max-md:h-[22rem] md:h-[30rem] md:w-[20rem] " src="{{asset('images/border-login-1.png')}}" alt="cagettes de fruits et de légumes."></div>
-			</div>
+				<button class="rounded-md bg-primary-default max-sm:w-full py-2 px-4 text-center text-sm text-tertiary-darker font-semi-bold" type="submit">
+					Se connecter
+				</button>
+			</form>
+			<div class="    flex flex-col justify-center items-center   ">
+				<small class=" flex flex-row border-2 rounded-md border-primary-default h-7 text-center lg:text-end text-xs text-tertiary-darker w-4/6 place-content-center place-items-center mb-5">
+					<span>Pas encore inscrit ?
+						<a class="font-semibold bg-primary-default rounded-sm text-center text-xs text-tertiary-darker items-end  place-self-center lg:place-self-end " href="{{path('app_register')}}">Cliquez ici</a>
+					</span>
+				</small>
+				<img class="rounded-2xl md:object-contain  md:w-4/6 max-sm:mt-8 " src=" {{asset('images/border-login-1.png')}} " alt=" cagettes de fruits et de légumes."></div>
+			{# </div> #}
 		</div>
 
 	</div>

@@ -70,6 +70,7 @@ when@test:
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
         role_hierarchy:
+            ROLE_USER: []
             ROLE_ADMIN:       ROLE_USER
             ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
             ROLE_IS_AUTHORIZED: [ROLE_SUPER_ADMIN]

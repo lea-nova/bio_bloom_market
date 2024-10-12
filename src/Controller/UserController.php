@@ -27,6 +27,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as Hashe
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Uid\Uuid;
 
 
 use function PHPUnit\Framework\isNull;
@@ -69,13 +70,13 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('user/{id}', name: 'app_user_show', methods: ['GET'])]
+    #[Route('user/{uuid}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user, Security $security): Response
     {
         $currentUser = $this->getUser();
 
         if ($user->getId() !== $currentUser->getId() && !($security->isGranted("ROLE_ADMIN"))) {
-            return $this->redirectToRoute('app_user_show', ["id" => $currentUser->getId()]);
+            return $this->redirectToRoute('app_user_show', ["uuid" => $currentUser->getUuid()]);
         }
 
         return $this->render('user/show.html.twig', [
@@ -85,14 +86,14 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('user/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
+    #[Route('user/{uuid}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager, Security $security): Response
     {
         $currentUser = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($user->getId() !== $currentUser->getId() &&  !($security->isGranted("ROLE_SUPER_ADMIN"))) {
-            return $this->redirectToRoute('app_user_edit', ["id" => $currentUser->getId()]);
+            return $this->redirectToRoute('app_user_edit', ["uuid" => $currentUser->getUuid()]);
         }
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -129,7 +130,7 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_main', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('user/{id}/edit/password', name: 'app_user_edit_password', methods: ['GET', 'POST'])]
+    #[Route('user/{uuid}/edit/password', name: 'app_user_edit_password', methods: ['GET', 'POST'])]
     public function editPassword(Request $request, User $user, EntityManagerInterface $entityManager, Security $security, HasherUserPasswordHasherInterface $userPasswordHasher): Response
     {
         $currentUser = $this->getUser();
@@ -159,7 +160,7 @@ class UserController extends AbstractController
                 );
                 $entityManager->persist($user);
                 $entityManager->flush();
-                return $this->redirectToRoute('app_user_show', ["id" => $currentUser->getId()], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_user_show', ["uuid" => $currentUser->getUuid()], Response::HTTP_SEE_OTHER);
             } else {
                 dd('Pas valide');
             }
@@ -179,7 +180,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('user/{id}/adresses', name: 'app_user_adresses', methods: ['GET'])]
+    #[Route('user/{uuid}/adresses', name: 'app_user_adresses', methods: ['GET'])]
     public function showAdresses(): Response
     {
         $currentUser = $this->getUser();
@@ -190,7 +191,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('user/{id}/adresses/new', name: 'app_user_adresses_new', methods: ['GET', 'POST'])]
+    #[Route('user/{uuid}/adresses/new', name: 'app_user_adresses_new', methods: ['GET', 'POST'])]
     public function addAdresse(Request $request, EntityManagerInterface $entityManager): Response
     {
         $currentUser = $this->getUser();
@@ -228,7 +229,7 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             // Rediriger vers la page des adresses de l'utilisateur après ajout
-            return $this->redirectToRoute('app_user_adresses', ['id' => $currentUser->getId()]);
+            return $this->redirectToRoute('app_user_adresses', ['uuid' => $currentUser->getUuid()]);
         }
         // Lier l'adresse à l'utilisateur actuel
         return $this->render('user_adresse/add_adresse.html.twig', [
@@ -237,8 +238,8 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/user/{id}/adresses/{id_adresse}/delete', name: 'app_user_adresses_delete', methods: ['POST'])]
-    public function removeAdresse(int $id, int $id_adresse, Request $request,  EntityManagerInterface $entityManager): Response
+    #[Route('/user/{uuid}/adresses/{id_adresse}/delete', name: 'app_user_adresses_delete', methods: ['POST'])]
+    public function removeAdresse(string $uuid, int $id_adresse, Request $request,  EntityManagerInterface $entityManager): Response
     {
 
         $adresse = $entityManager->getRepository(Adresse::class)->find($id_adresse);
@@ -259,25 +260,29 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             // Redirection vers la liste des adresses de l'utilisateur après suppression
-            return $this->redirectToRoute('app_user_adresses', ['id' => $id]);
+            return $this->redirectToRoute('app_user_adresses', ['uuid' => $uuid]);
         }
 
         // Si la méthode est GET (normalement, tu ne devrais pas avoir à gérer la suppression via GET, mais par sécurité)
         // Tu peux rediriger ou afficher une page d'erreur
-        return $this->redirectToRoute('app_user_adresses', ['id' => $id]);
+        return $this->redirectToRoute('app_user_adresses', ['uuid' => $uuid]);
     }
 
-    #[Route('/user/{id}/adresses/{id_adresse}/update', name: 'app_user_adresses_update', methods: ['GET', 'POST'])]
-    public function updateAdresse(User $user, int $id, int $id_adresse, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/user/{uuid}/adresses/{id_adresse}/update', name: 'app_user_adresses_update', methods: ['GET', 'POST'])]
+    public function updateAdresse(User $user, string $uuid, int $id_adresse, Request $request, EntityManagerInterface $entityManager): Response
     {
         $currentUser = $this->getUser();
-        if ($currentUser->getId() !== $id) {
+
+        $uuidFromUser = Uuid::fromString($user->getUuid());
+        $uuidFromUrl = Uuid::fromString($uuid);
+
+        if (!$uuidFromUser->equals($uuidFromUrl)) {
             throw $this->createAccessDeniedException('Vous n\'avez pas la permission de modifier cette adresse pour cet utilisateur');
         }
         $oldAdresse = $entityManager->getRepository(Adresse::class)->find($id_adresse);
         if (!$oldAdresse) {
             // throw $this->createNotFoundException('Adresse non trouvée.'); // arrete le programme
-            return $this->redirectToRoute('app_user_adresses', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_user_adresses', ['uuid' => $user->getUuid()]);
         } else {
             $autresUtilisateurs = $oldAdresse->getUsers();
             if (count($autresUtilisateurs) > 1) {
@@ -316,7 +321,7 @@ class UserController extends AbstractController
                 $user->addAdresse($newAdresse);
             }
             $entityManager->flush();
-            return $this->redirectToRoute('app_user_adresses', ['id' => $user->getId()]);
+            return $this->redirectToRoute('app_user_adresses', ['uuid' => $user->getUuid()]);
         }
 
         return $this->render('user_adresse/update_adresse.html.twig', [

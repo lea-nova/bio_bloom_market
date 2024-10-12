@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        'xs': '0.8rem',
+        'xxs': '0.6rem',
+      },
       colors: {
         primary: {
           default: '#4CAF50',
@@ -21,10 +25,11 @@ module.exports = {
         },
         tertiary: {
           light: '#e0e0e0', // gris clair
-          default: '#BDBDBD',
+          default: '#BDBDBD', // gris un peu plus foncé
           accent: '#CFD8DC',
           dark: '#757575',
           darker: '#0A0A0A', // A UTILISER POUR LE TEXTE FONCER
+          darkest: '#212121',
         },
         light: {
           default: '#FFFFFF',
