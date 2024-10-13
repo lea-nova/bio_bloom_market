@@ -41,9 +41,9 @@ class Adresse
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'adresses')]
     private Collection $users;
 
-    #[ORM\Column(type: UlidType::NAME, unique: true)]
+    #[ORM\Column(type: UlidType::NAME)]
 
-    private ?Ulid $ulid = null;
+    private Ulid $ulid;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -170,9 +170,9 @@ class Adresse
         return $this->ulid;
     }
 
-    public function setUlid(Ulid $ulid): static
+    public function setUlid(): static
     {
-        $this->ulid = $ulid;
+        $this->ulid;
 
         return $this;
     }
