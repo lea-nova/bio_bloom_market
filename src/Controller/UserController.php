@@ -238,12 +238,12 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/user/{uuid}/adresses/{id_adresse}/delete', name: 'app_user_adresses_delete', methods: ['POST'])]
-    public function removeAdresse(string $uuid, int $id_adresse, Request $request,  EntityManagerInterface $entityManager): Response
+    #[Route('/user/{uuid}/adresses/{ulid_adresse}/delete', name: 'app_user_adresses_delete', methods: ['POST'])]
+    public function removeAdresse(string $uuid, string $ulid_adresse, Request $request,  EntityManagerInterface $entityManager): Response
     {
 
-        $adresse = $entityManager->getRepository(Adresse::class)->find($id_adresse);
-
+        $adresse = $entityManager->getRepository(Adresse::class)->findBy(['ulid' => $ulid_adresse]);
+        // dd($adresse);
         if (!$adresse) {
             throw $this->createNotFoundException('Adresse non trouvée');
         }
@@ -256,8 +256,12 @@ class UserController extends AbstractController
         if ($request->isMethod('POST')) {
             // Supprimer l'adresse si la méthode est POST
             // $entityManager->removeAdresse($adresse);
-            $adresse->removeUser($this->getUser());
-            $entityManager->flush();
+
+            foreach ($adresse as $adresseUser) {
+                # code...
+                $adresseUser->removeUser($this->getUser());
+                $entityManager->flush();
+            }
 
             // Redirection vers la liste des adresses de l'utilisateur après suppression
             return $this->redirectToRoute('app_user_adresses', ['uuid' => $uuid]);
@@ -268,8 +272,8 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user_adresses', ['uuid' => $uuid]);
     }
 
-    #[Route('/user/{uuid}/adresses/{id_adresse}/update', name: 'app_user_adresses_update', methods: ['GET', 'POST'])]
-    public function updateAdresse(User $user, string $uuid, int $id_adresse, Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/user/{uuid}/adresses/{ulid_adresse}/update', name: 'app_user_adresses_update', methods: ['GET', 'POST'])]
+    public function updateAdresse(User $user, string $uuid, string $ulid_adresse, Request $request, EntityManagerInterface $entityManager): Response
     {
         $currentUser = $this->getUser();
 
@@ -279,7 +283,7 @@ class UserController extends AbstractController
         if (!$uuidFromUser->equals($uuidFromUrl)) {
             throw $this->createAccessDeniedException('Vous n\'avez pas la permission de modifier cette adresse pour cet utilisateur');
         }
-        $oldAdresse = $entityManager->getRepository(Adresse::class)->find($id_adresse);
+        $oldAdresse = $entityManager->getRepository(Adresse::class)->find($ulid_adresse);
         if (!$oldAdresse) {
             // throw $this->createNotFoundException('Adresse non trouvée.'); // arrete le programme
             return $this->redirectToRoute('app_user_adresses', ['uuid' => $user->getUuid()]);

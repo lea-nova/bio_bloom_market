@@ -45,7 +45,7 @@ class AdresseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_adresse_show', methods: ['GET'])]
+    #[Route('/{ulid}', name: 'app_adresse_show', methods: ['GET'])]
     public function show(Adresse $adresse): Response
     {
         return $this->render('adresse/show.html.twig', [
@@ -53,7 +53,7 @@ class AdresseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_adresse_edit', methods: ['GET', 'POST'])]
+    #[Route('/{ulid}/edit', name: 'app_adresse_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Adresse $adresse, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AdresseType::class, $adresse);
@@ -71,7 +71,7 @@ class AdresseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_adresse_delete', methods: ['POST'])]
+    #[Route('/{ulid}', name: 'app_adresse_delete', methods: ['POST'])]
     public function delete(Request $request, Adresse $adresse, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $adresse->getId(), $request->getPayload()->get('_token'))) {

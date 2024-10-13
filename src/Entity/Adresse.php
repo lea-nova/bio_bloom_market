@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
+use Symfony\Bridge\Doctrine\Types\UlidType;
 
 #[ORM\Entity()]
 class Adresse
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -38,9 +41,24 @@ class Adresse
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'adresses')]
     private Collection $users;
 
+    #[ORM\Column(type: UlidType::NAME, unique: true)]
+
+    private ?Ulid $ulid = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $deletedAt = null;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->ulid = new Ulid();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -143,6 +161,54 @@ class Adresse
         if ($this->users->removeElement($user)) {
             $user->removeAdresse($this);
         }
+
+        return $this;
+    }
+
+    public function getUlid(): ?Ulid
+    {
+        return $this->ulid;
+    }
+
+    public function setUlid(Ulid $ulid): static
+    {
+        $this->ulid = $ulid;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getDeletedAt(): ?\DateTimeImmutable
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt(?\DateTimeImmutable $deletedAt): static
+    {
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }
