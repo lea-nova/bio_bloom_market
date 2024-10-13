@@ -14,10 +14,10 @@
 				{{ adresse.id }}
 				-
 				{{ adresse.ligne1 }}
-				<a href="{{ path('app_user_adresses_update', {'uuid': user.uuid, 'id_adresse': adresse.id}) }}">Modifier</a>
-				<form action="{{ path('app_user_adresses_delete', {'uuid': user.uuid, 'id_adresse': adresse.id}) }}" method="POST" style="display: inline-block;">
+				<a href="{{ path('app_user_adresses_update', {'uuid': user.uuid, 'ulid_adresse': adresse.ulid}) }}">Modifier</a>
+				<form action="{{ path('app_user_adresses_delete', {'uuid': user.uuid, 'ulid_adresse': adresse.ulid}) }}" method="POST" style="display: inline-block;">
 					<input type="hidden" name="_method" value="DELETE">
-					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.id) }}">
+					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.ulid) }}">
 					<button type="submit">Supprimer</button>
 				</form>
 			</li>

@@ -12,9 +12,9 @@
 					{# <th>Id</th> #}
 					<th>Email</th>
 					{# {% if is_granted("ROLE_SUPER_ADMIN") %}
-					
-											<th>Roles</th>
-										{% endif %} #}
+										
+																<th>Roles</th>
+															{% endif %} #}
 					{# <th>Password</th> #}
 					<th>Nom</th>
 					<th>Prenom</th>
@@ -35,8 +35,8 @@
 				{# <td>{{ user.id }}</td> #}
 				<td>{{ user.email }}</td>
 				{# {% if is_granted("ROLE_SUPER_ADMIN") %}
-													<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-												{% endif %} #}
+																	<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+																{% endif %} #}
 				{# <td>{{ user.password }}</td> #}
 				<td>{{ user.nom }}</td>
 				<td>{{ user.prenom }}</td>
@@ -47,9 +47,9 @@
 				{# {% if  is_granted('ROLE_SUPER_ADMIN') %} #}
 
 				<td>
-					<a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+					<a href="{{ path('app_user_show', {'uuid': user.uuid}) }}">show</a>
 					{% if is_granted("ROLE_SUPER_ADMIN") %}
-						<a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+						<a href="{{ path('app_user_edit', {'uuid': user.uuid}) }}">edit</a>
 					{% endif %}
 				</td>
 

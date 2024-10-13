@@ -27,3 +27,8 @@
 
 #### 5. Création fixtures pour l'entité ``User``
 
+## [2024-10-13]
+### Ajouts 
+- Ajout de colonnes dans la table `Adresse`, *** ulid, createdAt, updatedAt, deletedAt ***
+- Date par défaut [13/10/2024] pour les enregistrements déjà existants. 
+
