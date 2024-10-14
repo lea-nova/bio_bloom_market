@@ -14,7 +14,7 @@ class FournisseurType extends AbstractType
         $builder
             ->add('nom')
             ->add('telephone')
-            ->add('email')
+            ->add('mail')
             ->add('service');
     }
 

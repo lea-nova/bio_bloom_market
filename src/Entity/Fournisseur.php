@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FournisseurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FournisseurRepository::class)]
@@ -24,6 +26,17 @@ class Fournisseur
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $service = null;
+
+    /**
+     * @var Collection<int, FournisseurAdresse>
+     */
+    #[ORM\OneToMany(targetEntity: FournisseurAdresse::class, mappedBy: 'idFournisseur')]
+    private Collection $fournisseurAdresses;
+
+    public function __construct()
+    {
+        $this->fournisseurAdresses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +87,36 @@ class Fournisseur
     public function setService(?string $service): static
     {
         $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FournisseurAdresse>
+     */
+    public function getFournisseurAdresses(): Collection
+    {
+        return $this->fournisseurAdresses;
+    }
+
+    public function addFournisseurAdress(FournisseurAdresse $fournisseurAdress): static
+    {
+        if (!$this->fournisseurAdresses->contains($fournisseurAdress)) {
+            $this->fournisseurAdresses->add($fournisseurAdress);
+            $fournisseurAdress->setIdFournisseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFournisseurAdress(FournisseurAdresse $fournisseurAdress): static
+    {
+        if ($this->fournisseurAdresses->removeElement($fournisseurAdress)) {
+            // set the owning side to null (unless already changed)
+            if ($fournisseurAdress->getIdFournisseur() === $this) {
+                $fournisseurAdress->setIdFournisseur(null);
+            }
+        }
 
         return $this;
     }
