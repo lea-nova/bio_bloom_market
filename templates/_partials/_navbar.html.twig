@@ -2,20 +2,20 @@
 
 	<a class="h-10" href=" {{path('app_main')}} "><img class="logo h-10" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market"></a>
 	<!-- Mobile menu button-->
-	<button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+	<button type="button" class="relative  inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
 		<span class="absolute -inset-0.5"></span>
 		<span class="sr-only">Open main menu</span>
 	</button>
 
 	<ul class="hidden md:flex flex-row text-sm md:text-md lg:text-lg  justify-around items-center  w-screen h-20 ">
 		<li class="">
-			<a class="" aria-current="page" href=" {{path('app_main')}} ">Accueil</a>
+			<a class=" text-tertiary-darker hover:text-primary-default" aria-current="page" href=" {{path('app_main')}} ">Accueil</a>
 		</li>
 		<li class="">
-			<a class="" href="#">Produits</a>
+			<a class=" text-tertiary-darker hover:text-primary-default" href="#">Produits</a>
 
 		</li>
-		<li class="">
+		<li class=" text-tertiary-darker hover:text-primary-default">
 			<button class="" id="btn-disclosure-category" data-bs-toggle="dropdown" aria-expanded="false">
 				Catégories
 				<svg class="h-5 w-5 flex-none inline" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -25,66 +25,66 @@
 
 			<ul class=" absolute hidden bg-light-default p-5 border-radius-2 rounded-xl shadow-[0_2px_4px_-2px_rgba(0,0,0,0.3)]" id="category-navbar">
 				<li>
-					<a class="" href="#">Fruits et Légumes
+					<a class=" text-tertiary-darker hover:text-primary-default" href="#">Fruits et Légumes
 					</a>
 				</li>
 				<li>
-					<a class="" href="#">Produits Laitiers et Oeufs
+					<a class=" text-tertiary-darker hover:text-primary-default" href="#">Produits Laitiers et Oeufs
 					</a>
 				</li>
 				<li>
-					<a class="" href="#">
+					<a class=" text-tertiary-darker hover:text-primary-default" href="#">
 						Épicerie Salée</a>
 				</li>
 				<li>
-					<a class="" href="#">
+					<a class=" text-tertiary-darker hover:text-primary-default" href="#">
 						Épicerie Sucrée</a>
 				</li>
 				<li>
-					<a class="" href="#">
+					<a class=" text-tertiary-darker hover:text-primary-default" href="#">
 						Boissons</a>
 				</li>
 				<li>
-					<a class="" href="#">
+					<a class=" text-tertiary-darker hover:text-primary-default" href="#">
 						Voir plus</a>
 				</li>
 			</ul>
 
 		</li>
 		<li>
-			<a class="nav-link" href="#">Promotions</a>
+			<a class="nav-link  text-tertiary-darker hover:text-primary-default" href="#">Promotions</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="#">Contact</a>
+			<a class="nav-link  text-tertiary-darker hover:text-primary-default" href="#">Contact</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="#">A propos</a>
+			<a class="nav-link  text-tertiary-darker hover:text-primary-default" href="#">A propos</a>
 		</li>
 		{% if  app.user  %}
 			{# <span class="d-flex flex-row mb-3 justify-content-between d-flex align-items-center"> #}
 			<li class="">
-				<a class="" href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
+				<a class=" text-tertiary-darker hover:text-primary-default" href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
 			</li>
 			<li class="">
-				<a class=" hidden lg:inline" href="{{path('app_logout')}}">Se déconnecter</a>
-				<a class="lg:hidden" href="{{path('app_logout')}}">
+				<a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a>
+				<a class="lg:hidden  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
 				</a>
 			</li>
 			{# </span> #}
 		{% else %}
 			<li>
-				<a class="" href="{{path('app_login')}}">Connexion/Inscription</a>
+				<a class=" text-tertiary-darker hover:text-primary-default" href="{{path('app_login')}}">Connexion/Inscription</a>
 			</li>
 		{% endif %}
 
 		<li>
-			<a class=" " href="#">
+			<a class=" text-tertiary-darker hover:text-primary-default " href="#">
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-basket"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></svg>
 			</a>
 		</li>
 		<li class="hidden lg:inline">
-			<form class="" role="search">
+			<form class=" text-tertiary-darker hover:text-primary-default" role="search">
 				<input class="w-24 text-sm" type="search" placeholder="Rechercher" aria-label="Rechercher">
 				<button class="" type="submit" title="Cliquer ici pour rechercher">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>

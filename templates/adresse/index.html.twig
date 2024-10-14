@@ -30,8 +30,8 @@
 					<td>{{ adresse.pays }}</td>
 					<td>{{ adresse.cedex }}</td>
 					<td>
-						<a href="{{ path('app_adresse_show', {'id': adresse.id}) }}">show</a>
-						<a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}">edit</a>
+						<a href="{{ path('app_adresse_show', {'ulid': adresse.ulid}) }}">show</a>
+						<a href="{{ path('app_adresse_edit', {'ulid': adresse.ulid}) }}">edit</a>
 					</td>
 				</tr>
 			{% else %}
