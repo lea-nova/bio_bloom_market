@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Adresse;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -12,6 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class AdresseType extends AbstractType
 {
+    private $security;
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -20,17 +26,26 @@ class AdresseType extends AbstractType
             ->add('codePostal')
             ->add('ville')
             ->add('pays')
-            ->add('cedex')
+            ->add('cedex');
 
-            // PLUS TARD AJOTUER ROLE 
-            ->add('users', EntityType::class, [/* On peut gérer cela avec role_admin etc... */
-                'class' => User::class,
-                'choice_label' => 'prenom',
-                'expanded' => true,
-                'multiple' => true,
-                'required' => false,
-            ]);
+        // PLUS TARD AJOTUER ROLE 
+        // if ($this->security->isGranted('ROLE_ADMIN')) {
+        //     $builder->add('users', EntityType::class, [/* On peut gérer cela avec role_admin etc... */
+        //         'class' => User::class,
+        //         'choice_label' => 'prenom',
+        //         'expanded' => true,
+        //         'multiple' => true,
+        //         'required' => false,
+        //     ]);
     }
+    // ->add('users', EntityType::class, [/* On peut gérer cela avec role_admin etc... */
+    //     'class' => User::class,
+    //     'choice_label' => 'prenom',
+    //     'expanded' => true,
+    //     'multiple' => true,
+    //     'required' => false,
+    // ]);
+
 
     public function buildFormDelete(FormBuilderInterface $builder, array $options)
     {
@@ -42,6 +57,7 @@ class AdresseType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Adresse::class,
+
         ]);
     }
 }
