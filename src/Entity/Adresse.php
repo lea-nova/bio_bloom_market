@@ -54,11 +54,18 @@ class Adresse
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $deletedAt = null;
 
+    /**
+     * @var Collection<int, FournisseurAdresse>
+     */
+    #[ORM\OneToMany(targetEntity: FournisseurAdresse::class, mappedBy: 'idAdresse')]
+    private Collection $fournisseurAdresses;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->ulid = new Ulid();
         $this->createdAt = new DateTimeImmutable();
+        $this->fournisseurAdresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,6 +216,36 @@ class Adresse
     public function setDeletedAt(?\DateTimeImmutable $deletedAt): static
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FournisseurAdresse>
+     */
+    public function getFournisseurAdresses(): Collection
+    {
+        return $this->fournisseurAdresses;
+    }
+
+    public function addFournisseurAdress(FournisseurAdresse $fournisseurAdress): static
+    {
+        if (!$this->fournisseurAdresses->contains($fournisseurAdress)) {
+            $this->fournisseurAdresses->add($fournisseurAdress);
+            $fournisseurAdress->setIdAdresse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFournisseurAdress(FournisseurAdresse $fournisseurAdress): static
+    {
+        if ($this->fournisseurAdresses->removeElement($fournisseurAdress)) {
+            // set the owning side to null (unless already changed)
+            if ($fournisseurAdress->getIdAdresse() === $this) {
+                $fournisseurAdress->setIdAdresse(null);
+            }
+        }
 
         return $this;
     }
