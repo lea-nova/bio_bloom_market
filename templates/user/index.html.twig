@@ -12,9 +12,9 @@
 					{# <th>Id</th> #}
 					<th>Email</th>
 					{# {% if is_granted("ROLE_SUPER_ADMIN") %}
-										
-																<th>Roles</th>
-															{% endif %} #}
+															
+																					<th>Roles</th>
+																				{% endif %} #}
 					{# <th>Password</th> #}
 					<th>Nom</th>
 					<th>Prenom</th>
@@ -35,8 +35,8 @@
 				{# <td>{{ user.id }}</td> #}
 				<td>{{ user.email }}</td>
 				{# {% if is_granted("ROLE_SUPER_ADMIN") %}
-																	<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-																{% endif %} #}
+																					<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+																				{% endif %} #}
 				{# <td>{{ user.password }}</td> #}
 				<td>{{ user.nom }}</td>
 				<td>{{ user.prenom }}</td>
@@ -62,5 +62,5 @@
 			</tr>
 		{% endfor %}
 	</tbody>
-</tbody></table>{% if  is_granted('ROLE_SUPER_ADMIN') %}
+</tbody></table>{% if  is_granted('ROLE_ADMIN') %}
 <a href="{{ path('app_user_new') }}">Create new</a>{% endif %}</div>{% endblock %}

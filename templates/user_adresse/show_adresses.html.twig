@@ -11,19 +11,19 @@
 	<ul>
 		{% for adresse in adresses %}
 			<li>
-				{{ adresse.id }}
-				-
+				{# {{ adresse.id }} #}
+				{# - #}
 				{{ adresse.ligne1 }}
-				<a href="{{ path('app_user_adresses_update', {'uuid': user.uuid, 'ulid_adresse': adresse.ulid}) }}">Modifier</a>
+					<a class="rounded-md bg-warning-default  py-1 px-3 " href="{{ path('app_user_adresses_update', {'uuid': user.uuid, 'ulid_adresse': adresse.ulid}) }}"> Modifier</a>
 				<form action="{{ path('app_user_adresses_delete', {'uuid': user.uuid, 'ulid_adresse': adresse.ulid}) }}" method="POST" style="display: inline-block;">
 					<input type="hidden" name="_method" value="DELETE">
 					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.ulid) }}">
-					<button type="submit">Supprimer</button>
+					<button type="submit" class=" rounded-md py-1 px-3 bg-red-600 text-white">Supprimer</button>
 				</form>
 			</li>
 		{% endfor %}
 	</ul>
 
 	{# Ajouter des liens pour ajouter, modifier ou supprimer des adresses si nécessaire #}
-	<a href="{{ path('app_user_adresses_new', {'uuid': user.uuid}) }}">Ajouter une nouvelle adresse</a>
+	<a class="btn-cta" href="{{ path('app_user_adresses_new', {'uuid': user.uuid}) }}">Ajouter une nouvelle adresse</a>
 {% endblock %}

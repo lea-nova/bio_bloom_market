@@ -63,9 +63,10 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('checkPassword', PasswordType::class, [
                 'mapped' => false, // champs pas lié à une prop de l'entité.
-                'label' => 'Confirmer le mot de passe :',
+                'label' => 'Confirmez le mot de passe :',
                 'attr' => [
-                    'placeholder' => "Confirmer le mot de passe",
+                    'placeholder' => "Confirmez le mot de passe",
+                    'class' => 'text-xs',
                 ]
             ])
             ->add('prenom', TextType::class, [

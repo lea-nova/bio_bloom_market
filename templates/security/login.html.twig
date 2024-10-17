@@ -4,8 +4,13 @@
 {% block title %}Se connecter | Bio Bloom Market
 {% endblock %}
 
+{% block description %}Connectez-vous à votre compte sur Bio Bloom Market, votre magasin en ligne d'aliments et produits bio. Accédez à vos commandes, suivez vos livraisons et profitez de nos offres exclusives. 
+								Si vous n'avez pas de compte il est possible de s'inscrire en cliquant sur le bouton 'Cliquez Ici'
+{% endblock %}
+
 {% block body %}
 	<div class="bg-gradient-to-b from-light-default to-light-muted md:h-100">
+
 		<div class="md:h-dvh flex flex-row max-md:flex-col justify-center items-center">
 			{# {{ render(controller('App\\Controller\\RegistrationController::register')) }} #}
 			{# <div class=" md:h-[90%] lg:h-[90%]  rounded-xl lg:w-4/6 flex max-md:flex-col lg:flex-row  justify-center items-center border-2 border-secondary-muted md:w-4/6  mt-5 mb- lg:shadow-bottom "> #}
@@ -17,31 +22,33 @@
 
 				<h1 class="text-5xl mb-12">Déjà client ?</h1>
 				<label for="inputEmail">Email :</label>
-				<input class="rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8" type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Entrez votre adresse mail ici" autocomplete="email" required autofocus>
-				<label for="inputPassword">Mot de passe :</label>
-				<input class="rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8" type="password" name="password" id="inputPassword" placeholder="Entrez votre mot de passe ici" autocomplete="current-password" required>
+				<input class="input-text blur:!outline-none focus:!outline-none" type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Entrez votre adresse mail ici" autocomplete="email" required>
+
+				<label for="inputPassword">
+					Mot de passe :</label>
+				<input class="border-b-2 rounded-t-sm  focus-visible:bg-secondary-light focus-visible:border-b-2 focus-visible:border-secondary-dark  focus:border-transparent blur:!outline-none focus:!outline-none focus:placeholder:bg-secondary-light focus:placeholder:border-none hover:placeholder-shown:bg-secondary-light border-secondary-dark form-control text-sm placeholder-secondary-dark h-8" type="password" name="password" id="inputPassword" placeholder="Entrez votre mot de passe ici" autocomplete="current-password" required>
 
 				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 				<div class="checkbox mb-3 relative inline-block ">
-					<input class="relative peer appearance-none shrink-0 h-5 w-5 border-2   checked:bg-secondary-dark checked:border- rounded-md border-secondary-dark mt-1 " type="checkbox" name="_remember_me">
-					<label>
+					<label for="_remember-me">
+						<input class="relative peer appearance-none shrink-0 h-5 w-5 border-2   checked:bg-secondary-dark checked:border- rounded-md border-secondary-dark mt-1 " type="checkbox" name="_remember_me" id="remerber-me">
 						Se souvenir de moi
 					</label>
 					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check hidden absolute top-1 left-0 text-white  peer-checked:block pointer-events-none  "><path d="M20 6 9 17l-5-5"/></svg>
 				</div>
 
-				<button class="rounded-md bg-primary-default max-sm:w-full py-2 px-4 text-center text-sm text-tertiary-darker font-semi-bold" type="submit">
+				<button class="btn-cta" type="submit">
 					Se connecter
 				</button>
 			</form>
 			<div class="    flex flex-col justify-center items-center   ">
-				<small class=" flex flex-row border-2 rounded-md border-primary-default h-7 text-center lg:text-end text-xs text-tertiary-darker w-4/6 place-content-center place-items-center mb-5">
+				<small class=" flex flex-row border-2 rounded-md border-primary-default h-12 text-center lg:text-end text-xs text-tertiary-darker w-4/6 place-content-center place-items-center mb-5">
 					<span>Pas encore inscrit ?
-						<a class="font-semibold bg-primary-default rounded-sm text-center text-xs text-tertiary-darker items-end  place-self-center lg:place-self-end " href="{{path('app_register')}}">Cliquez ici</a>
+						<a class="btn-cta" href="{{path('app_register')}}">Cliquez ici</a>
 					</span>
 				</small>
-				<img class="rounded-2xl md:object-contain  md:w-4/6 max-sm:mt-8 " src=" {{asset('images/border-login-1.png')}} " alt=" cagettes de fruits et de légumes."></div>
+				<img class="rounded-2xl md:object-contain  md:w-4/6 max-sm:mt-8 " src=" {{asset('images/border-login-1.png')}} " alt="image numérique pour représenter le slogan de la marque."></div>
 			{# </div> #}
 		</div>
 
