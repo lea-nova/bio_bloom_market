@@ -114,7 +114,7 @@
 			<div class="hidden fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10" id="navbar-right"> <div class="flex items-center justify-between">
 				<a class="" href=" {{path('app_main')}} ">
 					<span class="sr-only">Bio Bloom Market</span>
-					<img class="logo h-10" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market">
+					<img class="logo h-10 mt-0" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market">
 				</a>
 				<button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700 " id="btn-close">
 					<span class="sr-only">Close menu</span>
@@ -152,7 +152,23 @@
 						<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">A propos</a>
 					</div>
 					<div class="py-6">
-						<a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+						{% if  app.user  %}
+							{# <span class="d-flex flex-row mb-3 justify-content-between d-flex align-items-center"> #}
+
+							<a class="btn-cta" href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
+
+							{# <a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a> #}
+							<br>
+							<a
+								class="lg:hidden btn-cta" href="{{path('app_logout')}}">
+								{# <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg> #}
+								Se déconnecter
+							</a>
+
+							{# </span> #}
+						{% else %}
+							<a class="btn-cta" href="{{path('app_login')}}">Connexion/Inscription</a>
+						{% endif %}
 					</div>
 				</div>
 			</div>

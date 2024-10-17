@@ -5,73 +5,75 @@
 
 {% block body %}
 	<h1 class="text-5xl mb-6 text-center pt-5">S'inscrire</h1>
-	<h2 class="text-2xl text-center">Pour commander sur Bio Bloom Market</h2>
-	<div class="container pt-5 col-6 self-center relative">
-		<div class="flex items-center justify-around ">
-			<div class="col-5 col-md-5 col-lg-24  pb-10 w-[40%]  ">
-				<div class="form-container p-12 flex items-center justify-center border-2 rounded-md border-primary-accent     ">
-					{{ form_start(registrationForm) }}
-					<div class="flex flex-row  justify-between">
-						<div class=" ">
+	<h2 class="text-2xl text-center my-5">Pour commander sur Bio Bloom Market</h2>
+	<div class=" pt-5w-[70%]  max-lg:w-[100%] ">
+		<div class=" flex ">
+			<div class=" w-full pb-10 flex items-center justify-center  ">
+
+				<div class="p-12 flex items-center justify-center  border-2 rounded-md  border-primary-accent max-sm:w-[95%] md:w-[50%] lg:w-[45rem] ">
+					{{ form_start(registrationForm, {'attr':{'class':'flex flex-col text-xs  max-md:items-center w-full  '}})  }}
+					<div class="flex flex-row max-lg:flex-col align-middle max-lg:justify-center justify-between max-lg:w-full ">
+						<div class="w-full">
 							{{ form_label(registrationForm.prenom) }}
 							<br>
-							{{ form_widget(registrationForm.prenom, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+							{{ form_widget(registrationForm.prenom, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}) }}
 							{{ form_errors(registrationForm.prenom) }}
 						</div>
-						<div class="form-group">
+						<div class="w-full">
 							{{ form_label(registrationForm.nom) }}
 							<br>
-							{{ form_widget(registrationForm.nom, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+							{{ form_widget(registrationForm.nom, {'attr': {'class': 'max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}) }}
 							{{ form_errors(registrationForm.nom) }}
 						</div>
 					</div>
-					<div class="form-group ">
+					<div class="w-full">
 						{{ form_label(registrationForm.email) }}
 						<br>
 						{{ form_widget(registrationForm.email, {
     'attr': {
-        'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8',
+        'class': 'input-text w-full blur:!outline-none focus:!outline-none',
         'pattern': '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$'
     }
 }) }}
 						{{ form_errors(registrationForm.email) }}
 
 					</div>
-					<div class="form-group">
+					<div class="w-full">
 						{{ form_label(registrationForm.telephone) }}
 						<br>
-						{{ form_widget(registrationForm.telephone, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+						{{ form_widget(registrationForm.telephone, {'attr': {'class': 'w-full input-text blur:!outline-none focus:!outline-none'}}) }}
 						{{ form_errors(registrationForm.telephone) }}
 					</div>
-					<div class="form-group">
+					<div class="w-full">
 						{{ form_label(registrationForm.dateNaissance) }}
 						<br>
-						{{ form_widget(registrationForm.dateNaissance, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+						{{ form_widget(registrationForm.dateNaissance, {'attr': {'class': '  w-full   text-secondary-dark input-text blur:!outline-none focus:!outline-none'}}) }}
 						{{ form_errors(registrationForm.dateNaissance) }}
 					</div>
 
-					<div class="flex flex-row justify-between">
-						<div class="form-group">
+					<div class="flex flex-row max-lg:flex-col align-middle max-lg:justify-center justify-around  w-full ">
+						<div class="w-full mt-5">
 							{{ form_label(registrationForm.plainPassword) }}
 							<br>
-							{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+							{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'max-lg:w-full placeholder:text-xs input-text  blur:!outline-none focus:!outline-none'}}) }}
 							{{ form_errors(registrationForm.plainPassword) }}
 						</div>
-						<div class="form-group  w-full text-center">
+						<div class="w-full mt-5">
 							{{ form_label(registrationForm.checkPassword) }}
 							<br>
-							{{ form_widget(registrationForm.checkPassword, {'attr': {'class': ' rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8'}}) }}
+							{{ form_widget(registrationForm.checkPassword, {'attr': {'class': ' max-lg:w-full  placeholder:text-xs input-text blur:!outline-none focus:!outline-none  ',}}) }}
 							{{ form_errors(registrationForm.checkPassword) }}
 						</div>
 
 					</div>
-					<div class="form-group flex flex-row items-center">
-						{{ form_label(registrationForm.agreeTerms) }}
-						{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'rounded bg-secondary-light border-2 border-secondary-accent form-control text-sm placeholder-secondary-dark h-8 self-center'}}) }}
+					<div class="flex max-md:flex-row items-center checkbox my-3 relative text-xs ">
+						{{ form_label(registrationForm.agreeTerms)}}
+						{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': '  relative peer appearance-none shrink-0 h-5 w-5 border-2 mx-3   checked:bg-secondary-dark checked:border- rounded-md border-secondary-dark mt-1'}}) }}
+
 						{{ form_errors(registrationForm.agreeTerms) }}
 					</div>
-					<span class="flex justify-center">
-						<button type=" submit" class=" rounded-md w-[50%] bg-primary-default max-sm:w-full py-2 px-4 text-center text-sm text-tertiary-darker font-semi-bold">S'inscrire</button>
+					<span class="flex justify-center w-full text-center">
+						<button type=" submit" class="btn-cta w-full lg:w-[35%] ">S'inscrire</button>
 					</span>
 
 					{{ form_end(registrationForm) }}

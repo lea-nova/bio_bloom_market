@@ -4,16 +4,19 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Modifiez vos informations personnelles,
+	<h1 class="text-5xl mb-6 text-center pt-5">Modifiez vos informations personnelles,
 		{{user.prenom}}</h1>
 
 	{{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 	{% if is_granted('ROLE_ADMIN') %}
-		<a href="{{ path('app_user_index') }}">back to list</a>
+
+		<a href="{{ path('app_user_index') }}" class="bg-tertiary-accent rounded-md  w-full">
+			<svg class=" inline mr-2" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-left"><path d="M6 8L2 12L6 16"/><path d="M2 12H22"/></svg>Retour au profil</a>
+
 	{% endif %}
 	{{ include('user/_delete_form.html.twig') }}
 	<h4>Modifier votre mot de passe ?
 	</h4>
 	{# {{ include('user/_change_password_form.html.twig') }} #}
-	<a href="{{path('app_user_edit_password', {'uuid': user.uuid})}}">Cliquez ici</a>
+	<a class="btn-cta" href="{{path('app_user_edit_password', {'uuid': user.uuid})}}">Cliquez ici</a>
 {% endblock %}

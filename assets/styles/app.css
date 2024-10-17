@@ -4,6 +4,10 @@
 @tailwind utilities;
 
 
+/*Composants front*/
+@import './components/buttons.css';
+@import './components/input_text.css';
+
 body {
     font-family: Poppins;
     /* font-family: Raleway; */
@@ -13,6 +17,17 @@ body {
 h1,
 h2 {
     font-family: Raleway;
+}
+
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
 }
 
 /* .text-secondary {
