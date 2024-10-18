@@ -4,82 +4,98 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Bonjour,
-		{{user.prenom}}</h1>
-	<h2>Mes informations</h2>
+	<div class="flex h-full ">
 
-	<table class="table">
-		<tbody>
-			{# <tr>
-																																																																																																																																																																																																																																																																																																																																																																																																																					                <th>Id</th>
-																																																																																																																																																																																																																																																																																																																																																																																																																					                <td>{{ user.id }}</td>
-																																																																																																																																																																																																																																																																																																																																																																																																																					            </tr> #}
-			<tr>
-				<th>Email</th>
-				<td>{{ user.email }}</td>
-			</tr>
-			{# <tr>
-																																																																																																																																																																																																																																																																																																																																																																																																																						<th>Roles</th>
-																																																																																																																																																																																																																																																																																																																																																																																																																						<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-																																																																																																																																																																																																																																																																																																																																																																																																																					</tr> #}
-			{# <tr>
-																																																																																																																																																																																																																																																																																																																																																																																																																			<th>Password</th>
-																																																																																																																																																																																																																																																																																																																																																																																																																			<td>{{ user.password }}</td>
-																																																																																																																																																																																																																																																																																																																																																																																																																		</tr> #}
-			<tr>
-				<th>Nom</th>
-				<td>{{ user.nom }}</td>
-			</tr>
-			<tr>
-				<th>Prenom</th>
-				<td>{{ user.prenom }}</td>
-			</tr>
-			<tr>
-				<th>Telephone</th>
-				<td>{{ user.telephone }}</td>
-			</tr>
-			<tr>
-				<th>DateNaissance</th>
-				<td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
-			</tr>
-			<tr>
-				<th>FideliteClient</th>
-				<td>{{ user.fideliteClient ? 'Yes' : 'No' }}</td>
-			</tr>
-			<tr>
-				<th>PrefAchat</th>
-				<td>{{ user.prefAchat }}</td>
-			</tr>
-		</tbody>
-	</table>
+		<aside class="bg-primary-dark h-screen w-[15%]"></aside>
+		<section class="flex-col ml-[4rem]  ">
+			<h1 class="mt-[3rem]">Bonjour,
+				{{user.prenom}}</h1>
+			<h2>Mes informations</h2>
+			<table class="  ">
+				<tbody>
+					{# <tr>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                <th>Id</th>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                <td>{{ user.id }}</td>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				            {# </tr> #}
 
+					<tr>
+						<th>Email</th>
+						<td>{{ user.email }}</td>
+					</tr>
+					{% if is_granted('ROLE_ADMIN') %}
+						<tr>
 
-	<h3>Adresses enregistrées</h3>
-
-	{% if adresses|length < 1  %}
-		<small>Pas d'adresses enregistrées</small>
-	{% else %}
-		<h4>Votre adresse par défaut
-		</h4>
-		<ul>
-			<li>
-				{{adresses|first.ligne1}}
-				{# PLus tard mettre default//true#}
-			</li>
-		</ul>
-	{% endif %}
-
-	{# Remettre le <a> qui est dans Brouillon #}
-	<a href="{{ path('app_user_adresses', {'uuid': user.uuid}) }}" class="btn-cta">Gérer vos adresses</a>
-
-	<h3>Vous souhaitez modifier vos informations personnelles ?
-	</h3>
-	<a href="{{ path('app_user_edit', {'uuid': user.uuid}) }}">edit</a>
-
-	{{ include('user/_delete_form.html.twig') }}
-	{% if is_granted('ROLE_ADMIN') %}
-		<a href="{{ path('app_user_index') }}">back to list</a>
-	{% endif %}
+							<th>Roles</th>
+							<td>
+								<ul>
+									{% for role in user.roles %}
+										<li>
+											json_decode({{role}});
+										</li>
+									{% endfor %}
+									{# <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
+								</ul>
+							</td>
+						</tr>
+					{% endif %}
+					{# <tr>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		<th>Password</th>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		<td>{{ user.password }}</td>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	</tr> #}
+					<tr>
+						<th>Nom</th>
+						<td>{{ user.nom }}</td>
+					</tr>
+					<tr>
+						<th>Prenom</th>
+						<td>{{ user.prenom }}</td>
+					</tr>
+					<tr>
+						<th>Telephone</th>
+						<td>{{ user.telephone }}</td>
+					</tr>
+					<tr>
+						<th>DateNaissance</th>
+						<td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
+					</tr>
+					<tr>
+						<th>FideliteClient</th>
+						<td>{{ user.fideliteClient ? 'Oui' : 'Non' }}</td>
+					</tr>
+					<tr>
+						<th>PrefAchat</th>
+						<td>{{ user.prefAchat }}</td>
+					</tr>
+				</tbody>
+			</table>
 
 
+			<h3>Adresses enregistrées</h3>
+
+			{% if adresses|length < 1  %}
+				<small>Pas d'adresses enregistrées</small>
+			{% else %}
+				<h4>Votre adresse par défaut
+				</h4>
+				<ul>
+					<li>
+						{{adresses|first.ligne1}}
+						{# PLus tard mettre default//true#}
+					</li>
+				</ul>
+			{% endif %}
+
+			{# Remettre le <a> qui est dans Brouillon #}
+			<a href="{{ path('app_user_adresses', {'uuid': user.uuid}) }}" class="btn-cta">Gérer vos adresses</a>
+
+			<h3>Vous souhaitez modifier vos informations personnelles ?
+			</h3>
+			<a href="{{ path('app_user_edit', {'uuid': user.uuid}) }}">edit</a>
+
+			{{ include('user/_delete_form.html.twig') }}
+			{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{ path('app_user_index') }}">back to list</a>
+			{% endif %}
+		</section>
+	</div>
 {% endblock %}

@@ -12,9 +12,9 @@
 					{# <th>Id</th> #}
 					<th>Email</th>
 					{# {% if is_granted("ROLE_SUPER_ADMIN") %}
-															
-																					<th>Roles</th>
-																				{% endif %} #}
+																				
+																										<th>Roles</th>
+																									{% endif %} #}
 					{# <th>Password</th> #}
 					<th>Nom</th>
 					<th>Prenom</th>
@@ -35,14 +35,14 @@
 				{# <td>{{ user.id }}</td> #}
 				<td>{{ user.email }}</td>
 				{# {% if is_granted("ROLE_SUPER_ADMIN") %}
-																					<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-																				{% endif %} #}
+																									<td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+																								{% endif %} #}
 				{# <td>{{ user.password }}</td> #}
 				<td>{{ user.nom }}</td>
 				<td>{{ user.prenom }}</td>
 				{# <td>{{ user.telephone }}</td> #}
 				<td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
-				<td>{{ user.fideliteClient ? 'Yes' : 'No' }}</td>
+				<td>{{ user.fideliteClient ? 'Oui' : 'Non' }}</td>
 				<td>{{ user.prefAchat }}</td>
 				{# {% if  is_granted('ROLE_SUPER_ADMIN') %} #}
 

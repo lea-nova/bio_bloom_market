@@ -30,6 +30,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
+
             if ($form->get('plainPassword')->getData() !== $form->get("checkPassword")->getData()) {
                 return $this->redirectToRoute('app_register');
             }
