@@ -53,6 +53,8 @@ class UserController extends AbstractController
     #[Route('admin/user/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -75,10 +77,10 @@ class UserController extends AbstractController
     {
         $currentUser = $this->getUser();
 
+
         if ($user->getId() !== $currentUser->getId() && !($security->isGranted("ROLE_ADMIN"))) {
             return $this->redirectToRoute('app_user_show', ["uuid" => $currentUser->getUuid()]);
         }
-
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'adresses' => $user->getAdresses(),
