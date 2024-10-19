@@ -10,7 +10,9 @@ use App\Form\ResetPasswordFormType;
 use App\Form\UserType;
 use App\Form\AdresseType;
 
+
 use App\Repository\UserRepository;
+use App\Service\PasswordService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,9 +27,13 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as HasherUserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\PasswordHasher\UserPasswordHasherInterface;
+
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
 
 
 use function PHPUnit\Framework\isNull;
@@ -35,12 +41,7 @@ use function PHPUnit\Framework\isNull;
 class UserController extends AbstractController
 {
 
-    // private $csrfTokenManager;
-    // CsrfTokenManagerInterface $csrfTokenManager
-    public function __construct()
-    {
-        // $this->csrfTokenManager = $csrfTokenManager;
-    }
+
 
     #[Route('admin/user/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
@@ -51,16 +52,38 @@ class UserController extends AbstractController
     }
 
     #[Route('admin/user/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function new(
+        UserPasswordHasherInterface $userPasswordHasher,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        PasswordService $passwordService,
+        Security $security
+    ): Response {
 
-
+        // dd($request);
         $user = new User();
+        // $user->setEmail($request->request->get('email'));
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+        // dd($form->getData());
+        if ($security->isGranted("ROLE_ADMIN")) {
+            $passwordGenerated = $passwordService->generatePassword();
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($user);
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+
+
+            if ($form->get('plainPassword')->getData() !== $form->get("checkPassword")->getData()) {
+                return $this->redirectToRoute('app_register');
+            }
+            $entityManager->persist($form->getData());
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -69,6 +92,7 @@ class UserController extends AbstractController
         return $this->render('user/new.html.twig', [
             'user' => $user,
             'form' => $form,
+            'passwordGenerated' => $passwordGenerated
         ]);
     }
 
@@ -84,6 +108,7 @@ class UserController extends AbstractController
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'adresses' => $user->getAdresses(),
+
 
         ]);
     }
@@ -335,5 +360,13 @@ class UserController extends AbstractController
             // 'adresse' => $adresse,
             'form' => $form->createView(),
         ]);
+    }
+    /**
+     * @Route("/admin/user/print", name="admin_user_print")
+     */
+    #[Route('/admin/user/print', name: 'admin_user_print', methods: ['GET', 'POST'])]
+    public function print(): Response
+    {
+        return $this->render('admin_user_print.html.twig');
     }
 }

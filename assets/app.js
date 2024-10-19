@@ -70,3 +70,15 @@ btnNavbarCategory.addEventListener('click', () => {
 // console.log(afficherMdp)
 // motDePasseChamp(afficherMdp[0], cacherMdp[0], inputPassword);
 // motDePasseChamp(afficherMdp[1], cacherMdp[1], inputPasswordConf);
+let btnPrint = document.getElementById('print')
+let passwordDiv = document.getElementById('password-shown')
+let showAccount = document.getElementById('remove-hidden');
+btnPrint.addEventListener('click', () => {
+    showAccount.classList.remove('hidden')
+    let passWord = document.getElementById('user_plainPassword').value
+    let paragrapheMdp = document.createElement('p')
+    paragrapheMdp.textContent = `Mot de passe :  ${passWord}`
+    passwordDiv.appendChild(paragrapheMdp)
+    btnPrint.disabled = true;
+})
+
