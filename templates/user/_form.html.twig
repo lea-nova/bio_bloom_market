@@ -5,13 +5,10 @@
 {{form_row(form.prenom)}}
 {{form_row(form.nom)}}
 {{form_row(form.email)}}
-{{form_row(form.roles)}}
+{# {{form_row(form.roles)}} #}
 {{form_row(form.dateNaissance)}}
 {{form_row(form.telephone)}}
-{{form_row(form.fideliteClient)}}
-{{form_row(form.plainPassword , {'attr': {'class':'password-input', 'value': passwordGenerated}})}}
-{{form_row(form.checkPassword , {'attr': {'class':'checked-password-input', 'value': passwordGenerated}})}}
-{{ form_widget(form._token) }}
-{# CSRF #}
-<button class="btn">{{ button_label|default('Save') }}</button>
+{{form_row(form.fideliteClient)}}{# {{form_row(form.plainPassword , {'attr': {'class':'password-input', 'value': passwordGenerated}})}} #}
+{# {{form_row(form.checkPassword , {'attr': {'class':'checked-password-input', 'value': passwordGenerated}})}} #}{{ form_widget(form._token) }}{# CSRF #}
+	<button class="btn"> {{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

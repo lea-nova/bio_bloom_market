@@ -23,7 +23,7 @@
 
 		{% endblock %}
 	</head>
-	<body class="min-h-screen flex flex-col h-full ">
+	<body class="min-h-screen flex flex-col h-full bg-gradient-to-b from-light-default to-light-muted md:h-100">
 		<header>
 			{% include '_partials/_navbar.html.twig' %}
 		</header>
@@ -48,36 +48,32 @@
 				{% endfor %}
 				{% block body %}{% endblock %}
 			</div>
-
-		</main>
-
-		<footer class="flex flex-col place-items-center md:h-[20%]">
-			<ul class="flex flex-row justify-between md:w-3/5  ">
-				<li class="">
-					<a href="#" class="">Home</a>
-				</li>
-				<li class="">
-					<a href="#" class="">Features</a>
-				</li>
-				<li class="">
-					<a href="#" class="">Pricing</a>
-				</li>
-				<li class="">
-					<a href="#" class="">FAQs</a>
-				</li>
-				<li class="">
-					<a href="#" class="">About</a>
-				</li>
-			</ul>
-			<p class="text-center text-body-secondary">© 2024 Company, Inc</p>
-			<p class="text-center text-body-secondary">
-				Image par
-				<a target="_blank" class=" px-2 text-body-secondary" href="https://pixabay.com/fr/users/pexels-2286921/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pexels</a>
-				de
-				<a target="_blank" class="  px-2 text-body-secondary" href="https://pixabay.com/fr//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pixabay</a>
-
-
-			</p>
-		</footer>
+		</body>
 	</body>
-</html></body></html>
+</html></main><footer class="flex flex-col place-items-center md:h-[20%]">
+<ul class="flex flex-row justify-between md:w-3/5  ">
+	<li class="">
+		<a href="#" class="">Home</a>
+	</li>
+	<li class="">
+		<a href="#" class="">Features</a>
+	</li>
+	<li class="">
+		<a href="#" class="">Pricing</a>
+	</li>
+	<li class="">
+		<a href="#" class="">FAQs</a>
+	</li>
+	<li class="">
+		<a href="#" class="">About</a>
+	</li>
+</ul>
+<p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+<p class="text-center text-body-secondary">
+	Image par
+	<a target="_blank" class=" px-2 text-body-secondary" href="https://pixabay.com/fr/users/pexels-2286921/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pexels</a>
+	de
+	<a target="_blank" class="  px-2 text-body-secondary" href="https://pixabay.com/fr//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pixabay</a>
+
+
+</p></footer></body></html></body></html>
