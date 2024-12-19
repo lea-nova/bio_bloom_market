@@ -9,8 +9,7 @@ use App\Entity\Adresse;
 use App\Form\ResetPasswordFormType;
 use App\Form\UserType;
 use App\Form\AdresseType;
-
-
+use App\Repository\AdresseRepository;
 use App\Repository\UserRepository;
 use App\Service\PasswordService;
 use Doctrine\ORM\EntityManager;
@@ -208,10 +207,12 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}/adresses', name: 'app_user_adresses', methods: ['GET'])]
-    public function showAdresses(): Response
+    public function showAdresses(UserRepository $userRepository): Response
     {
         $currentUser = $this->getUser();
+
         $adresses = $currentUser->getAdresses();
+
         return $this->render('user_adresse/show_adresses.html.twig', [
             'user' => $currentUser,
             'adresses' => $adresses,
@@ -299,21 +300,28 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user_adresses', ['uuid' => $uuid]);
     }
 
-    #[Route('/user/{uuid}/adresses/{ulid_adresse}/update', name: 'app_user_adresses_update', methods: ['GET', 'POST'])]
-    public function updateAdresse(User $user, string $uuid, string $ulid_adresse, Request $request, EntityManagerInterface $entityManager): Response
-    {
+    #[Route('/user/{uuid}/adresses/{id}/update', name: 'app_user_adresses_update', methods: ['GET', 'POST'])]
+    public function updateAdresse(
+        User $user,
+        string $uuid,
+        string $id,
+        Request $request,
+        AdresseRepository $adresseRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
         $currentUser = $this->getUser();
+        // dd($currentUser);
+        // $uuidFromUser = Uuid::fromString($user->getUuid());
+        // $uuidFromUrl = Uuid::fromString($uuid);
+        // if (!$uuidFromUser->equals($uuidFromUrl)) {
+        //     throw $this->createAccessDeniedException('Vous n\'avez pas la permission de modifier cette adresse pour cet utilisateur');
+        // }
+        $oldAdresse = $entityManager->getRepository(Adresse::class)->find($id);
 
-        $uuidFromUser = Uuid::fromString($user->getUuid());
-        $uuidFromUrl = Uuid::fromString($uuid);
 
-        if (!$uuidFromUser->equals($uuidFromUrl)) {
-            throw $this->createAccessDeniedException('Vous n\'avez pas la permission de modifier cette adresse pour cet utilisateur');
-        }
-        $oldAdresse = $entityManager->getRepository(Adresse::class)->find($ulid_adresse);
         if (!$oldAdresse) {
             // throw $this->createNotFoundException('Adresse non trouvée.'); // arrete le programme
-            return $this->redirectToRoute('app_user_adresses', ['uuid' => $user->getUuid()]);
+            return $this->redirectToRoute('app_user_adresses', ['uuid' => $user->getUuid(), 'id' => $id]);
         } else {
             $autresUtilisateurs = $oldAdresse->getUsers();
             if (count($autresUtilisateurs) > 1) {
@@ -326,7 +334,7 @@ class UserController extends AbstractController
                 $newAdresse->setPays($oldAdresse->getPays());
 
                 // $oldAdresse->removeUser($currentUser)
-                $currentUser->removeAdresse($oldAdresse);
+                // $currentUser->removeAdresse($oldAdresse);
                 $form = $this->createForm(AdresseType::class, $newAdresse);
             } else {
                 // personne n'a la même adresse il est possible de la modifier.
@@ -343,7 +351,7 @@ class UserController extends AbstractController
                     'ville' => $newAdresse->getVille(),
                     'pays' => $newAdresse->getPays(),
                 ]);
-
+                dd($adresseExisteDeja);
                 if ($adresseExisteDeja) {
                     $newAdresse = $adresseExisteDeja;
                 } else {
@@ -356,8 +364,8 @@ class UserController extends AbstractController
         }
 
         return $this->render('user_adresse/update_adresse.html.twig', [
-            'user' => $user,
-            // 'adresse' => $adresse,
+            'user' => $this->getUser(),
+            // 'adresse' => $newAdresse,
             'form' => $form->createView(),
         ]);
     }
