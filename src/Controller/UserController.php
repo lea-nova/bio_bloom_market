@@ -14,6 +14,7 @@ use App\Repository\UserRepository;
 use App\Service\PasswordService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -96,7 +97,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user, Security $security): Response
+    public function show(#[MapEntity(uuid: "uuid")] User $user, Security $security): Response
     {
         $currentUser = $this->getUser();
 
@@ -113,7 +114,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, Security $security): Response
+    public function edit(Request $request, #[MapEntity(uuid: "uuid")] User $user, EntityManagerInterface $entityManager, Security $security): Response
     {
         $currentUser = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
@@ -134,7 +135,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{id}', name: 'app_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
+    public function delete(Request $request, #[MapEntity(id: "id")] User $user, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
     {
 
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
@@ -157,14 +158,14 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}/edit/password', name: 'app_user_edit_password', methods: ['GET', 'POST'])]
-    public function editPassword(Request $request, User $user, EntityManagerInterface $entityManager, Security $security, HasherUserPasswordHasherInterface $userPasswordHasher): Response
+    public function editPassword(Request $request, #[MapEntity(uuid: "uuid")] User $user, EntityManagerInterface $entityManager, Security $security, HasherUserPasswordHasherInterface $userPasswordHasher): Response
     {
         $currentUser = $this->getUser();
         $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
 
         // si l'id de l'user connecté n'est pas le même que l'id de l'user de la page.
-        if ($user->getId() !== $currentUser->getId()) {
+        if ($user->getId() !== $currentUser->getUuid()) {
             return $this->redirectToRoute('app_main');
         }
 
@@ -207,7 +208,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}/adresses', name: 'app_user_adresses', methods: ['GET'])]
-    public function showAdresses(UserRepository $userRepository, User $user): Response
+    public function showAdresses(UserRepository $userRepository,  #[MapEntity(uuid: "uuid")] User $user): Response
     {
         $currentUser = $this->getUser();
 
@@ -220,7 +221,7 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}/adresses/new', name: 'app_user_adresses_new', methods: ['GET', 'POST'])]
-    public function addAdresse(Request $request, EntityManagerInterface $entityManager): Response
+    public function addAdresse(#[MapEntity(uuid: "uuid")] User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
         $currentUser = $this->getUser();
 
@@ -267,9 +268,9 @@ class UserController extends AbstractController
 
 
     #[Route('/user/{uuid}/adresses/{id}/delete', name: 'app_user_adresses_delete', methods: ['POST'])]
-    public function removeAdresse(string $uuid, string $id, Request $request,  EntityManagerInterface $entityManager): Response
+    public function removeAdresse(string $uuid, #[MapEntity(id: "id")] Adresse $adresse, Request $request,  EntityManagerInterface $entityManager): Response
     {
-        $adresse = $entityManager->getRepository(Adresse::class)->find(['id' => $id]);
+        $adresse = $entityManager->getRepository(Adresse::class)->find(['id' => $adresse->getId()]);
         // dd($adresse);
         // dd($adresse);
         if (!$adresse) {
@@ -306,8 +307,8 @@ class UserController extends AbstractController
     #[Route('/user/{uuid}/adresses/{id}/update', name: 'app_user_adresses_update', methods: ['GET', 'POST'])]
     public function updateAdresse(
         User $user,
-        string $uuid,
-        string $id,
+        #[MapEntity(uuid: "uid")] string $uuid,
+        #[MapEntity(id: "id")] string $id,
         Request $request,
         AdresseRepository $adresseRepository,
         EntityManagerInterface $entityManager

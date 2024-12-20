@@ -6,6 +6,7 @@ use App\Entity\Fournisseur;
 use App\Form\FournisseurType;
 use App\Repository\FournisseurRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ class FournisseurController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_fournisseur_show', methods: ['GET'])]
-    public function show(Fournisseur $fournisseur): Response
+    public function show(#[MapEntity(id: "id")] Fournisseur $fournisseur): Response
     {
         return $this->render('fournisseur/show.html.twig', [
             'fournisseur' => $fournisseur,
@@ -51,7 +52,7 @@ class FournisseurController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_fournisseur_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Fournisseur $fournisseur, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity(id: "id")] Fournisseur $fournisseur, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
@@ -69,9 +70,9 @@ class FournisseurController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_fournisseur_delete', methods: ['POST'])]
-    public function delete(Request $request, Fournisseur $fournisseur, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity(id: "id")] Fournisseur $fournisseur, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$fournisseur->getId(), $request->getPayload()->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $fournisseur->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($fournisseur);
             $entityManager->flush();
         }
