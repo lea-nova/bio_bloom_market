@@ -207,11 +207,11 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}/adresses', name: 'app_user_adresses', methods: ['GET'])]
-    public function showAdresses(UserRepository $userRepository): Response
+    public function showAdresses(UserRepository $userRepository, User $user): Response
     {
         $currentUser = $this->getUser();
 
-        $adresses = $currentUser->getAdresses();
+        $adresses = $user->getAdresses();
 
         return $this->render('user_adresse/show_adresses.html.twig', [
             'user' => $currentUser,
@@ -266,15 +266,18 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/user/{uuid}/adresses/{ulid_adresse}/delete', name: 'app_user_adresses_delete', methods: ['POST'])]
-    public function removeAdresse(string $uuid, string $ulid_adresse, Request $request,  EntityManagerInterface $entityManager): Response
+    #[Route('/user/{uuid}/adresses/{id}/delete', name: 'app_user_adresses_delete', methods: ['POST'])]
+    public function removeAdresse(string $uuid, string $id, Request $request,  EntityManagerInterface $entityManager): Response
     {
-
-        $adresse = $entityManager->getRepository(Adresse::class)->findBy(['ulid' => $ulid_adresse]);
+        $adresse = $entityManager->getRepository(Adresse::class)->find(['id' => $id]);
+        // dd($adresse);
         // dd($adresse);
         if (!$adresse) {
             throw $this->createNotFoundException('Adresse non trouvée');
         }
+        dump($adresse);
+        $entityManager->remove($adresse);
+        $entityManager->flush();
 
         // // Vérifie que l'adresse appartient bien à l'utilisateur
         // if ($adresse->getUsers()->getId() !== $id) {
@@ -283,11 +286,11 @@ class UserController extends AbstractController
 
         if ($request->isMethod('POST')) {
             // Supprimer l'adresse si la méthode est POST
-            // $entityManager->removeAdresse($adresse);
-
+            $entityManager->remove($adresse);
             foreach ($adresse as $adresseUser) {
                 # code...
-                $adresseUser->removeUser($this->getUser());
+                // $this->getUser()->removeAdresse($adresse);
+                // $entityManager->flush();
                 $entityManager->flush();
             }
 
@@ -310,9 +313,9 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
         $currentUser = $this->getUser();
-        // dd($currentUser);
-        // $uuidFromUser = Uuid::fromString($user->getUuid());
-        // $uuidFromUrl = Uuid::fromString($uuid);
+        dd($currentUser);
+        $uuidFromUser = Uuid::fromString($user->getUuid());
+        $uuidFromUrl = Uuid::fromString($uuid);
         // if (!$uuidFromUser->equals($uuidFromUrl)) {
         //     throw $this->createAccessDeniedException('Vous n\'avez pas la permission de modifier cette adresse pour cet utilisateur');
         // }
@@ -351,7 +354,7 @@ class UserController extends AbstractController
                     'ville' => $newAdresse->getVille(),
                     'pays' => $newAdresse->getPays(),
                 ]);
-                dd($adresseExisteDeja);
+                // dd($adresseExisteDeja);
                 if ($adresseExisteDeja) {
                     $newAdresse = $adresseExisteDeja;
                 } else {
@@ -365,7 +368,7 @@ class UserController extends AbstractController
 
         return $this->render('user_adresse/update_adresse.html.twig', [
             'user' => $this->getUser(),
-            // 'adresse' => $newAdresse,
+            'adresse' => $newAdresse,
             'form' => $form->createView(),
         ]);
     }
