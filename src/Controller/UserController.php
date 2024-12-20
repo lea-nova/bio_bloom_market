@@ -12,8 +12,10 @@ use App\Form\AdresseType;
 use App\Repository\AdresseRepository;
 use App\Repository\UserRepository;
 use App\Service\PasswordService;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\ArgumentResolver\EntityValueResolver;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,25 +98,25 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('user/{uuid}', name: 'app_user_show', methods: ['GET'])]
-    public function show(#[MapEntity(uuid: "uuid")] User $user, Security $security): Response
-    {
+    #[Route('user/{uuid:user}', name: 'app_user_show', methods: ['GET'])]
+    public function show(
+        // #[MapEntity(mapping: ['uuid' => 'uuid'])] 
+        User $user,
+        Security $security
+    ): Response {
         $currentUser = $this->getUser();
-
-
-        if ($user->getId() !== $currentUser->getId() && !($security->isGranted("ROLE_ADMIN"))) {
+        if ($user->getUuid() !== $currentUser->getUuid() && !($security->isGranted("ROLE_ADMIN"))) {
             return $this->redirectToRoute('app_user_show', ["uuid" => $currentUser->getUuid()]);
+            // return $this->redirectToRoute('app_user_show', ["uuid" => $uuid]);
         }
         return $this->render('user/show.html.twig', [
-            'user' => $user,
+            'user' => $currentUser,
             'adresses' => $user->getAdresses(),
-
-
         ]);
     }
 
     #[Route('user/{uuid}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, #[MapEntity(uuid: "uuid")] User $user, EntityManagerInterface $entityManager, Security $security): Response
+    public function edit(Request $request, #[MapEntity(mapping: ['uuid' => "uuid"])] User $user, EntityManagerInterface $entityManager, Security $security): Response
     {
         $currentUser = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
@@ -123,6 +125,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_edit', ["uuid" => $currentUser->getUuid()]);
         }
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUpdatedAt(new DateTimeImmutable());
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -208,8 +211,10 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}/adresses', name: 'app_user_adresses', methods: ['GET'])]
-    public function showAdresses(UserRepository $userRepository,  #[MapEntity(uuid: "uuid")] User $user): Response
-    {
+    public function showAdresses(
+        UserRepository $userRepository,
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] User $user,
+    ): Response {
         $currentUser = $this->getUser();
 
         $adresses = $user->getAdresses();
@@ -221,8 +226,12 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}/adresses/new', name: 'app_user_adresses_new', methods: ['GET', 'POST'])]
-    public function addAdresse(#[MapEntity(uuid: "uuid")] User $user, Request $request, EntityManagerInterface $entityManager): Response
-    {
+    public function addAdresse(
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] User $user,
+        string $uuid,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
         $currentUser = $this->getUser();
 
         if (!$currentUser) {
@@ -306,15 +315,14 @@ class UserController extends AbstractController
 
     #[Route('/user/{uuid}/adresses/{id}/update', name: 'app_user_adresses_update', methods: ['GET', 'POST'])]
     public function updateAdresse(
-        User $user,
-        #[MapEntity(uuid: "uid")] string $uuid,
-        #[MapEntity(id: "id")] string $id,
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] User $user,
+        string $uuid,
+        string $id,
         Request $request,
         AdresseRepository $adresseRepository,
         EntityManagerInterface $entityManager
     ): Response {
         $currentUser = $this->getUser();
-        dd($currentUser);
         $uuidFromUser = Uuid::fromString($user->getUuid());
         $uuidFromUrl = Uuid::fromString($uuid);
         // if (!$uuidFromUser->equals($uuidFromUrl)) {
@@ -369,7 +377,7 @@ class UserController extends AbstractController
 
         return $this->render('user_adresse/update_adresse.html.twig', [
             'user' => $this->getUser(),
-            'adresse' => $newAdresse,
+            'adresse' => $oldAdresse,
             'form' => $form->createView(),
         ]);
     }

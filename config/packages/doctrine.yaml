@@ -24,7 +24,8 @@ doctrine:
                 alias: App
         controller_resolver:
             auto_mapping: false
-            enabled: false
+            enabled: true
+            # 3nabled: false si ca bug remettre false
 
 when@test:
     doctrine:
