@@ -23,6 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
+    // #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
