@@ -6,7 +6,10 @@
 {% block body %}
 	<div class="flex h-full ">
 
-		<aside class="bg-primary-dark h-screen w-[15%]"></aside>
+		<aside class="bg-primary-dark h-screen w-[15%]">
+			<a href="#">Historique des commandes</a>
+			<a href="#">Suivi des livraisons</a>
+		</aside>
 		<section class="flex-col ml-[4rem]  ">
 			<h1 class="mt-[3rem]">Bonjour,
 				{{user.prenom}}</h1>
@@ -14,10 +17,10 @@
 
 			<table class="  ">
 				<tbody>
-					{# <tr>
-										<th>Id</th>
-										<td>{{ user.id }}</td>
-										{# </tr> #}
+					<tr>{# <th>Id</th> #}
+						{# <td>{{ user.id }}</td> #}
+					</tr>
+
 					<tr>
 						<th>Email</th>
 						<td>{{ user.email }}</td>

@@ -4,47 +4,30 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Adresse;
-
-
+use App\Entity\UserAdresse;
 use App\Form\ResetPasswordFormType;
 use App\Form\UserType;
 use App\Form\AdresseType;
 use App\Repository\AdresseRepository;
+use App\Repository\UserAdresseRepository;
 use App\Repository\UserRepository;
 use App\Service\PasswordService;
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\ArgumentResolver\EntityValueResolver;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as HasherUserPasswordHasherInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Uid\Uuid;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Bundle\SecurityBundle\SecurityBundle;
-
-
-use function PHPUnit\Framework\isNull;
 
 class UserController extends AbstractController
 {
-
-
-
     #[Route('admin/user/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
@@ -100,34 +83,53 @@ class UserController extends AbstractController
 
     #[Route('user/{uuid}', name: 'app_user_show', methods: ['GET'])]
     public function show(
-        #[MapEntity(mapping: ['uuid' => 'uuid'], message: "L'utilisateur n'a pas été trouvé")] User $user,
+        AdresseRepository $adresseRepository,
+        UserAdresseRepository $userAdresseRepository,
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] User $user,
         Security $security
     ): Response {
+
+        // dd($this->getUser());
         $currentUser = $this->getUser();
-        if ($user->getUuid() !== $currentUser->getUuid() && !($security->isGranted("ROLE_ADMIN"))) {
-            return $this->redirectToRoute('app_user_show', ["uuid" => $currentUser->getUuid()]);
+        if ($user !== $currentUser && !($security->isGranted("ROLE_ADMIN"))) {
+            return $this->redirectToRoute('app_main');
             // return $this->redirectToRoute('app_user_show', ["uuid" => $uuid]);
         }
+
+        $userAdresses = $user->getUserAdresses();
+        $adressesByUser = [];
+        foreach ($userAdresses as $userAdresse) {
+            $adressesByUser[] = $userAdresse->getAdresse();
+        }
+
         return $this->render('user/show.html.twig', [
-            'user' => $currentUser,
-            'adresses' => $user->getAdresses(),
+            'user' => $user,
+            'adresses' => $adressesByUser,
         ]);
     }
 
     #[Route('user/{uuid}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, #[MapEntity(mapping: ['uuid' => "uuid"])] User $user, EntityManagerInterface $entityManager, Security $security): Response
-    {
+    public function edit(
+        Request $request,
+        #[MapEntity(mapping: ['uuid' => "uuid"])] User $user,
+        EntityManagerInterface $entityManager,
+        Security $security
+    ): Response {
         $currentUser = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        if ($user->getId() !== $currentUser->getId() &&  !($security->isGranted("ROLE_SUPER_ADMIN"))) {
-            return $this->redirectToRoute('app_user_edit', ["uuid" => $currentUser->getUuid()]);
-        }
+        // if ($user->getUuId() !== $currentUser->getUuId() &&  !($security->isGranted("ROLE_ADMIN"))) {
+        //     // return $this->redirectToRoute('app_login');
+        //     return $this->redirectToRoute('app_main');
+        // }
+        // if ($security->isGranted("ROLE_ADMIN")) {
+        //     // return $this->redirectToRoute('app_login');
+        //     return $this->redirectToRoute('app_main');
+        // }
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setUpdatedAt(new DateTimeImmutable());
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_show', ['uuid' => $currentUser->getUuid()]);
         }
 
         return $this->render('user/edit.html.twig', [
@@ -160,14 +162,19 @@ class UserController extends AbstractController
     }
 
     #[Route('user/{uuid}/edit/password', name: 'app_user_edit_password', methods: ['GET', 'POST'])]
-    public function editPassword(Request $request, #[MapEntity(uuid: "uuid")] User $user, EntityManagerInterface $entityManager, Security $security, HasherUserPasswordHasherInterface $userPasswordHasher): Response
-    {
+    public function editPassword(
+        Request $request,
+        #[MapEntity(mapping: ["uuid" => "uuid"])] User $user,
+        EntityManagerInterface $entityManager,
+        Security $security,
+        HasherUserPasswordHasherInterface $userPasswordHasher
+    ): Response {
         $currentUser = $this->getUser();
         $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
 
         // si l'id de l'user connecté n'est pas le même que l'id de l'user de la page.
-        if ($user->getId() !== $currentUser->getUuid()) {
+        if ($user !== $currentUser) {
             return $this->redirectToRoute('app_main');
         }
 
@@ -189,9 +196,10 @@ class UserController extends AbstractController
                 );
                 $entityManager->persist($user);
                 $entityManager->flush();
-                return $this->redirectToRoute('app_user_show', ["uuid" => $currentUser->getUuid()], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_user_show', ["uuid" => $currentUser->getUuid()]);
             } else {
-                dd('Pas valide');
+                return $this->redirectToRoute('app_user_edit_password
+',  ["uuid" => $currentUser->getUuid()]);
             }
         };
         // dd($currentUser); // user connecté
@@ -216,11 +224,16 @@ class UserController extends AbstractController
     ): Response {
         $currentUser = $this->getUser();
 
-        $adresses = $user->getAdresses();
+        $userAdresses = $user->getUserAdresses();
+        $adressesByUser = [];
+        foreach ($userAdresses as $userAdresse) {
+            $adressesByUser[] = $userAdresse->getAdresse();
+        }
 
         return $this->render('user_adresse/show_adresses.html.twig', [
             'user' => $currentUser,
-            'adresses' => $adresses,
+            'adresses' => $adressesByUser
+            // 'adresses' => $adresses,
         ]);
     }
 
@@ -261,8 +274,12 @@ class UserController extends AbstractController
                 $adresse = $newAdresse;
             }
             // Sauvegarder l'adresse dans la base de données
-            $adresse->addUser($currentUser);
-            $entityManager->persist($adresse);
+            $userAdresse = new UserAdresse();
+            $userAdresse->setAdresse($adresse);
+            $user->addUserAdress($userAdresse);
+            // $adresse->addUserAdress($adresse);
+            $entityManager->persist($userAdresse);
+            $entityManager->persist($user);
             $entityManager->flush();
 
             // Rediriger vers la page des adresses de l'utilisateur après ajout
@@ -276,17 +293,47 @@ class UserController extends AbstractController
 
 
     #[Route('/user/{uuid}/adresses/{id}/delete', name: 'app_user_adresses_delete', methods: ['POST'])]
-    public function removeAdresse(string $uuid, #[MapEntity(id: "id")] Adresse $adresse, Request $request,  EntityManagerInterface $entityManager): Response
-    {
-        $adresse = $entityManager->getRepository(Adresse::class)->find(['id' => $adresse->getId()]);
-        // dd($adresse);
-        // dd($adresse);
+    public function removeAdresse(
+        string $uuid,
+        #[MapEntity(mapping: ['id' => 'id'])] Adresse $adresse,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
+        // $adresse = $entityManager->getRepository(Adresse::class)->find(['id' => $adresse->getId()]);
+        $currentUser = $this->getUser();
         if (!$adresse) {
             throw $this->createNotFoundException('Adresse non trouvée');
         }
-        dump($adresse);
-        $entityManager->remove($adresse);
-        $entityManager->flush();
+        $fetchUserAdresse = $adresse->getUserAdresses();
+        $userAdresses = [];
+        foreach ($fetchUserAdresse as $userAdresse) {
+            $userAdresses = $userAdresse;
+            $currentUser->removeUserAdress($userAdresse);
+            $adresse->removeUserAdress($userAdresse);
+            $entityManager->remove($userAdresse);
+            $entityManager->remove($adresse);
+            $entityManager->flush();
+        }
+        // dd();
+        // dd($userAdresse);
+
+        // $entityManager->remove($userAdresse);
+        // $entityManager->flush();
+        // $usersByAdresse = [];
+        // foreach ($adresse->getUserAdresses() as $userAdresse) {
+        //     if ($userAdresse->getUser() === $this->getUser()) {
+        //         $usersByAdresse = $userAdresse->getUser();
+        //     }
+        // }
+        // dd($usersByAdresse);
+        // $adressesOfUser = [];
+
+        // dd($userAdresse->getUser());
+        // dd($adresse)
+        // $entityManager->remove($usersByAdresse);
+        // dd($adresse->getUserAdresses());
+        // $entityManager->remove($adresse);
+        // $entityManager->flush();
 
         // // Vérifie que l'adresse appartient bien à l'utilisateur
         // if ($adresse->getUsers()->getId() !== $id) {
@@ -294,18 +341,60 @@ class UserController extends AbstractController
         // }
 
         if ($request->isMethod('POST')) {
-            // Supprimer l'adresse si la méthode est POST
-            $entityManager->remove($adresse);
-            foreach ($adresse as $adresseUser) {
-                # code...
-                // $this->getUser()->removeAdresse($adresse);
-                // $entityManager->flush();
-                $entityManager->flush();
+            foreach ($adresse->getUserAdresses() as $userAdresse) {
+                if ($userAdresse->getUser() === $this->getUser()) {
+                    $usersByAdresse = $userAdresse->getUser();
+                }
+            }
+            $userLinkedToTheAdresse = $adresse->getUserAdresses();
+            $usersForThisAdresse = [];
+            foreach ($userLinkedToTheAdresse as $oneUser) {
+
+                $usersForThisAdresse = $oneUser;
             }
 
-            // Redirection vers la liste des adresses de l'utilisateur après suppression
-            return $this->redirectToRoute('app_user_adresses', ['uuid' => $uuid]);
+            // if ($usersForThisAdresse->getUser() === $this->getUser()) {
+            // $userAdresse->User(null);
+
+            // $usersForThisAdresse->getAdresse();
+            // $removedThisUser = $usersForThisAdresse->getUser();
+            // dump($usersForThisAdresse->getAdresse());
+            // dd($adresse);
+            // $usersForThisAdresse->remove($adresse);
+            // $userAdresse = new UserAdresse();
+            // $userAdresse->getAdresse();
+            // $adresse->removeUserAdress($usersForThisAdresse);
+            // $entityManager->remove($userAdresse);
+            // $removedThisUser->removeUserAdress($usersForThisAdresse);
+            // $entityManager->persist($usersForThisAdresse);
+            // dd("Supprimé adresse du user");
+            // $entityManager->flush();
         }
+
+
+        // $userAdresse = new UserAdresse();
+        // $userAdresse->setAdresse($adresse);
+        // $user->addUserAdress($userAdresse);
+        // // $adresse->addUserAdress($adresse);
+        // $entityManager->persist($userAdresse);
+        // $entityManager->persist($user);
+        // $entityManager->flush();
+
+        // Supprimer l'adresse si la méthode est POST
+        // // dd($adresse);
+        // dd($usersByAdresse);
+        // dd($user);
+        // // $usersByAdresse->removeUserAdress($this->getUser());
+        // foreach ($adresse as $adresseUser) {
+        //     # code...
+        //     // $this->getUser()->removeAdresse($adresse);
+        //     // $entityManager->flush();
+        //     $entityManager->flush();
+        // }
+
+        // Redirection vers la liste des adresses de l'utilisateur après suppression
+        //     return $this->redirectToRoute('app_user_adresses', ['uuid' => $uuid]);
+        // }
 
         // Si la méthode est GET (normalement, tu ne devrais pas avoir à gérer la suppression via GET, mais par sécurité)
         // Tu peux rediriger ou afficher une page d'erreur
@@ -334,7 +423,13 @@ class UserController extends AbstractController
             // throw $this->createNotFoundException('Adresse non trouvée.'); // arrete le programme
             return $this->redirectToRoute('app_user_adresses', ['uuid' => $user->getUuid(), 'id' => $id]);
         } else {
-            $autresUtilisateurs = $oldAdresse->getUsers();
+            $autresUtilisateursParAdresse = $oldAdresse->getUserAdresses();
+            // dd($autresUtilisateurs);
+            $autresUtilisateurs = [];
+            foreach ($autresUtilisateursParAdresse as $oneUser) {
+                $autresUtilisateurs[] = $oneUser->getUser();
+            }
+            // dd($autresUtilisateurs);
             if (count($autresUtilisateurs) > 1) {
                 // Si d'autres utilisateur il faut add une nouvelle adresse pas la modifier.
                 $newAdresse = new Adresse();

@@ -15,37 +15,37 @@ class FournisseurAdresse
 
     #[ORM\ManyToOne(inversedBy: 'fournisseurAdresses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Fournisseur $idFournisseur = null;
+    private ?Fournisseur $fournisseur = null;
 
     #[ORM\ManyToOne(inversedBy: 'fournisseurAdresses')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Adresse $idAdresse = null;
+    private ?Adresse $adresse = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdFournisseur(): ?Fournisseur
+    public function getFournisseur(): ?Fournisseur
     {
-        return $this->idFournisseur;
+        return $this->fournisseur;
     }
 
-    public function setIdFournisseur(?Fournisseur $idFournisseur): static
+    public function setFournisseur(?Fournisseur $fournisseur): static
     {
-        $this->idFournisseur = $idFournisseur;
+        $this->fournisseur = $fournisseur;
 
         return $this;
     }
 
-    public function getIdAdresse(): ?Adresse
+    public function getAdresse(): ?Adresse
     {
-        return $this->idAdresse;
+        return $this->adresse;
     }
 
-    public function setIdAdresse(?Adresse $idAdresse): static
+    public function setAdresse(?Adresse $adresse): static
     {
-        $this->idAdresse = $idAdresse;
+        $this->adresse = $adresse;
 
         return $this;
     }
