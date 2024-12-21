@@ -41,6 +41,14 @@ d<div class=" pt-5w-[70%]  max-lg:w-[100%] ">
 					{{ form_errors(form.fideliteClient) }}
 					{{ form_widget(form._token) }}
 				</div>
+				<div class=" w-full flex flex-row justify-center">
+					{% if is_granted('ROLE_ADMIN') %}
+						{{ form_label(form.roles) }}
+						{{ form_widget(form.roles, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
+						) }}
+						{{ form_errors(form.roles) }}
+					{% endif %}
+				</div>
 				{# CSRF #}
 				<span class="flex flex-row justify-center mt-5">
 					<button class="btn-cta max-lg:w-[10rem]"></span>
