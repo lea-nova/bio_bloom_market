@@ -6,7 +6,7 @@
  * which should already be in your base.html.twig.
  */
 import './styles/app.css';
-
+// import '../templates/_partials/navbar';
 // console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 // Variable pour récupérer les éléments du bouton pour le menu.
 let btnNavbar = document.getElementById('navbar-toggle');
