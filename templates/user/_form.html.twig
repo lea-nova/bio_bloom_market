@@ -1,14 +1,52 @@
-{{ form_start(form) }}
-{{ form_errors(form) }}
-{# {{ form_widget(form) }} #}
+d<div class=" pt-5w-[70%]  max-lg:w-[100%] ">
+	<div class=" flex ">
+		<div class=" w-full pb-10 flex items-center justify-center   ">
 
-{{form_row(form.prenom)}}
-{{form_row(form.nom)}}
-{{form_row(form.email)}}
-{# {{form_row(form.roles)}} #}
-{{form_row(form.dateNaissance)}}
-{{form_row(form.telephone)}}
-{{form_row(form.fideliteClient)}}{# {{form_row(form.plainPassword , {'attr': {'class':'password-input', 'value': passwordGenerated}})}} #}
-{# {{form_row(form.checkPassword , {'attr': {'class':'checked-password-input', 'value': passwordGenerated}})}} #}{{ form_widget(form._token) }}{# CSRF #}
-	<button class="btn"> {{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+			<div class="p-12 flex flex-col justify-middle border-2 rounded-md  border-primary-accent max-sm:w-[95%] md:w-[50%] lg:w-[45rem]  ">
+				{{ form_start(form, {'attr':{'class':'flex flex-col justify-center text-xs  max-md:items-center w-full  '}})}}
+				{{ form_errors(form) }}
+				<div class=" w-full flex flex-row justify-between">
+					{# {{ form_widget(form) }} #}
+					{# Prénom #}
+					{{ form_label(form.prenom) }}
+					{{ form_widget(form.prenom, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
+					) }}
+					{{ form_errors(form.prenom) }}
+					{# Nom #}
+					{{ form_label(form.nom) }}
+					{{ form_widget(form.nom, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
+					) }}
+				{{ form_errors(form.nom) }}
+				</div>
+					<div class="w-full flex flex-row justify-between"> {{ form_label(form.email) }}
+					{# Email #}
+					{{ form_widget(form.email, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
+					) }}
+					{{ form_errors(form.email) }}
+					{# Date naissance #}
+					{{ form_label(form.dateNaissance) }}
+					{{ form_widget(form.dateNaissance, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
+					) }}
+					{{ form_errors(form.dateNaissance) }}
+					{# Téléphone #}
+				</div>
+				<div class="w-full flex flex-row justify-between">
+					{{ form_label(form.telephone) }}
+					{{ form_widget(form.telephone, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
+					) }}
+					{{ form_errors(form.telephone) }}
+					{{ form_label(form.fideliteClient) }}
+					{{ form_widget(form.fideliteClient, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
+					) }}
+					{{ form_errors(form.fideliteClient) }}
+					{{ form_widget(form._token) }}
+				</div>
+				{# CSRF #}
+				<span class="flex flex-row justify-center mt-5">
+					<button class="btn-cta max-lg:w-[10rem]"></span>
+					{{ button_label|default('Save') }}</button>
+			</div>
+			{{ form_end(form) }}
+		</div>
+	</div>
+</div></div>

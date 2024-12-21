@@ -107,7 +107,7 @@
 		<div class="mt-2 space-y-2" id="disclosure-1"></div>
 	</nav>
 	<!-- Mobile menu, show/hide based on menu open state. -->
-	<div class="lg:hidden" role="dialog" aria-modal="true">
+	<div class="lg:hidden h-96" role="dialog" aria-modal="true">
 		<!-- Background backdrop, show/hide based on slide-over state. -->
 		{# <div class="fixed inset-0 z-10"></div> #}
 		{# Classe à modifier avec le JS pour toggle #}
@@ -123,8 +123,8 @@
 					</svg>
 				</button>
 			</div>
-			<div class="mt-6 flow-root">
-				<div class="-my-6 divide-y divide-gray-500/10">
+			<div class="mt-6 flow-root h-fit ">
+				<div class="-my-6 divide-y divide-gray-500/10  ">
 					<div class="space-y-2 py-6">
 						<a class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" href="#">Produits</a>
 						<div class="-mx-3">
@@ -151,21 +151,22 @@
 						<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Contact</a>
 						<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">A propos</a>
 					</div>
-					<div class="py-6">
+					<div class=" h-20 flex flex-col m-5 ">
 						{% if  app.user  %}
-							{# <span class="d-flex flex-row mb-3 justify-content-between d-flex align-items-center"> #}
+							<span class=" h-20 flex flex-col m-5 ">
 
-							<a class="btn-cta" href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
+								<a class="btn-cta " href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
 
-							{# <a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a> #}
-							<br>
-							<a
-								class="lg:hidden btn-cta" href="{{path('app_logout')}}">
-								{# <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg> #}
-								Se déconnecter
-							</a>
+								{# <a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a> #}
+								<br>
 
-							{# </span> #}
+								<a
+									class="lg:hidden btn-cta " href="{{path('app_logout')}}">
+									{# <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg> #}
+									Se déconnecter
+								</a>
+
+							</span>
 						{% else %}
 							<a class="btn-cta" href="{{path('app_login')}}">Connexion/Inscription</a>
 						{% endif %}
