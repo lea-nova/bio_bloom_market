@@ -30,7 +30,7 @@ class Fournisseur
     /**
      * @var Collection<int, FournisseurAdresse>
      */
-    #[ORM\OneToMany(targetEntity: FournisseurAdresse::class, mappedBy: 'idFournisseur')]
+    #[ORM\OneToMany(targetEntity: FournisseurAdresse::class, mappedBy: 'fournisseur')]
     private Collection $fournisseurAdresses;
 
     public function __construct()
@@ -103,7 +103,7 @@ class Fournisseur
     {
         if (!$this->fournisseurAdresses->contains($fournisseurAdress)) {
             $this->fournisseurAdresses->add($fournisseurAdress);
-            $fournisseurAdress->setIdFournisseur($this);
+            $fournisseurAdress->setFournisseur($this);
         }
 
         return $this;
@@ -113,8 +113,8 @@ class Fournisseur
     {
         if ($this->fournisseurAdresses->removeElement($fournisseurAdress)) {
             // set the owning side to null (unless already changed)
-            if ($fournisseurAdress->getIdFournisseur() === $this) {
-                $fournisseurAdress->setIdFournisseur(null);
+            if ($fournisseurAdress->getFournisseur() === $this) {
+                $fournisseurAdress->setFournisseur(null);
             }
         }
 

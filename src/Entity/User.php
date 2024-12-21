@@ -23,7 +23,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    // #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
@@ -67,12 +66,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $prefAchat = null;
 
-    /**
-     * @var Collection<int, Adresse>
-     */
-    #[ORM\ManyToMany(targetEntity: Adresse::class, inversedBy: 'users')]
-    private Collection $adresses;
-
     #[ORM\Column(type: UuidType::NAME)]
     private Uuid $uuid;
 
@@ -85,11 +78,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $deletedAt = null;
 
+    /**
+     * @var Collection<int, UserAdresse>
+     */
+    #[ORM\OneToMany(targetEntity: UserAdresse::class, mappedBy: 'user')]
+    private Collection $userAdresses;
+
     public function __construct()
     {
-        $this->adresses = new ArrayCollection();
+        // $this->adresses = new ArrayCollection();
         $this->uuid = Uuid::v4();
         $this->createdAt = new DateTimeImmutable();
+        // $this->userAdresses = new ArrayCollection();
     }
 
 
@@ -242,30 +242,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Adresse>
-     */
-    public function getAdresses(): Collection
-    {
-        return $this->adresses;
-    }
-
-    public function addAdresse(Adresse $adresse): static
-    {
-        if (!$this->adresses->contains($adresse)) {
-            $this->adresses[] = $adresse;
-        }
-
-        return $this;
-    }
-
-    public function removeAdresse(Adresse $adresse): static
-    {
-        $this->adresses->removeElement($adresse);
-
-        return $this;
-    }
-
     public function getUuid(): ?Uuid
     {
         return $this->uuid;
@@ -310,6 +286,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDeletedAt(?\DateTimeImmutable $deletedAt): static
     {
         $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserAdresse>
+     */
+    public function getUserAdresses(): Collection
+    {
+        return $this->userAdresses;
+    }
+
+    public function addUserAdress(UserAdresse $userAdress): static
+    {
+        if (!$this->userAdresses->contains($userAdress)) {
+            $this->userAdresses->add($userAdress);
+            $userAdress->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserAdress(UserAdresse $userAdress): static
+    {
+        if ($this->userAdresses->removeElement($userAdress)) {
+            // set the owning side to null (unless already changed)
+            if ($userAdress->getUser() === $this) {
+                $userAdress->setUser(null);
+            }
+        }
 
         return $this;
     }

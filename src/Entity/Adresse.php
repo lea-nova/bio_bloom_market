@@ -35,12 +35,6 @@ class Adresse
     #[ORM\Column(length: 4, nullable: true)]
     private ?string $cedex = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'adresses')]
-    private Collection $users;
-
     #[ORM\Column(type: UlidType::NAME)]
 
     private Ulid $ulid;
@@ -57,15 +51,21 @@ class Adresse
     /**
      * @var Collection<int, FournisseurAdresse>
      */
-    #[ORM\OneToMany(targetEntity: FournisseurAdresse::class, mappedBy: 'idAdresse')]
+    #[ORM\OneToMany(targetEntity: FournisseurAdresse::class, mappedBy: 'adresse')]
     private Collection $fournisseurAdresses;
+
+    /**
+     * @var Collection<int, UserAdresse>
+     */
+    #[ORM\OneToMany(targetEntity: UserAdresse::class, mappedBy: 'adresse')]
+    private Collection $userAdresses;
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->ulid = new Ulid();
         $this->createdAt = new DateTimeImmutable();
         $this->fournisseurAdresses = new ArrayCollection();
+        $this->userAdresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,34 +144,6 @@ class Adresse
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addAdresse($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeAdresse($this);
-        }
-
-        return $this;
-    }
-
     public function getUlid(): ?Ulid
     {
         return $this->ulid;
@@ -232,7 +204,7 @@ class Adresse
     {
         if (!$this->fournisseurAdresses->contains($fournisseurAdress)) {
             $this->fournisseurAdresses->add($fournisseurAdress);
-            $fournisseurAdress->setIdAdresse($this);
+            $fournisseurAdress->setAdresse($this);
         }
 
         return $this;
@@ -242,8 +214,38 @@ class Adresse
     {
         if ($this->fournisseurAdresses->removeElement($fournisseurAdress)) {
             // set the owning side to null (unless already changed)
-            if ($fournisseurAdress->getIdAdresse() === $this) {
-                $fournisseurAdress->setIdAdresse(null);
+            if ($fournisseurAdress->getAdresse() === $this) {
+                $fournisseurAdress->setAdresse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    // /**
+    //  * @return Collection<int, UserAdresse>
+    //  */
+    public function getUserAdresses(): Collection
+    {
+        return $this->userAdresses;
+    }
+
+    public function addUserAdress(UserAdresse $userAdress): static
+    {
+        if (!$this->userAdresses->contains($userAdress)) {
+            $this->userAdresses->add($userAdress);
+            $userAdress->setAdresse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserAdress(UserAdresse $userAdress): static
+    {
+        if ($this->userAdresses->removeElement($userAdress)) {
+            // set the owning side to null (unless already changed)
+            if ($userAdress->getAdresse() === $this) {
+                $userAdress->setAdresse(null);
             }
         }
 
