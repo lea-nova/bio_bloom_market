@@ -98,10 +98,9 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('user/{uuid:user}', name: 'app_user_show', methods: ['GET'])]
+    #[Route('user/{uuid}', name: 'app_user_show', methods: ['GET'])]
     public function show(
-        // #[MapEntity(mapping: ['uuid' => 'uuid'])] 
-        User $user,
+        #[MapEntity(mapping: ['uuid' => 'uuid'], message: "L'utilisateur n'a pas été trouvé")] User $user,
         Security $security
     ): Response {
         $currentUser = $this->getUser();
