@@ -5,25 +5,26 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Adresses de
+	<h1 class="text-center mt-10">Adresses de
 		{{ user.prenom }}</h1>
+	<section class="h-[25rem] flex flex-col justify-around items-center ">
+		<ul>
+			{% for adresse in adresses %}
+				<li>
+					{# {{ adresse.id }} #}
+					{# - #}
+					{{ adresse.ligne1 }}
+						<a class="rounded-md bg-warning-default  py-1 px-3 " href="{{ path('app_user_adresses_update', {'uuid': user.uuid, 'id': adresse.id}) }}"> Modifier</a>
+					<form action="{{ path('app_user_adresses_delete', {'uuid': user.uuid, 'id': adresse.id}) }}" method="POST" style="display: inline-block;">
+						<input type="hidden" name="_method" value="DELETE">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.id) }}">
+						<button type="submit" class=" rounded-md py-1 px-3 bg-red-600 text-white">Supprimer</button>
+					</form>
+				</li>
+			{% endfor %}
+		</ul>
+		{# Ajouter des liens pour ajouter, modifier ou supprimer des adresses si nécessaire #}
+		<a class="btn-cta w-[15rem]" href="{{ path('app_user_adresses_new', {'uuid': user.uuid}) }}">Ajouter une nouvelle adresse</a>
+	</section>
 
-	<ul>
-		{% for adresse in adresses %}
-			<li>
-				{# {{ adresse.id }} #}
-				{# - #}
-				{{ adresse.ligne1 }}
-					<a class="rounded-md bg-warning-default  py-1 px-3 " href="{{ path('app_user_adresses_update', {'uuid': user.uuid, 'id': adresse.id}) }}"> Modifier</a>
-				<form action="{{ path('app_user_adresses_delete', {'uuid': user.uuid, 'id': adresse.id}) }}" method="POST" style="display: inline-block;">
-					<input type="hidden" name="_method" value="DELETE">
-					<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.id) }}">
-					<button type="submit" class=" rounded-md py-1 px-3 bg-red-600 text-white">Supprimer</button>
-				</form>
-			</li>
-		{% endfor %}
-	</ul>
-
-	{# Ajouter des liens pour ajouter, modifier ou supprimer des adresses si nécessaire #}
-	<a class="btn-cta" href="{{ path('app_user_adresses_new', {'uuid': user.uuid}) }}">Ajouter une nouvelle adresse</a>
 {% endblock %}
