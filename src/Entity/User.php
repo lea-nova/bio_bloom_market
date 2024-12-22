@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var list<string> The user roles
      */
     #[ORM\Column(nullable: true)]
-    private array $roles = [];
+    private array $roles = ["ROLE_USER"];
 
     /**
      * @var string The hashed password
@@ -60,8 +60,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateNaissance = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $fideliteClient = null;
+    #[ORM\Column(nullable: false)]
+    private ?bool $fideliteClient = false;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $prefAchat = null;
