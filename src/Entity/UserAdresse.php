@@ -6,6 +6,7 @@ use App\Repository\UserAdresseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserAdresseRepository::class)]
+#[ORM\UniqueConstraint(name: "unique_default_address", columns: ["is_default"])]
 class UserAdresse
 {
     #[ORM\Id]
@@ -21,6 +22,9 @@ class UserAdresse
     #[ORM\ManyToOne(inversedBy: 'userAdresses', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Adresse $adresse = null;
+
+    #[ORM\Column]
+    private ?bool $isDefault = false;
 
     public function getId(): ?int
     {
@@ -54,6 +58,18 @@ class UserAdresse
     public function setAdresse(?Adresse $adresse): static
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function isDefault(): ?bool
+    {
+        return $this->isDefault;
+    }
+
+    public function setIsDefault(bool $isDefault): static
+    {
+        $this->isDefault = $isDefault;
 
         return $this;
     }

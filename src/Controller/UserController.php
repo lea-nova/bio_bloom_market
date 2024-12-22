@@ -89,22 +89,29 @@ class UserController extends AbstractController
         Security $security
     ): Response {
 
-        // dd($this->getUser());
         $currentUser = $this->getUser();
         if ($user !== $currentUser && !($security->isGranted("ROLE_ADMIN"))) {
             return $this->redirectToRoute('app_main');
             // return $this->redirectToRoute('app_user_show', ["uuid" => $uuid]);
         }
 
-        $userAdresses = $user->getUserAdresses();
+        $userAdresses = $user->getUserAdresses();;
         $adressesByUser = [];
         foreach ($userAdresses as $userAdresse) {
             $adressesByUser[] = $userAdresse->getAdresse();
+            if ($userAdresse->isDefault()) {
+                $adresseDefault = $userAdresse->getAdresse();
+            }
         }
+        // dd($userAdresses);
 
+        // dd($adresseDefault->getId());
+        $adresseById = $adresseRepository->find($adresseDefault->getId());
+        // dd($adresseById);
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'adresses' => $adressesByUser,
+            'adresseDefault' => $adresseById
         ]);
     }
 
@@ -483,4 +490,97 @@ class UserController extends AbstractController
     {
         return $this->render('admin_user_print.html.twig');
     }
+    #[Route('/user/{uuid:user}/adresses/{id:adresse}', name: 'app_one_adresse', methods: ['GET', 'POST'])]
+    public function showOne(
+        User $user,
+        Adresse $adresse
+    ): Response {
+        // dd($user);
+        return $this->render('user_adresse/show_one.html.twig', [
+            'user' => $user,
+            'adresse' => $adresse,
+        ]);
+    }
+
+    #[Route('/user/{uuid:user}/adresses/{id:adresse}/default', name: 'app_adress_default', methods: ['GET', 'POST'])]
+    public function adresseByDefault(
+        User $user,
+        Adresse $adresse,
+        UserAdresseRepository $userAdresseRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+
+
+        $userAdresse = $userAdresseRepository->findBy([
+            'user' => $user,
+            'adresse' => $adresse
+        ]);
+        // if ($userAdresse) {
+
+        $usersAdresses = $user->getUserAdresses();
+        $userAdresses = [];
+        foreach ($usersAdresses as $userAdresse) {
+            $userAdresses[] = $userAdresse;
+            if ($userAdresse->isDefault()) {
+
+                $userAdresse->setIsDefault(false);
+                $entityManager->persist($userAdresse);
+                // dd($userAdresse);
+                // Mets tout à faux.
+                // dd($userAdresses);
+                // $adressesByUser = [];
+                // foreach ($userAdresses as $userAdresse) {
+                //     $adressesByUser[] = $userAdresse->getAdresse();
+                //     if ($userAdresse->isDefault()) {
+                //         $userAdresse->setIsDefault(true);
+                //         $entityManager->persist($userAdresse);
+                //         $entityManager->flush();
+                //     }
+                // }
+                $entityManager->flush();
+
+                // dd($userAdresse);
+                // dd($userAdresse);
+            }
+            // $entityManager->flush();
+        }
+        foreach ($userAdresses as $theAdresse) {
+            if ($theAdresse->getAdresse() === $adresse) {
+                $valueIsDefault = $theAdresse->isDefault();
+                // dd($valueIsDefault);
+                $theAdresse->setIsDefault(true);
+                $entityManager->persist($theAdresse);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_user_show', ['uuid' => $user->getUuid()]);
+            }
+        }
+        // }
+
+        // $adrezs = [];
+        // foreach ($userAdresse as $adress) {
+        //     $adrezs = $adress->isDefault();
+        // }
+        // // dd($adrezs);
+        // if ($adrezs) {
+        //     $adress->setIsDefault(!$adrezs);
+        //     $entityManager->persist($adress);
+        //     $entityManager->flush();
+        // }
+        return $this->redirectToRoute('app_main');
+        // return $this->redirectToRoute('app_user_show', ['uuid' => $user->getUuid()]);
+
+
+        return $this->render('user_adresse/adresse_default.html.twig', [
+            'user' => $user,
+            'adresse' => $adresse,
+        ]);
+    }
 }
+
+// $adresseExiste = $entityManager->getRepository(Adresse::class)->findOneBy([
+//     'ligne1' => $newAdresse->getLigne1(),
+//     'ligne2' => $newAdresse->getLigne2(),
+//     'codePostal' => $newAdresse->getCodePostal(),
+//     'ville' => $newAdresse->getVille(),
+//     'pays' => $newAdresse->getPays(),
+// // ]);

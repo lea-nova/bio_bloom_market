@@ -20,11 +20,11 @@
 						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.id) }}">
 						<button type="submit" class=" rounded-md py-1 px-3 bg-red-600 text-white">Supprimer</button>
 					</form>
+					<a href=" {{path('app_one_adresse',  {'uuid': user.uuid, 'id': adresse.id})}}">Voir plus</a>
 				</li>
 			{% endfor %}
 		</ul>
 		{# Ajouter des liens pour ajouter, modifier ou supprimer des adresses si nécessaire #}
-		<a class="btn-cta w-[15rem]" href="{{ path('app_user_adresses_new', {'uuid': user.uuid}) }}">Ajouter une nouvelle adresse</a>
-	</section>
-
-{% endblock %}
+		<a class=" btn-cta w-[15rem]" href=" {{ path('app_user_adresses_new', {'uuid': user.uuid} ) }}">Ajouter une nouvelle adresse</a>
+	</li>
+</section>{% endblock %}
