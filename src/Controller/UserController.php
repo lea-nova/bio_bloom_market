@@ -97,21 +97,19 @@ class UserController extends AbstractController
 
         $userAdresses = $user->getUserAdresses();;
         $adressesByUser = [];
+        $adresseDefault = null;
         foreach ($userAdresses as $userAdresse) {
             $adressesByUser[] = $userAdresse->getAdresse();
             if ($userAdresse->isDefault()) {
                 $adresseDefault = $userAdresse->getAdresse();
+                $adresseById = $adresseRepository->find($adresseDefault->getId());
             }
         }
-        // dd($userAdresses);
 
-        // dd($adresseDefault->getId());
-        $adresseById = $adresseRepository->find($adresseDefault->getId());
-        // dd($adresseById);
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'adresses' => $adressesByUser,
-            'adresseDefault' => $adresseById
+            'adresseDefault' => $adresseDefault
         ]);
     }
 

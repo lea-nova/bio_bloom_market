@@ -77,11 +77,12 @@
 			<ul>
 				<li>
 
-					{% if adresseDefault is  empty %}
-						<small>Pas d'adresses enregistrées</small>
+					{% if adresseDefault is not null %}
+						{{ adresseDefault.ligne1 }}
 					{% else %}
-						{{adresseDefault.ligne1}}
+						<small>Pas d'adresses enregistrées</small>
 					{% endif %}
+
 
 					{# PLus tard mettre default//true#}
 				</li>
