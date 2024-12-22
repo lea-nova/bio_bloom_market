@@ -72,18 +72,20 @@
 
 			<h3>Adresses enregistrées</h3>
 
-			{% if adresses|length < 1  %}
-				<small>Pas d'adresses enregistrées</small>
-			{% else %}
-				<h4>Votre adresse par défaut
-				</h4>
-				<ul>
-					<li>
-						{{adresses|first.ligne1}}
-						{# PLus tard mettre default//true#}
-					</li>
-				</ul>
-			{% endif %}
+			<h4>Votre adresse par défaut
+			</h4>
+			<ul>
+				<li>
+
+					{% if adresseDefault is  empty %}
+						<small>Pas d'adresses enregistrées</small>
+					{% else %}
+						{{adresseDefault.ligne1}}
+					{% endif %}
+
+					{# PLus tard mettre default//true#}
+				</li>
+			</ul>
 
 			{# Remettre le <a> qui est dans Brouillon #}
 			<a href="{{ path('app_user_adresses', {'uuid': user.uuid}) }}" class="btn-cta">Gérer vos adresses</a>

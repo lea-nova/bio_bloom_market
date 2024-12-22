@@ -89,7 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->adresses = new ArrayCollection();
         $this->uuid = Uuid::v4();
         $this->createdAt = new DateTimeImmutable();
-        // $this->userAdresses = new ArrayCollection();
+        $this->userAdresses = new ArrayCollection();
     }
 
 

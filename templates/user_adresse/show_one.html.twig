@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<h1>Adresses n°{{adresse.id}}</h1>
+	<div>
+		<p>Ligne 1 :
+			{{adresse.ligne1}}</p>
+		<p>Ligne 2 :
+			{{adresse.ligne2}}</p>
+		<p>Code Postal :
+			{{adresse.codePostal}}
+		</p>
+		<p>Ville:
+			{{adresse.ville}}
+		</p>
+		<p>Pays :
+			{{adresse.pays}}
+		</p>
+		<p>
+			Cedex
+			<small>(optionnel)</small>:
+			{{adresse.cedex}}
+		</p>
+	</div>
+	<a class="btn-cta" href="{{ path('app_adress_default', {'uuid': app.user.uuid, 'id': adresse.id}) }}">Choisir cette adresse par défaut
+	</a>
+	{# <h1>Adresses n°Test</h1> #}
+{% endblock %}
