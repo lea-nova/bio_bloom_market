@@ -44,6 +44,7 @@
 			</div>
 		</div>
 	</section>
-
+	<a class="btn-cta" href="{{ path('app_adress_default', {'uuid': app.user.uuid, 'id': adresse.id}) }}">Choisir cette adresse par défaut
+	</a>
 	<a href=" {{ path('app_user_adresses', {'uuid': user.uuid} ) }}">Retour à la liste des adresses</a>
 {% endblock %}
