@@ -13,6 +13,7 @@ use App\Repository\UserAdresseRepository;
 use App\Repository\UserRepository;
 use App\Service\PasswordService;
 use DateTimeImmutable;
+use Doctrine\DBAL\Types\DateImmutableType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -281,6 +282,8 @@ class UserController extends AbstractController
             // Sauvegarder l'adresse dans la base de données
             $userAdresse = new UserAdresse();
             $userAdresse->setAdresse($adresse);
+            $userAdresse->setCreatedAt(new DateTimeImmutable());
+            $userAdresse->setUpdatedAt(new DateTimeImmutable());
             $user->addUserAdress($userAdresse);
             // $adresse->addUserAdress($adresse);
             $entityManager->persist($userAdresse);
@@ -432,6 +435,7 @@ class UserController extends AbstractController
             // dd($autresUtilisateurs);
             $autresUtilisateurs = [];
             foreach ($autresUtilisateursParAdresse as $oneUser) {
+
                 $autresUtilisateurs[] = $oneUser->getUser();
             }
             // dd($autresUtilisateurs);
@@ -443,11 +447,13 @@ class UserController extends AbstractController
                 $newAdresse->setCodePostal($oldAdresse->getCodePostal());
                 $newAdresse->setVille($oldAdresse->getVille());
                 $newAdresse->setPays($oldAdresse->getPays());
+                $newAdresse->setUpdatedAt(new DateTimeImmutable());
 
                 // $oldAdresse->removeUser($currentUser)
                 // $currentUser->removeAdresse($oldAdresse);
                 $form = $this->createForm(AdresseType::class, $newAdresse);
             } else {
+
                 // personne n'a la même adresse il est possible de la modifier.
                 $form = $this->createForm(AdresseType::class, $oldAdresse);
             }
@@ -468,6 +474,8 @@ class UserController extends AbstractController
                 } else {
                     $entityManager->persist($newAdresse);
                 }
+                $newAdresse->setUpdatedAt(new DateTimeImmutable());
+
                 $user->addAdresse($newAdresse);
             }
             $entityManager->flush();
@@ -522,6 +530,7 @@ class UserController extends AbstractController
             if ($userAdresse->isDefault()) {
 
                 $userAdresse->setIsDefault(false);
+                $userAdresse->setUpdatedAt(new DateTimeImmutable());
                 $entityManager->persist($userAdresse);
                 // dd($userAdresse);
                 // Mets tout à faux.
@@ -547,6 +556,7 @@ class UserController extends AbstractController
                 $valueIsDefault = $theAdresse->isDefault();
                 // dd($valueIsDefault);
                 $theAdresse->setIsDefault(true);
+                $theAdresse->setUpdatedAt(new DateTimeImmutable());
                 $entityManager->persist($theAdresse);
                 $entityManager->flush();
                 return $this->redirectToRoute('app_user_show', ['uuid' => $user->getUuid()]);

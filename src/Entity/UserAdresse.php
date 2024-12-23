@@ -26,6 +26,14 @@ class UserAdresse
     #[ORM\Column]
     private ?bool $isDefault = false;
 
+    #[ORM\Column]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -70,6 +78,30 @@ class UserAdresse
     public function setIsDefault(bool $isDefault): static
     {
         $this->isDefault = $isDefault;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
