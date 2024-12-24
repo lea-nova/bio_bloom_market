@@ -100,13 +100,15 @@
 			{{ include('user/_delete_form.html.twig') }}
 			{% if is_granted('ROLE_ADMIN') %}
 				<small class="font-semibold">ADMIN</small>
-				<div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 h-[8rem] flex flex-col justify-around items-center w-2/3">
+				<div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 h-[12rem] flex flex-col justify-around items-center w-2/3">
 					<h4 class="my-3">Liste des utilisateurs :
 						<br>
 					</h4>
 					{# <span class="mt-8"> #}
 					<a class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  my-3 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800  w-1/2" href=" {{ path('app_user_index') }} ">back to list</a>
 					{# </span> #}
+					{# #[Route('admin/', name: 'admin_app_main')] #}
+					<a class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  my-3 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800  w-1/2" href="{{path('admin_app_main')}}">Dashboard</a>
 				</div>
 			{% endif %}
 		</section>
