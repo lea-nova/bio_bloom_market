@@ -496,17 +496,17 @@ class UserController extends AbstractController
     {
         return $this->render('admin_user_print.html.twig');
     }
-    #[Route('/user/{uuid:user}/adresses/{id:adresse}', name: 'app_one_adresse', methods: ['GET', 'POST'])]
-    public function showOne(
-        User $user,
-        Adresse $adresse
-    ): Response {
-        // dd($user);
-        return $this->render('user_adresse/show_one.html.twig', [
-            'user' => $user,
-            'adresse' => $adresse,
-        ]);
-    }
+    // #[Route('/user/{uuid:user}/adresses/{id:adresse}', name: 'app_one_adresse', methods: ['GET', 'POST'])]
+    // public function showOne(
+    //     User $user,
+    //     Adresse $adresse
+    // ): Response {
+    //     // dd($user);
+    //     return $this->render('user_adresse/show_one.html.twig', [
+    //         'user' => $user,
+    //         'adresse' => $adresse,
+    //     ]);
+    // }
 
     #[Route('/user/{uuid:user}/adresses/{id:adresse}/default', name: 'app_adress_default', methods: ['GET', 'POST'])]
     public function adresseByDefault(
@@ -584,11 +584,3 @@ class UserController extends AbstractController
         ]);
     }
 }
-
-// $adresseExiste = $entityManager->getRepository(Adresse::class)->findOneBy([
-//     'ligne1' => $newAdresse->getLigne1(),
-//     'ligne2' => $newAdresse->getLigne2(),
-//     'codePostal' => $newAdresse->getCodePostal(),
-//     'ville' => $newAdresse->getVille(),
-//     'pays' => $newAdresse->getPays(),
-// // ]);
