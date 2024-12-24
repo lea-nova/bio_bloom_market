@@ -12,12 +12,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/fournisseur')]
+#[Route('admin/fournisseur')]
 class FournisseurController extends AbstractController
 {
     #[Route('/', name: 'app_fournisseur_index', methods: ['GET'])]
     public function index(FournisseurRepository $fournisseurRepository): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
+            return $this->redirectToRoute('app_main');
+        }
         return $this->render('fournisseur/index.html.twig', [
             'fournisseurs' => $fournisseurRepository->findAll(),
         ]);
@@ -26,6 +29,9 @@ class FournisseurController extends AbstractController
     #[Route('/new', name: 'app_fournisseur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
+            return $this->redirectToRoute('app_main');
+        }
         $fournisseur = new Fournisseur();
         $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
@@ -46,6 +52,9 @@ class FournisseurController extends AbstractController
     #[Route('/{id}', name: 'app_fournisseur_show', methods: ['GET'])]
     public function show(#[MapEntity(id: "id")] Fournisseur $fournisseur): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
+            return $this->redirectToRoute('app_main');
+        }
         return $this->render('fournisseur/show.html.twig', [
             'fournisseur' => $fournisseur,
         ]);
@@ -54,6 +63,9 @@ class FournisseurController extends AbstractController
     #[Route('/{id}/edit', name: 'app_fournisseur_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, #[MapEntity(id: "id")] Fournisseur $fournisseur, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
+            return $this->redirectToRoute('app_main');
+        }
         $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
 
@@ -72,6 +84,9 @@ class FournisseurController extends AbstractController
     #[Route('/{id}', name: 'app_fournisseur_delete', methods: ['POST'])]
     public function delete(Request $request, #[MapEntity(id: "id")] Fournisseur $fournisseur, EntityManagerInterface $entityManager): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
+            return $this->redirectToRoute('app_main');
+        }
         if ($this->isCsrfTokenValid('delete' . $fournisseur->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($fournisseur);
             $entityManager->flush();

@@ -28,7 +28,7 @@ class FournisseurAdresse
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
-    private ?bool $isApproved = null;
+    private ?bool $isApproved = false;
 
     public function getId(): ?int
     {
