@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Fournisseur;
+use App\Entity\FournisseurAdresse;
 use App\Form\FournisseurType;
+use App\Repository\AdresseRepository;
+use App\Repository\FournisseurAdresseRepository;
 use App\Repository\FournisseurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -50,11 +53,14 @@ class FournisseurController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_fournisseur_show', methods: ['GET'])]
-    public function show(#[MapEntity(id: "id")] Fournisseur $fournisseur): Response
+    public function show(#[MapEntity(mapping: ['id' => 'id'])] Fournisseur $fournisseur): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
             return $this->redirectToRoute('app_main');
         }
+        $adresseByFournisseur = $fournisseur->getFournisseurAdresses();
+        // dd($adresseByFournisseur);
+
         return $this->render('fournisseur/show.html.twig', [
             'fournisseur' => $fournisseur,
         ]);
@@ -93,5 +99,29 @@ class FournisseurController extends AbstractController
         }
 
         return $this->redirectToRoute('app_fournisseur_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/adresses', name: 'app_fournisseur_show_adresses', methods: ['GET'])]
+    public function showAdresses(
+        #[MapEntity(mapping: ['id' => 'id'])] Fournisseur $fournisseur,
+        FournisseurAdresseRepository $fournisseurAdresseRepository,
+        AdresseRepository $adresseRepository
+    ): Response {
+        if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
+            return $this->redirectToRoute('app_main');
+        }
+
+        $fournisseurAdresses = $fournisseur->getFournisseurAdresses();
+        $fournisseurAdresseIds = [];
+        $fournisseurAdress = [];
+        foreach ($fournisseurAdresses as $oneFournisseurAdresse) {
+            $fournisseurAdresseIds[] = $oneFournisseurAdresse->getAdresse()->getId();
+            $fournisseurAdress[] = $adresseRepository->find($oneFournisseurAdresse->getAdresse()->getId());
+        }
+
+        return $this->render('fournisseur/show_adresses.html.twig', [
+            'adresses' => $fournisseurAdress,
+            'fournisseur' => $fournisseur,
+        ]);
     }
 }

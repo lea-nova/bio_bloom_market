@@ -1,38 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fournisseur{% endblock %}
+{% block title %}Fournisseur
+{% endblock %}
 
 {% block body %}
-    <h1>Fournisseur</h1>
+	<h1>Fournisseur</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ fournisseur.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ fournisseur.nom }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ fournisseur.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Mail</th>
-                <td>{{ fournisseur.mail }}</td>
-            </tr>
-            <tr>
-                <th>Service</th>
-                <td>{{ fournisseur.service }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ fournisseur.id }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ fournisseur.nom }}</td>
+			</tr>
+			<tr>
+				<th>Telephone</th>
+				<td>{{ fournisseur.telephone }}</td>
+			</tr>
+			<tr>
+				<th>Mail</th>
+				<td>{{ fournisseur.mail }}</td>
+			</tr>
+			<tr>
+				<th>Service</th>
+				<td>{{ fournisseur.service }}</td>
+			</tr>
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_fournisseur_index') }}">back to list</a>
+	<a href="{{ path('app_fournisseur_index') }}">back to list</a>
 
-    <a href="{{ path('app_fournisseur_edit', {'id': fournisseur.id}) }}">edit</a>
-
-    {{ include('fournisseur/_delete_form.html.twig') }}
+	<a href="{{ path('app_fournisseur_edit', {'id': fournisseur.id}) }}">edit</a>
+	<h2>Adresses pour
+		{{fournisseur.nom}}</h2>
+	<a href={{path('app_adresse_fournisseur_index', {'id': fournisseur.id} )}}>Voir les différentes adresses</a>
+	{{ include('fournisseur/_delete_form.html.twig') }}
 {% endblock %}
