@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title %}Adresses de
+	{{ fournisseur.nom }}
+{% endblock %}
+{% block body %}
+	<h1>Adresses pour
+		{{fournisseur.nom}}
+	</h1>
+	{% if adresses is empty %}
+		Pas d'adresses connues pour ce fournisseur
+	{% else %}
+		<section class="h-[25rem] flex flex-col justify-around items-center ">
+			<ul>
+				{% for adresse in adresses %}
+					<li>
+						{{ adresse.id }}
+						-
+						{{ adresse.ligne1 }}
+						<a class="focus:outline-none text-black bg-yellow-400 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  " href="{{ path('app_adresse_fournisseur_edit', {'id': fournisseur.id, 'ulid': adresse.ulid}) }}">
+							Modifier</a>
+						<form action="{{ path('app_adresse_fournisseur_delete', {'id': fournisseur.id, 'idAdresse': adresse.id}) }}" method="POST" style="display: inline-block;">
+							<input type="hidden" name="_method" value="DELETE">
+							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.id) }}">
+							<button type="submit" class=" rounded-md  bg-red-600 text-white text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+						</form>
+					</li>
+				{% endfor %}
+			</ul>
+			{# Ajouter des liens pour ajouter, modifier ou supprimer des adresses si nécessaire #}
+
+		</section>
+	{% endif %}
+	<section>
+		<a class=" btn-cta w-[15rem]" href={{ path('app_adresse_fournisseur_new', {'id': fournisseur.id} )}}>Ajouter une nouvelle adresse</a>
+	</section>
+{% endblock %}

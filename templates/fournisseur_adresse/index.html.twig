@@ -1,0 +1,39 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Adresse index
+{% endblock %}
+
+{% block body %}
+	<h1>Adresse index</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				{# <th>Id</th> #}
+	<th>Ligne1</th>
+	<th>Ligne2</th>
+	<th>CodePostal</th>
+	<th>Ville</th>
+	<th>Pays</th>
+	<th>Cedex</th>
+	<th>actions</th>
+</tr></thead><tbody>
+{% for adresse in adresses %}
+	<tr>
+		{# <td>{{ adresse.id }}</td> #}
+		<td>{{ adresse.ligne1 }}</td>
+		<td>{{ adresse.ligne2 }}</td>
+		<td>{{ adresse.codePostal }}</td>
+		<td>{{ adresse.ville }}</td>
+		<td>{{ adresse.pays }}</td>
+		<td>{{ adresse.cedex }}</td>
+		<td>
+			<a href="{{ path('app_adresse_show', {'ulid': adresse.ulid}) }}">show</a>
+			<a href="{{ path('app_adresse_edit', {'ulid': adresse.ulid}) }}">edit</a>
+		</td>
+	</tr>
+{% else %}
+	<tr>
+		<td colspan="8">no records found</td>
+	</tr>
+{% endfor %}</tbody></table><a href="{{ path('app_adresse_new') }}">Create new</a>{% endblock %}#}

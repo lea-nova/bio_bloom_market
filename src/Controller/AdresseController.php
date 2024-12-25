@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Adresse;
+use App\Entity\Fournisseur;
 use App\Form\AdresseType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,12 +12,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
-#[Route('/adresse')]
+// #[Route('/adresse')]
 class AdresseController extends AbstractController
 {
-    #[Route('/', name: 'app_adresse_index', methods: ['GET'])]
+    #[Route('admin/adresse', name: 'app_adresse_index', methods: ['GET', 'POST'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
+            return $this->redirectToRoute('app_main');
+        }
         $adresses = $entityManager
             ->getRepository(Adresse::class)
             ->findAll();
@@ -26,36 +30,41 @@ class AdresseController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_adresse_new', methods: ['GET', 'POST'])]
+    #[Route('adresse/new', name: 'app_adresse_new', methods: ['POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // dd($request);
         $adresse = new Adresse();
         $form = $this->createForm(AdresseType::class, $adresse);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $adresse) {
             $entityManager->persist($adresse);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_adresse_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_fournisseur_show_adresses', [], Response::HTTP_SEE_OTHER);
         }
-
+        // if ($adresse) {
+        //     return $this->redirectToRoute('app_fournisseur_show_adresses');
+        // }
         return $this->render('adresse/new.html.twig', [
             'adresse' => $adresse,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{ulid}', name: 'app_adresse_show', methods: ['GET'])]
-    public function show(#[MapEntity(ulid: "ulid")] Adresse $adresse): Response
+    #[Route('adresse/{ulid}', name: 'app_adresse_show', methods: ['GET'])]
+    public function show(#[MapEntity(mapping: ['ulid' => "ulid"])] Adresse $adresse, $fournisseurId): Response
     {
+        dd($fournisseurId);
+
         return $this->render('adresse/show.html.twig', [
             'adresse' => $adresse,
         ]);
     }
 
-    #[Route('/{ulid}/edit', name: 'app_adresse_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, #[MapEntity(ulid: "ulid")] Adresse $adresse, EntityManagerInterface $entityManager): Response
+    #[Route('adresse/{ulid}/edit', name: 'app_adresse_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, #[MapEntity(mapping: ['ulid' => "ulid"])] Adresse $adresse, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AdresseType::class, $adresse);
         $form->handleRequest($request);
@@ -72,8 +81,8 @@ class AdresseController extends AbstractController
         ]);
     }
 
-    #[Route('/{ulid}', name: 'app_adresse_delete', methods: ['POST'])]
-    public function delete(Request $request, #[MapEntity(ulid: "ulid")] Adresse $adresse, EntityManagerInterface $entityManager): Response
+    #[Route('adresse/{ulid}', name: 'app_adresse_delete', methods: ['POST'])]
+    public function delete(Request $request, #[MapEntity(mapping: ['ulid' => "ulid"])] Adresse $adresse, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $adresse->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($adresse);
