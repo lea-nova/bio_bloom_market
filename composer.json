@@ -23,16 +23,17 @@
         "symfony/flex": "^2",
         "symfony/form": "7.0.*",
         "symfony/framework-bundle": "7.0.*",
-        "symfony/http-client": "7.0.*",
+        "symfony/http-client": "7.1.8",
         "symfony/intl": "7.0.*",
         "symfony/mailer": "7.0.*",
         "symfony/mime": "7.0.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/notifier": "7.0.*",
-        "symfony/process": "7.0.*",
+ 
+        "symfony/process": "7.1.7",
         "symfony/property-access": "7.0.*",
         "symfony/property-info": "7.0.*",
-        "symfony/runtime": "7.0.*",
+        "symfony/runtime": "7.1.7",
         "symfony/security-bundle": "7.0.*",
         "symfony/security-csrf": "7.0.*",
         "symfony/serializer": "7.2.*",
@@ -42,12 +43,12 @@
         "symfony/twig-bundle": "7.0.*",
         "symfony/uid": "7.0.*",
         "symfony/ux-turbo": "^2.17",
-        "symfony/validator": "7.0.*",
+         "symfony/validator": "7.1.4",
         "symfony/web-link": "7.0.*",
         "symfony/webpack-encore-bundle": "^2.2",
         "symfony/yaml": "7.0.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "3.14.0"
+        "twig/twig": "3.14.1"
     },
     "config": {
         "allow-plugins": {
