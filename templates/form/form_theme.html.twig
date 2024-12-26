@@ -1,0 +1,17 @@
+{# templates/form/form_theme.html.twig #}
+{% block form_row %}
+	<div class="w-full">
+		{{ form_label(form) }}
+		<br>
+		{{ form_widget(form,  {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}) }}
+		{{ form_errors(form) }}
+	</div>
+{% endblock %}
+
+{% block form_label %}
+	{% if label is not same as(false) %}
+		<label {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}" {% endfor %}>
+			{{ translation_domain is same as(null) ? label : label|trans({}, translation_domain) }}
+		</label>
+	{% endif %}
+{% endblock %}

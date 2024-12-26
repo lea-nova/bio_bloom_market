@@ -1,9 +1,9 @@
 {% extends "base.html.twig" %}
 {% block body %}
 	{# {{ form_start(form) }}
-																					{{ form_widget(form) }}
-																					<button class="btn">{{ button_label|default('Save') }}</button>
-																					{{ form_end(form) }} #}
+																						{{ form_widget(form) }}
+																						<button class="btn">{{ button_label|default('Save') }}</button>
+																						{{ form_end(form) }} #}
 	<h1>Ajouter une nouvelle adresse</h1>
 	<section>
 		<div class=" w-full pb-10 flex items-center justify-center  ">
@@ -32,7 +32,7 @@
 					{{ form_errors(form.pays)}}
 					{# </div> #}
 					{{ form_label(form.cedex) }}
-					{{ form_widget(form.cedex, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
+					{{ form_widget(form.cedex, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none not-required'}}
 					) }}
 					{{ form_errors(form.cedex)}}
 					<span class="flex justify-center mt-6">

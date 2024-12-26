@@ -1,47 +1,40 @@
-## [2024-10-12]
+# Changelog
 
-### Résolutions
+Toutes les modifications notables lors des itérations seront documentées ici.
 
-- Correction du bug d'ID auto-incrémenté.
-- Implémentation des UUID dans l'entité `User`.
-- Mise à jour des URLs pour utiliser les UUID.
-- Comparaison des UUID en chaînes de caractères.
-- Fixtures pour l'entité `User` et test
+## [1.0.0] - 2024-12-26
 
----
+### Features développées
 
-### Détails des Changements
-
-#### 1. Correction du Bug d'ID Auto-Incrémenté
-
-- Définition correcte de la colonne `id` comme `integer` et auto-incrémenté.
-- Application des migrations nécessaires.
-
-#### 2. Génération d'UUID
-
-- Ajout du champ `uuid` dans l'entité `User`.
-- Utilisation de `Uuid::uuid4()` pour la génération d'UUID.
-
-#### 3. Mise à Jour des URLs
-
-- Modification des routes pour utiliser les UUID.
-- Mise à jour des contrôleurs et des templates pour refléter ce changement.
-
-#### 4. Comparaison des UUIDs
-
-- Conversion des UUIDs en chaînes de caractères avant comparaison pour garantir l'accès sécurisé.
-
-#### 5. Création fixtures pour l'entité `User`
-
-## [2024-10-13]
-
-### Ajouts
-
-- Ajout de colonnes dans la table `Adresse`, **_ ulid, createdAt, updatedAt, deletedAt _**
-- Date par défaut [13/10/2024] pour les enregistrements déjà existants.
-
-## [2024-12-19]
-
-### Modifications
-
-- Temporairement remis l'ID des adresses comme paramètres d'URL.
+- Inscription
+  - Création de compte utilisateur
+  - Modification mot de passe ( vieux mot de passe + deux fois nouveau )
+- Connexion/Déconnexion
+  - Authentification sécurisée
+  - G
+- Utilisateur
+  - CRUD :
+    - **Création** : Enregistrement d’un nouvel utilisateur
+    - **Lecture** : Affichage des informations utilisateurs afficher informations utilisateurs, modifications des coordonnées )
+    - **Mise à jour** : Modification des coordonnées utilisateurs
+    - **Suppression** : Suppression d’un utilisateur
+    - **Adresse par Utilisateur**
+  - Gestion des rôles : ROLE_USER par défaut quand on est connecté.
+- Adresse
+  - CRUD :
+    - **Création** : Ajout d’une nouvelle adresse ( reliée soit à un enregistrement de `User` soit de `Fournisseur`
+    - **Lecture** : Affichage des adresses existantes.
+    - **Mise à jour** : Modifications des adresses
+    - **Suppression** : Suppression d’une adresse.
+  - Affichage d’une adresse par défaut :
+    - Définition et affichage d’une adresse préférée
+- Fournisseur
+  - CRUD :
+    - **Création** : Ajout d’un nouveau fournisseur
+    - **Lecture** : Affichage des informations fournisseur
+    - **Mise à jour** : Modification des informations fournisseur
+    - **Suppression**: Suppression d’un fournisseur
+  - Affichage dans le backoffice : Accessible uniquement aux utiliateurs avec le rôle `ROLE_ADMIN`
+- Création des tables `FournisseurAdresse` et `UtilisateurAdresse`
+  - Gestion du carnet d'adresses de chaque utilisateur
+  - Gestion du carnet d'adresses de chaque fournisseur

@@ -23,7 +23,7 @@ class FournisseurAdresseController extends AbstractController
     #[Route('admin/fournisseur/{id:fournisseur}/adresses', name: 'app_adresse_fournisseur_index', methods: ['POST'])]
     public function index(EntityManagerInterface $entityManager, $id): Response
     {
-        dd($id);
+
 
         if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
             return $this->redirectToRoute('app_main');

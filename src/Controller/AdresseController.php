@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Adresse;
 use App\Entity\Fournisseur;
 use App\Form\AdresseType;
+use App\Repository\AdresseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,20 +34,17 @@ class AdresseController extends AbstractController
     #[Route('adresse/new', name: 'app_adresse_new', methods: ['POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // dd($request);
         $adresse = new Adresse();
         $form = $this->createForm(AdresseType::class, $adresse);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $adresse) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($adresse);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_fournisseur_show_adresses', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_adresse_index', [], Response::HTTP_SEE_OTHER);
         }
-        // if ($adresse) {
-        //     return $this->redirectToRoute('app_fournisseur_show_adresses');
-        // }
+
         return $this->render('adresse/new.html.twig', [
             'adresse' => $adresse,
             'form' => $form,
@@ -54,9 +52,10 @@ class AdresseController extends AbstractController
     }
 
     #[Route('adresse/{ulid}', name: 'app_adresse_show', methods: ['GET'])]
-    public function show(#[MapEntity(mapping: ['ulid' => "ulid"])] Adresse $adresse, $fournisseurId): Response
+    public function show(#[MapEntity(mapping: ['ulid' => "ulid"])] Adresse $adresse, string $ulid, AdresseRepository $adresseRepository): Response
     {
-        dd($fournisseurId);
+        $adresse = $adresseRepository->findOneBy(['ulid' => $ulid]);
+
 
         return $this->render('adresse/show.html.twig', [
             'adresse' => $adresse,
