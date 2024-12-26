@@ -66,4 +66,4 @@
 | adresse_id FK | integer  | Clé étrangère d'Adresse                                                           |
 | created_at    | datetime | Timestamps création du compte                                                     |
 | updated_at    | datetime | Timestamps mise a jour info du compte                                             |
-| isDefault     | bool     | Permet de vérifier si l'adresse est par \n défaut dans le profil de l'utilisateur |
+| isDefault     | bool     | Permet de vérifier si l'adresse est par défaut dans le profil de l'utilisateur    |
