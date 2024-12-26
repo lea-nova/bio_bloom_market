@@ -146,7 +146,7 @@ class UserController extends AbstractController
     }
 
 
-
+    #[Route('user/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, #[MapEntity(id: "id")] User $user, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
     {
 
