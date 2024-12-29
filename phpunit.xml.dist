@@ -16,13 +16,6 @@
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
         <env name="KERNEL_CLASS" value="App\Kernel"/>
-<<<<<<< ours
-=======
-
-        <!-- ###+ symfony/mailer ### -->
-        <env name="MAILER_DSN" value="null://null"/>
-        <!-- ###- symfony/mailer ### -->
->>>>>>> theirs
     </php>
 
     <testsuites>
@@ -42,5 +35,6 @@
     </listeners>
 
     <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
     </extensions>
 </phpunit>
