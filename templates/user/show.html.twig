@@ -6,10 +6,17 @@
 {% block body %}
 	<div class="flex h-full ">
 
-		<aside class="bg-primary-dark min-h-full w-[15%]">
+		<aside class="bg-primary-dark max-h-full w-[15%]">
 			<a href="#">Historique des commandes</a>
 			<br/>
+			<small>Liste des commandes avec les détails pertinents ( date, statut, articles achetés ..)</small>
 			<a href="#">Suivi des livraisons</a>
+			<a href="#">Préférences personnelles</a>
+			<small>Préférences de communications (Notif etc...)</small>
+			<small>Paramètres de confidentialité</small>
+			<a href="#">Informations supplémentaires</a>
+			<small>Fidélités clients(points,statut..)</small>
+			<small>Préférences d'achats (produits preférés, allergies alimentaires ...)</small>
 		</aside>
 		<section class="flex-col ml-[4rem]  ">
 			<h1 class="mt-[3rem]">Bonjour,
@@ -98,6 +105,15 @@
 			<h4 class="my-3">Vous souhaitez supprimer votre compte ?
 			</h4>
 			{{ include('user/_delete_form.html.twig') }}
+			<h3>Détails du compte</h3>
+			<section>
+				<small>Date de création du compte :
+					{{createdAt}}</small>
+				<p>
+					<i>Dernière connexion :</i>
+					<small>mettre en place timestamps pour la dernière connexion de l'utilisateur</small>
+				</p>
+			</section>
 			{% if is_granted('ROLE_ADMIN') %}
 
 				<small class="font-semibold">ADMIN</small>

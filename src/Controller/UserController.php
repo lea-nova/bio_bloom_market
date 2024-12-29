@@ -95,6 +95,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_main');
             // return $this->redirectToRoute('app_user_show', ["uuid" => $uuid]);
         }
+        $userDate = $user->getCreatedAt()->format('d-m-Y');
 
         $userAdresses = $user->getUserAdresses();;
         $adressesByUser = [];
@@ -110,7 +111,8 @@ class UserController extends AbstractController
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'adresses' => $adressesByUser,
-            'adresseDefault' => $adresseDefault
+            'adresseDefault' => $adresseDefault,
+            'createdAt' => $userDate,
         ]);
     }
 
