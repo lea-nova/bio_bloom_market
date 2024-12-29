@@ -18,7 +18,7 @@ Toutes les modifications notables lors des itérations seront documentées ici.
     - **Lecture** : Affichage des informations utilisateurs afficher informations utilisateurs, modifications des coordonnées )
     - **Mise à jour** : Modification des coordonnées utilisateurs
     - **Suppression** : Suppression d’un utilisateur
-    - **Adresse par Utilisateur**
+  - Adresse par Utilisateur
   - Gestion des rôles : ROLE_USER par défaut quand on est connecté.
 - Adresse
   - CRUD :
