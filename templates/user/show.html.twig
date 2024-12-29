@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="flex h-full ">
 
-		<aside class="bg-primary-dark h-screen w-[15%]">
+		<aside class="bg-primary-dark h-max  w-[15%]">
 			<a href="#">Historique des commandes</a>
 			<br/>
 			<a href="#">Suivi des livraisons</a>
@@ -99,8 +99,9 @@
 			</h4>
 			{{ include('user/_delete_form.html.twig') }}
 			{% if is_granted('ROLE_ADMIN') %}
+
 				<small class="font-semibold">ADMIN</small>
-				<div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 h-[12rem] flex flex-col justify-around items-center w-2/3">
+				<div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 h-[12rem] flex flex-col justify-around items-center w-2/3 mb-5">
 					<h4 class="my-3">Liste des utilisateurs :
 						<br>
 					</h4>
