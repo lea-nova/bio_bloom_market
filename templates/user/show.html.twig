@@ -4,9 +4,9 @@
 {% endblock %}
 
 {% block body %}
-	<div class="flex h-full ">
 
-		<aside class="bg-primary-dark max-h-full w-[15%]">
+	<div class="md:flex md:flex-row my-5 justify-around">
+		<aside class="max-md:hidden  bg-primary-dark max-h-full w-[15%]">
 			<a href="#">Historique des commandes</a>
 			<br/>
 			<small>Liste des commandes avec les détails pertinents ( date, statut, articles achetés ..)</small>
@@ -18,116 +18,150 @@
 			<small>Fidélités clients(points,statut..)</small>
 			<small>Préférences d'achats (produits preférés, allergies alimentaires ...)</small>
 		</aside>
-		<section class="flex-col ml-[4rem]  ">
-			<h1 class="mt-[3rem]">Bonjour,
-				{{user.prenom}}</h1>
-			<h2 class="font-semibold text-3xl">Mes informations</h2>
+		<div class="md:flex md:flex-col md:w-fit m-auto">
+			<h1 class=" w-full text-center">Mon compte</h1>
+			<div class="flex flex-col justify-around   ">
+				<section class="flex max-md:flex-col md:flex-row w-full min-h-screen md:justify-around p-5  ">
+					<br>
+					<div class="md:flex flex-col justify-around  ">
+						<div class="  h-[5rem]">
+							<h2 class="">Bonjour,
+								{{user.prenom}}</h2>
+							<a href="{{ path('app_logout') }}" class="max-md:hidden btn-cta">Se déconnecter</a>
+						</div>
+						<section
+							class="bg-light-muted rounded-lg max-md:w-[98%] lg:p-5 lg:w-3/4  flex flex-col max-md:my-5 py-5 ">
+							{# <section class="bg-light-muted rounded-lg p-5 w-3/4 h-[26rem] flex flex-col "> #}
+							<h2 class=" font-semibold  max-md:text-md md:text-3xl pl-5 pt-5 ">Mes informations</h2>
+							<table class="mt-12">
+								<tbody>
+									<tr>{# <th>Id</th> #}
+										{# <td>{{ user.id }}</td> #}
+									</tr>
 
-			<table class="  ">
-				<tbody>
-					<tr>{# <th>Id</th> #}
-						{# <td>{{ user.id }}</td> #}
-					</tr>
+									<tr>
+										<th>Email</th>
+										<td class="break-all">{{ user.email }}</td>
+									</tr>
 
-					<tr>
-						<th>Email</th>
-						<td>{{ user.email }}</td>
-					</tr>
+									{% if is_granted('ROLE_ADMIN') %}
+										<tr>
 
-					{% if is_granted('ROLE_ADMIN') %}
-						<tr>
+											<th>Roles</th>
+											<td>
+												<ul class=" ">
+													{% for role in user.roles %}
+														<li class="inline">
+															{{role}};
+														</li>
+													{% endfor %}
+													{# <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
+												</ul>
+											</td>
+										</tr>
+									{% endif %}
+									<tr>
+										<th>Nom</th>
+										<td>{{ user.nom }}</td>
+									</tr>
+									<tr>
+										<th>Prenom</th>
+										<td>{{ user.prenom }}</td>
+									</tr>
+									<tr>
+										<th>Telephone</th>
+										<td>{{ user.telephone }}</td>
+									</tr>
+									<tr>
+										<th>DateNaissance</th>
+										<td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
+									</tr>
+									<tr>
+										<th>FideliteClient</th>
+										<td>{{ user.fideliteClient ? 'Oui' : 'Non' }}</td>
+									</tr>
+									<tr>
+										<th>PrefAchat</th>
+										<td>{{ user.prefAchat }}</td>
+									</tr>
+								</tbody>
+							</table>
+							<br>
+							<h3 class="font-semibold  max-md:text-md md:text-3xl pl-5 break-normal text-center max-lg:text-md lg:text-lg">Vous souhaitez modifier vos informations personnelles ?
+							</h3>
+							<a class=" max-sm:w-2/3 lg:w-2/3 text-center bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-yellow-900 m-auto" href="{{ path('app_user_edit', {'uuid': user.uuid}) }}">Modifier</a>
+						</section>
 
-							<th>Roles</th>
-							<td>
-								<ul class=" ">
-									{% for role in user.roles %}
-										<li class="inline">
-											{{role}};
-										</li>
-									{% endfor %}
-									{# <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
+						{% if is_granted('ROLE_ADMIN') %}
+							<div class="bg-light-muted rounded-lg max-md:w-[98%] lg:p-5 lg:w-3/4  flex flex-col justify-center max-md:my-5 py-5 border-2 border-primary-dark">
+								<h4 class="font-semibold  max-md:text-md md:text-3xl pl-5">Dashboard Admin :
+									<br>
+
+
+								</h4>
+								<a class="m-auto  bg-primary-default text-tertiary-darkerborder font-medium rounded-lg text-sm px-5  py-2.5 text-center md:font-bold  my-3 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800  w-1/2" href="{{path('admin_app_main')}}">Dashboard</a>
+							</div>
+						{% endif %}
+					</div>
+					<br>
+					<div class=" md:flex flex-col justify-between rounded-lg md:p-5  ">
+						<section class="bg-light-muted rounded-lg p-5 md:h-[24rem]  flex flex-col justify-around border-2 border-primary-default max-md:my-5 ">
+							<h3 class="font-semibold  max-md:text-md md:text-3xl">Fidélité client</h3>
+							<p>Point cumulés | Point avant la prochaine récompense</p>
+							<p>10% de réduction à votre prochaine commande</p>
+							<p>Prochaine vente privée prévues dans 3j</p>
+							<span class="my-3 m-auto">
+								<a href="#" class="btn-cta ">Voir mes avantages</a>
+							</span>
+						</section>
+						<section class="bg-light-muted rounded-lg p-5 h-[14rem] flex flex-col justify-around max-md:my-5">
+							<h3 class="font-semibold  max-md:text-md md:text-3xl">Votre adresse par défaut
+							</h3>
+							<span class="flex max-lg:flex-col lg:flex-row  max-lg:items-center justify-around">
+								<ul class="my-3 ">
+									<li>
+										{% if adresseDefault is not null %}
+											{{ adresseDefault.ligne1 }}
+										{% else %}
+											<small>Pas d'adresses enregistrées</small>
+										{% endif %}
+										{# PLus tard mettre default//true#}
+									</li>
 								</ul>
-							</td>
-						</tr>
-					{% endif %}
-					<tr>
-						<th>Nom</th>
-						<td>{{ user.nom }}</td>
-					</tr>
-					<tr>
-						<th>Prenom</th>
-						<td>{{ user.prenom }}</td>
-					</tr>
-					<tr>
-						<th>Telephone</th>
-						<td>{{ user.telephone }}</td>
-					</tr>
-					<tr>
-						<th>DateNaissance</th>
-						<td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
-					</tr>
-					<tr>
-						<th>FideliteClient</th>
-						<td>{{ user.fideliteClient ? 'Oui' : 'Non' }}</td>
-					</tr>
-					<tr>
-						<th>PrefAchat</th>
-						<td>{{ user.prefAchat }}</td>
-					</tr>
-				</tbody>
-			</table>
 
-			<h4 class="my-3 font-semibold text-2xl">Votre adresse par défaut
-			</h4>
-			<ul class="my-3">
-				<li>
-
-					{% if adresseDefault is not null %}
-						{{ adresseDefault.ligne1 }}
-					{% else %}
-						<small>Pas d'adresses enregistrées</small>
-					{% endif %}
+								{# Remettre le <a> qui est dans Brouillon #}
+								<span class="my-3 ">
+									<a href="{{ path('app_user_adresses', {'uuid': user.uuid}) }}" class="btn-cta m-auto  ">Gérer vos adresses</a>
+								</span>
+							</span>
+						</section>
 
 
-					{# PLus tard mettre default//true#}
-				</li>
-			</ul>
+						<section class="bg-light-muted rounded-lg p-5 max-md:my-5">
+							<h3 class="font-semibold max-md:text-md md:text-3xl">Détails du compte</h3>
 
-			{# Remettre le <a> qui est dans Brouillon #}
-			<span class="my-3">
-				<a href="{{ path('app_user_adresses', {'uuid': user.uuid}) }}" class="btn-cta ">Gérer vos adresses</a>
-			</span>
+							<small>Date de création du compte :
+								{{createdAt}}</small>
+							<p>
+								<i>Dernière connexion :</i>
+								<small>mettre en place timestamps pour la dernière connexion de l'utilisateur</small>
+							</p>
+						</section>
 
-			<h3 class="my-3">Vous souhaitez modifier vos informations personnelles ?
-			</h3>
-			<a class="  bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 mt-3 dark:focus:ring-yellow-900 " href="{{ path('app_user_edit', {'uuid': user.uuid}) }}">Modifier</a>
+						<section class="bg-red-100 rounded-lg p-5 flex max-md:flex-col md:flex-row  justify-around items-center align-middle md:h-24  pt-7">
+							<h6 class="md:my-3 font-semibold max-md:text-md">
+								Vous souhaitez supprimer votre compte ?
+							</h6>
+							<span class="max-md:items-center">
+								{{ include('user/_delete_form.html.twig') }}
+							</span>
+						</section>
+					</div>
+					<div class="mb-2"></div>
+				</section>
 
-			<h4 class="my-3">Vous souhaitez supprimer votre compte ?
-			</h4>
-			{{ include('user/_delete_form.html.twig') }}
-			<h3>Détails du compte</h3>
-			<section>
-				<small>Date de création du compte :
-					{{createdAt}}</small>
-				<p>
-					<i>Dernière connexion :</i>
-					<small>mettre en place timestamps pour la dernière connexion de l'utilisateur</small>
-				</p>
-			</section>
-			{% if is_granted('ROLE_ADMIN') %}
+			</div>
 
-				<small class="font-semibold">ADMIN</small>
-				<div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 h-[12rem] flex flex-col justify-around items-center w-2/3 mb-5">
-					<h4 class="my-3">Liste des utilisateurs :
-						<br>
-					</h4>
-					{# <span class="mt-8"> #}
-					<a class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  my-3 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800  w-1/2" href=" {{ path('app_user_index') }} ">back to list</a>
-					{# </span> #}
-					{# #[Route('admin/', name: 'admin_app_main')] #}
-					<a class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  my-3 dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800  w-1/2" href="{{path('admin_app_main')}}">Dashboard</a>
-				</div>
-			{% endif %}
-		</section>
+		</div>
 	</div>
 {% endblock %}
