@@ -25,57 +25,49 @@
 
 		{% endblock %}
 	</head>
-	<body class="min-h-screen flex flex-col h-full bg-gradient-to-b from-light-default to-light-muted md:h-100">
+	<body
+		class="flex flex-col min-h-screen ">
+		{# <body class="flex flex-col min-h-screen bg-gradient-to-b from-light-default to-light-muted md:h-100"> #}
 		<header>
 			{% include '_partials/_navbar.html.twig' %}
 		</header>
-		<main class=" flex-grow">
-			<div
-				class="w-full">
-				{# Affichage des messages flash #}
-				{% if app.user %}
-					<div class="mb-2">You are logged in as
-						{{ app.user.userIdentifier }},<a href="{{ path('app_logout') }}">Logout</a>
-						<small>
-							<em>A modifier</em>
-						</small>
+		<main
+			class="flex-grow">
+			{# Affichage des messages flash #}
+			{% for type, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ type }}">
+						{{ message }}
 					</div>
-				{% endif %}
-				{% for type, messages in app.flashes %}
-					{% for message in messages %}
-						<div class="alert alert-{{ type }}">
-							{{ message }}
-						</div>
-					{% endfor %}
 				{% endfor %}
-				{% block body %}{% endblock %}
-			</div>
-		</body>
+			{% endfor %}
+			{% block body %}{% endblock %}
+		</main>
+		<footer class="flex flex-col place-items-center justify-around align-bottom max-md:h-[17rem] mt-auto">
+			<ul class="flex max-md:flex-col max-md:items-center md:flex-row md:justify-between md:w-3/5  w-full ">
+				<li class="">
+					<a href="#" class="">Home</a>
+				</li>
+				<li class="">
+					<a href="#" class="">Features</a>
+				</li>
+				<li class="">
+					<a href="#" class="">Pricing</a>
+				</li>
+				<li class="">
+					<a href="#" class="">FAQs</a>
+				</li>
+				<li class="">
+					<a href="#" class="">About</a>
+				</li>
+			</ul>
+			<p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+			<p class="text-center text-body-secondary">
+				Image par
+				<a target="_blank" class=" px-2 text-body-secondary" href="https://pixabay.com/fr/users/pexels-2286921/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pexels</a>
+				de
+				<a target="_blank" class="  px-2 text-body-secondary" href="https://pixabay.com/fr//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pixabay</a>
+			</p>
+		</footer>
 	</body>
-</html></main><footer class="flex flex-col place-items-center md:h-[20%]">
-<ul class="flex flex-row justify-between md:w-3/5  ">
-	<li class="">
-		<a href="#" class="">Home</a>
-	</li>
-	<li class="">
-		<a href="#" class="">Features</a>
-	</li>
-	<li class="">
-		<a href="#" class="">Pricing</a>
-	</li>
-	<li class="">
-		<a href="#" class="">FAQs</a>
-	</li>
-	<li class="">
-		<a href="#" class="">About</a>
-	</li>
-</ul>
-<p class="text-center text-body-secondary">© 2024 Company, Inc</p>
-<p class="text-center text-body-secondary">
-	Image par
-	<a target="_blank" class=" px-2 text-body-secondary" href="https://pixabay.com/fr/users/pexels-2286921/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pexels</a>
-	de
-	<a target="_blank" class="  px-2 text-body-secondary" href="https://pixabay.com/fr//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=1834416">Pixabay</a>
-
-
-</p></footer></body></html></body></html>
+</html>
