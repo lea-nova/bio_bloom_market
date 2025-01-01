@@ -7,7 +7,7 @@
 		<span class="sr-only">Open main menu</span>
 	</button>
 
-	<ul class="hidden md:flex flex-row text-sm md:text-md lg:text-lg  justify-around items-center  w-screen h-20 ">
+	<ul class="hidden lg:flex flex-row text-sm md:text-md lg:text-md  justify-around items-center  w-screen h-20 ">
 		<li class="">
 			<a class=" text-tertiary-darker hover:text-primary-default" aria-current="page" href=" {{path('app_main')}} ">Accueil</a>
 		</li>
@@ -66,7 +66,8 @@
 				<a class=" text-tertiary-darker hover:text-primary-default" href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
 			</li>
 			<li class="">
-				<a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a>
+				<a class="btn-border" href="{{path('app_logout')}}">Se déconnecter</a>
+				{# <a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a> #}
 				<a class="lg:hidden text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}" name="Mon panier">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
 				</a>
@@ -94,7 +95,7 @@
 		</li>
 	</ul>
 	{# Bouton navbar fermé #}
-	<button type="button" class="md:hidden relative inline-flex items-center justify-end rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" id="navbar-toggle">
+	<button type="button" class="lg:hidden relative inline-flex items-center justify-end rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" id="navbar-toggle">
 		<span class="  "></span>
 		<span class="sr-only">Open main menu</span>
 		<svg class="block h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
