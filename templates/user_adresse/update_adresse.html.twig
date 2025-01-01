@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Modifier l'Adresse</h1>
+	<h1 class=" max-md:text-md md:text-lg text-center my-5">Modifier l'Adresse</h1>
 	<section>
 		<div class=" flex ">
 			<div class=" w-full pb-10 flex items-center justify-center  ">
@@ -36,7 +36,7 @@
 						{{ form_widget(form.cedex, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
 						) }}
 						{{ form_errors(form.cedex)}}
-						<button type="submit" class="btn-cta w-full lg:w-[35%]">
+						<button type="submit" class="btn-cta w-full lg:w-[35%] m-auto mt-5">
 							Enregistrer</button>
 						{{ form_end(form) }}
 					</div>
@@ -44,7 +44,9 @@
 			</div>
 		</div>
 	</section>
-	<a class="btn-cta" href="{{ path('app_adress_default', {'uuid': app.user.uuid, 'id': adresse.id}) }}">Choisir cette adresse par défaut
-	</a>
-	<a href=" {{ path('app_user_adresses', {'uuid': user.uuid} ) }}">Retour à la liste des adresses</a>
+	<div class="flex flex-col my-5">
+		<a class="btn-cta w-3/4 md:w-1/5 m-auto " href="{{ path('app_adress_default', {'uuid': app.user.uuid, 'id': adresse.id}) }}">Choisir cette adresse par défaut
+		</a>
+		<a class="m-auto" href=" {{ path('app_user_adresses', {'uuid': user.uuid} ) }}">Retour à la liste des adresses</a>
+	</div>
 {% endblock %}
