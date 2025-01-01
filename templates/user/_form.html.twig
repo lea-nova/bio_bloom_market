@@ -2,10 +2,10 @@
 	<div class=" flex ">
 		<div class=" w-full pb-10 flex items-center justify-center   ">
 
-			<div class="p-12 flex flex-col justify-middle border-2 rounded-md  border-primary-accent max-sm:w-[95%] md:w-[50%] lg:w-[45rem]  ">
+			<div class="p-12 flex sm:flex-col justify-middle border-2 rounded-md  border-primary-accent max-sm:w-[95%] md:w-[50%] lg:w-[45rem]  ">
 				{{ form_start(form, {'attr':{'class':'flex flex-col justify-center text-xs  max-md:items-center w-full  '}})}}
 				{{ form_errors(form) }}
-				<div class=" w-full flex flex-row justify-between">
+				<div class=" w-full md:flex flex-col lg:flex-row justify-between">
 					{# {{ form_widget(form) }} #}
 					{# Prénom #}
 					{{ form_label(form.prenom) }}
@@ -18,7 +18,7 @@
 					) }}
 				{{ form_errors(form.nom) }}
 				</div>
-					<div class="w-full flex flex-row justify-between"> {{ form_label(form.email) }}
+					<div class="w-full md:flex flex-col lg:flex-row justify-between"> {{ form_label(form.email) }}
 					{# Email #}
 					{{ form_widget(form.email, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
 					) }}
@@ -30,18 +30,22 @@
 					{{ form_errors(form.dateNaissance) }}
 					{# Téléphone #}
 				</div>
-				<div class="w-full flex flex-row justify-between">
+				<div class="w-full md:flex flex-col lg:flex-row justify-between">
 					{{ form_label(form.telephone) }}
 					{{ form_widget(form.telephone, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
 					) }}
 					{{ form_errors(form.telephone) }}
-					{{ form_label(form.fideliteClient) }}
-					{{ form_widget(form.fideliteClient, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
-					) }}
-					{{ form_errors(form.fideliteClient) }}
+					<span class=" flex flex-row text-center justify-center">
+						<span class="text-center w-full">
+							{{ form_label(form.fideliteClient) }}
+						</span>
+						{{ form_widget(form.fideliteClient, {'attr': {'class': 'h-5 max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}
+						) }}
+						{{ form_errors(form.fideliteClient) }}
+					</span>
 					{{ form_widget(form._token) }}
 				</div>
-				<div class=" w-full flex flex-row justify-center">
+				<div class=" w-full md:flex flex-row justify-center">
 					{% if is_granted('ROLE_ADMIN') %}
 						{{ form_label(form.roles) }}
 						{{ form_widget(form.roles, {'attr': {'class': ' max-lg:w-full input-text blur:!outline-none focus:!outline-none'}}

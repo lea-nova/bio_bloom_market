@@ -30,7 +30,11 @@ h2 {
     font-weight: 600;
 }
 
-
+input[type=text],
+input[type=email],
+input[type=password] {
+ @apply border-b-2 rounded-t-sm focus-visible:bg-secondary-light focus:border-b  focus:!outline-none focus-visible:border-b-2 focus-visible:border-secondary-dark focus:border-transparent focus:placeholder:bg-secondary-light focus:placeholder:border-none hover:placeholder-shown:bg-secondary-light border-secondary-dark text-sm placeholder-secondary-dark h-8;
+}
 
 /* .text-secondary {
     color: #E0E0E0 !important;

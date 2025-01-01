@@ -1,4 +1,4 @@
-.input-text {
+.basic-input {
     /* Pour le formulaire il faut aussi ajouter dans la classlist : "blur:!outline-none focus:!outline-none" */
-    @apply border-b-2 rounded-t-sm focus-visible:bg-secondary-light focus-visible:border-b-2 focus-visible:border-secondary-dark focus:border-transparent focus:placeholder:bg-secondary-light focus:placeholder:border-none hover:placeholder-shown:bg-secondary-light border-secondary-dark text-sm placeholder-secondary-dark h-8;
+    @apply border-b-2 rounded-t-sm focus-visible:bg-secondary-light focus:border-b  focus:!outline-none focus-visible:border-b-2 focus-visible:border-secondary-dark focus:border-transparent focus:placeholder:bg-secondary-light focus:placeholder:border-none hover:placeholder-shown:bg-secondary-light border-secondary-dark text-sm placeholder-secondary-dark h-8;
 }

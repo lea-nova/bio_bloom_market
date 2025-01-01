@@ -1,4 +1,15 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="flex flex-col w-[20rem]">
+	{{form_label(form.nom)}}
+	{{ form_widget(form.nom, {'attr': {'placeholder': 'Entrez le nom du fournisseur'}}) }}
+	{{form_label(form.telephone)}}
+	{{form_widget(form.telephone,{'attr':{'placeholder':'Entrez le numéro de téléphone du fournisseur'}})}}
+	{{form_label(form.mail)}}
+	{{form_widget(form.mail)}}
+	{{form_label(form.service )}}
+	{{form_widget(form.service,{'attr':
+    {'placeholder': 'Entrez le SAV'}})}}
+	{{ form_widget(form) }}
+</div>
+<button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

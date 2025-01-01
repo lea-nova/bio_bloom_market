@@ -1,4 +1,23 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
+<div class="flex flex-col w-[20rem]">
+	{{ form_label(form.ligne1) }}
+	{{ form_widget(form.ligne1) }}
+	{{ form_errors(form.ligne1) }}
+	{{ form_label(form.ligne2) }}
+	{{ form_widget(form.ligne2) }}
+	{{ form_errors(form.ligne2) }}
+	{{ form_label(form.codePostal) }}
+	{{ form_widget(form.codePostal) }}
+	{{ form_errors(form.codePostal) }}
+	{{ form_label(form.ville) }}
+	{{ form_widget(form.ville) }}
+	{{ form_errors(form.ville) }}
+	{{ form_label(form.pays) }}
+	{{ form_widget(form.pays) }}
+	{{ form_errors(form.pays) }}
+	{{ form_label(form.cedex) }}
+	{{ form_widget(form.cedex) }}
+	{{ form_errors(form.cedex) }}
+</div>
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
