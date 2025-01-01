@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="text-5xl mb-6 text-center pt-5">Modifiez vos informations personnelles,
+	<h1 class="max-md:text-xl text-5xl mb-6 text-center pt-5">Modifiez vos informations personnelles,
 		{{user.prenom}}</h1>
 
 	{{ include('user/_form.html.twig', {'button_label': 'Update'}) }}

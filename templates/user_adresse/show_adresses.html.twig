@@ -10,15 +10,17 @@
 	<section class="h-[25rem] flex flex-col justify-around items-center ">
 		<ul>
 			{% for adresse in adresses %}
-				<li>
+				<li class="flex flex-row ">
 					{# {{ adresse.id }} #}
 					{# - #}
-					{{ adresse.ligne1 }}
-						<a class="focus:outline-none text-black bg-yellow-400 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2  " href="{{ path('app_user_adresses_update', {'uuid': user.uuid, 'id': adresse.id}) }}"> Modifier</a>
+						<span class=" text-sm text-center m-auto"> {{ adresse.ligne1 }}
+					</span>
+					<a class="focus:outline-none text-black bg-yellow-400 focus:ring-4  font-medium rounded-lg text-sm px-4 py-2.5 me-2 mb-2 " href="{{ path('app_user_adresses_update', {'uuid': user.uuid, 'id': adresse.id}) }}">
+						Modifier</a>
 					<form action="{{ path('app_user_adresses_delete', {'uuid': user.uuid, 'id': adresse.id}) }}" method="POST" style="display: inline-block;">
 						<input type="hidden" name="_method" value="DELETE">
 						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.id) }}">
-						<button type="submit" class=" rounded-md py-1 px-3 bg-red-600 text-white text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+						<button type="submit" class=" rounded-md  bg-red-600 text-white text-sm px-3 py-2.5 me-2 mb-2">Supprimer</button>
 					</form>
 				</li>
 			{% endfor %}
