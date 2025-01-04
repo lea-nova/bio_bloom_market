@@ -6,7 +6,7 @@ use App\Repository\UserAdresseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserAdresseRepository::class)]
-#[ORM\UniqueConstraint(name: "unique_default_address", columns: ["is_default"])]
+
 class UserAdresse
 {
     #[ORM\Id]
