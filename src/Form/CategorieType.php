@@ -17,18 +17,18 @@ class CategorieType extends AbstractType
             ->add('nom')
             ->add('slug')
             ->add('description')
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('updatedAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('isVisible')
-            ->add('produits', EntityType::class, [
-                'class' => Produit::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
+            // ->add('createdAt', null, [
+            //     'widget' => 'single_text',
+            // ])
+            // ->add('updatedAt', null, [
+            //     'widget' => 'single_text',
+            // ])
+            // ->add('isVisible')
+            // ->add('produits', EntityType::class, [
+            //     'class' => Produit::class,
+            //     'choice_label' => 'id',
+            //     'multiple' => true,
+            // ])
         ;
     }
 
