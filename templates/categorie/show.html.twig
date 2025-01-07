@@ -49,6 +49,17 @@
 			{% endif %}
 		</tbody>
 	</table>
+	<h2>Produits</h2>
+	{% if categorie.Produits is empty %}
+		<p>
+			Il n'y a pas de produits dans cette catégorie pour le moment.
+		</p>
+	{% else %}
+		{% for produit in categorie.Produits %}
+			{{produit.nom}}
+		{% endfor %}
+	{% endif %}
+
 	{% if 'ROLE_ADMIN' in app.user.roles %}
 		<a href="{{ path('app_categorie_index') }}">back to list</a>
 

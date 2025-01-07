@@ -44,8 +44,11 @@ final class CategorieController extends AbstractController
     }
 
     #[Route('/categorie/{id}', name: 'app_categorie_show', methods: ['GET'])]
-    public function show(Categorie $categorie): Response
+    public function show(Categorie $categorie, CategorieRepository $categorieRepository): Response
     {
+
+
+        // $categorie->$categorieRepository->find($categorie->getId());
         return $this->render('categorie/show.html.twig', [
             'categorie' => $categorie,
         ]);
