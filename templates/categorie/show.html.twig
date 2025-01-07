@@ -1,46 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Categorie{% endblock %}
+{% block title %}Categorie
+{% endblock %}
 
 {% block body %}
-    <h1>Categorie</h1>
+	<h1>Categorie</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ categorie.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ categorie.nom }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ categorie.slug }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ categorie.description }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ categorie.createdAt ? categorie.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ categorie.updatedAt ? categorie.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>IsVisible</th>
-                <td>{{ categorie.isVisible ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<tbody>
 
-    <a href="{{ path('app_categorie_index') }}">back to list</a>
+			{% if 'ROLE_ADMIN' in app.user.roles %}
+				<tr>
+					<th>Id</th>
+					<td>{{ categorie.id }}</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Nom</th>
+				<td>{{ categorie.nom }}</td>
+			</tr>
+			{% if 'ROLE_ADMIN' in app.user.roles %}
+				<tr>
+					<th>Slug</th>
+					<td>{{ categorie.slug }}</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Description</th>
+				<td>{{ categorie.description }}</td>
+			</tr>
+			{% if 'ROLE_ADMIN' in app.user.roles %}
+				<tr>
+					<th>CreatedAt</th>
+					<td>{{ categorie.createdAt ? categorie.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+				</tr>
+				<tr>
+					<th>UpdatedAt</th>
+					<td>{{ categorie.updatedAt ? categorie.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+				</tr>
+			{% endif %}
 
-    <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
 
-    {{ include('categorie/_delete_form.html.twig') }}
+			{% if 'ROLE_ADMIN' in app.user.roles %}
+				<tr>
+					<th>IsVisible</th>
+					<td>{{ categorie.isVisible ? 'Yes' : 'No' }}</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+	{% if 'ROLE_ADMIN' in app.user.roles %}
+		<a href="{{ path('app_categorie_index') }}">back to list</a>
+
+		<a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
+
+		{{ include('categorie/_delete_form.html.twig') }}
+	{% endif %}
 {% endblock %}
