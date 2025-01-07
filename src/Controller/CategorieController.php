@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
-use App\Service\CategorieService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,11 +43,9 @@ final class CategorieController extends AbstractController
     }
 
     #[Route('/categorie/{id}', name: 'app_categorie_show', methods: ['GET'])]
-    public function show(Categorie $categorie, CategorieRepository $categorieRepository): Response
+    public function show(Categorie $categorie): Response
     {
 
-
-        // $categorie->$categorieRepository->find($categorie->getId());
         return $this->render('categorie/show.html.twig', [
             'categorie' => $categorie,
         ]);
