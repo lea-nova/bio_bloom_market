@@ -1,3 +1,4 @@
+{# {{ render(controller('App\\Controller\\NavbarController::navbar')) }} #}
 <nav class=" flex flex-row items-center justify-between">
 
 	<a class="h-10" href=" {{path('app_main')}} "><img class="logo h-10" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market"></a>
@@ -24,155 +25,138 @@
 			</button>
 
 			<ul class=" absolute hidden bg-light-default p-5 border-radius-2 rounded-xl shadow-[0_2px_4px_-2px_rgba(0,0,0,0.3)]" id="category-navbar">
-				<li>
-					<a class=" text-tertiary-darker hover:text-primary-default" href="#">Fruits et Légumes
+				{% for categorie in categories %}
+					<a href=" {{path('app_categorie_show', {'id': categorie.id})}} ">
+						<li class=" text-tertiary-darker hover:text-primary-default">
+							{{categorie.nom}}</li>
 					</a>
-				</li>
-				<li>
-					<a class=" text-tertiary-darker hover:text-primary-default" href="#">Produits Laitiers et Oeufs
-					</a>
-				</li>
-				<li>
-					<a class=" text-tertiary-darker hover:text-primary-default" href="#">
-						Épicerie Salée</a>
-				</li>
-				<li>
-					<a class=" text-tertiary-darker hover:text-primary-default" href="#">
-						Épicerie Sucrée</a>
-				</li>
-				<li>
-					<a class=" text-tertiary-darker hover:text-primary-default" href="#">
-						Boissons</a>
-				</li>
-				<li>
-					<a class=" text-tertiary-darker hover:text-primary-default" href="#">
-						Voir plus</a>
-				</li>
+				{% endfor %}
 			</ul>
-
 		</li>
-		<li>
-			<a class="nav-link  text-tertiary-darker hover:text-primary-default" href="#">Promotions</a>
+	</li>
+	<li>
+		<a class="nav-link  text-tertiary-darker hover:text-primary-default" href="#">Promotions</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link  text-tertiary-darker hover:text-primary-default" href="#">Contact</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link  text-tertiary-darker hover:text-primary-default" href="#">A propos</a>
+	</li>
+	{% if  app.user  %}
+		{# <span class="d-flex flex-row mb-3 justify-content-between d-flex align-items-center"> #}
+		<li class="">
+			<a class=" text-tertiary-darker hover:text-primary-default" href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
 		</li>
-		<li class="nav-item">
-			<a class="nav-link  text-tertiary-darker hover:text-primary-default" href="#">Contact</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link  text-tertiary-darker hover:text-primary-default" href="#">A propos</a>
-		</li>
-		{% if  app.user  %}
-			{# <span class="d-flex flex-row mb-3 justify-content-between d-flex align-items-center"> #}
-			<li class="">
-				<a class=" text-tertiary-darker hover:text-primary-default" href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
-			</li>
-			<li class="">
-				<a class="btn-border" href="{{path('app_logout')}}">Se déconnecter</a>
-				{# <a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a> #}
-				<a class="lg:hidden text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}" name="Mon panier">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-				</a>
-			</li>
-			{# </span> #}
-		{% else %}
-			<li>
-				<a class=" text-tertiary-darker hover:text-primary-default" href="{{path('app_login')}}">Connexion/Inscription</a>
-			</li>
-		{% endif %}
-
-		<li>
-			<a class=" text-tertiary-darker hover:text-primary-default " href="#">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-basket"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></svg>
+		<li class="">
+			<a class="btn-border" href="{{path('app_logout')}}">Se déconnecter</a>
+			{# <a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a> #}
+			<a class="lg:hidden text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}" name="Mon panier">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
 			</a>
 		</li>
-		<li class="hidden lg:inline">
-			<form class=" text-tertiary-darker hover:text-primary-default" role="search">
-				<input class="w-24 text-sm" type="search" placeholder="Rechercher" aria-label="Rechercher">
-				<button class="" type="submit" title="Cliquer ici pour rechercher">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-				</button>
-				{# <button class="btn btn-outline-success" type="submit">Compte</button> #}
-			</form>
+		{# </span> #}
+	{% else %}
+		<li>
+			<a class=" text-tertiary-darker hover:text-primary-default" href="{{path('app_login')}}">Connexion/Inscription</a>
 		</li>
-	</ul>
-	{# Bouton navbar fermé #}
-	<button type="button" class="lg:hidden relative inline-flex items-center justify-end rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" id="navbar-toggle">
-		<span class="  "></span>
-		<span class="sr-only">Open main menu</span>
-		<svg class="block h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-			<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
-		</svg>
-		<!--Icon when menu is open. Menu open: "block", Menu closed: "hidden"-->
-		<svg class="hidden h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-			<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-		</svg>
-		<div class="mt-2 space-y-2" id="disclosure-1"></div>
-	</nav>
-	<!-- Mobile menu, show/hide based on menu open state. -->
-	<div class="lg:hidden" role="dialog" aria-modal="true">
-		<!-- Background backdrop, show/hide based on slide-over state. -->
-		{# <div class="fixed inset-0 z-10"></div> #}
-		{# Classe à modifier avec le JS pour toggle #}
-			<div class="hidden fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10" id="navbar-right"> <div class="flex items-center justify-between">
-				<a class="" href=" {{path('app_main')}} ">
-					<span class="sr-only">Bio Bloom Market</span>
-					<img class="logo h-10 mt-0" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market">
-				</a>
-				<button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700 " id="btn-close">
-					<span class="sr-only">Close menu</span>
-					<svg class="h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-					</svg>
-				</button>
-			</div>
-			<div class="mt-6 flow-root h-fit ">
-				<div class="-my-6 divide-y divide-gray-500/10  ">
-					<div class="space-y-2 py-6">
-						<a class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" href="#">Produits</a>
-						<div class="-mx-3">
-							<button type="button" class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" aria-controls="disclosure-1" aria-expanded="false" id='btn-disclosure-1'>
-								Catégories
-								<!--Expandcollapse icon, toggle classes based on menu open state.Open: "rotate-180", Closed: ""														                -->
-								<svg class="h-5 w-5 flex-none" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
-									<path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
-								</svg>
-							</button>
-							<!-- 'Product' sub-menu, show/hide based on menu state. -->
-							<div class=" hidden mt-2 space-y-2" id="list-menu">
-								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Fruits et Légumes</a>
-								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Produits Laitiers et Oeufs</a>
-								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Épicerie Salée</a>
-								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Épicerie Sucrée</a>
-								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Boissons</a>
-								<a href="#" class="block rounded-lg py-2 pl-6 pr-3 text-sm  leading-7 text-gray-900 hover:bg-gray-50">Voir plus</a>
+	{% endif %}
 
-							</div>
+	<li>
+		<a class=" text-tertiary-darker hover:text-primary-default " href="#">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-basket"><path d="m15 11-1 9"/><path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/><path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/></svg>
+		</a>
+	</li>
+	<li class="hidden lg:inline">
+		<form class=" text-tertiary-darker hover:text-primary-default" role="search">
+			<input class="w-24 text-sm" type="search" placeholder="Rechercher" aria-label="Rechercher">
+			<button class="" type="submit" title="Cliquer ici pour rechercher">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+			</button>
+			{# <button class="btn btn-outline-success" type="submit">Compte</button> #}
+		</form>
+	</li>
+</ul>
+{# Bouton navbar fermé #}
+<button type="button" class="lg:hidden relative inline-flex items-center justify-end rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" id="navbar-toggle">
+	<span class="  "></span>
+	<span class="sr-only">Open main menu</span>
+	<svg class="block h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+		<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+	</svg>
+	<!--Icon when menu is open. Menu open: "block", Menu closed: "hidden"-->
+	<svg class="hidden h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+		<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+	</svg>
+	<div class="mt-2 space-y-2" id="disclosure-1"></div>
+</nav>
+<!-- Mobile menu, show/hide based on menu open state. -->
+<div class="lg:hidden" role="dialog" aria-modal="true">
+	<!-- Background backdrop, show/hide based on slide-over state. -->
+	{# <div class="fixed inset-0 z-10"></div> #}
+	{# Classe à modifier avec le JS pour toggle #}
+		<div class="hidden fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10" id="navbar-right"> <div class="flex items-center justify-between">
+			<a class="" href=" {{path('app_main')}} ">
+				<span class="sr-only">Bio Bloom Market</span>
+				<img class="logo h-10 mt-0" src="{{asset("images/logo.jpg")}}" alt="logo de BioBloom Market">
+			</a>
+			<button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700 " id="btn-close">
+				<span class="sr-only">Close menu</span>
+				<svg class="h-6 w-6" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+				</svg>
+			</button>
+		</div>
+		<div class="mt-6 flow-root h-fit ">
+			<div class="-my-6 divide-y divide-gray-500/10  ">
+				<div class="space-y-2 py-6">
+					<a class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" href="#">Produits</a>
+					<div class="-mx-3">
+						<button type="button" class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" aria-controls="disclosure-1" aria-expanded="false" id='btn-disclosure-1'>
+							Catégories
+							<!--Expandcollapse icon, toggle classes based on menu open state.Open: "rotate-180", Closed: ""														                -->
+							<svg class="h-5 w-5 flex-none" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+								<path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/>
+							</svg>
+						</button>
+						<!-- 'Product' sub-menu, show/hide based on menu state. -->
+						<div class=" hidden mt-2 space-y-2" id="list-menu">
+							<ul>
+								{% for categorie in categories %}
+									<a href=" {{path('app_categorie_show', {'id': categorie.id})}} ">
+										<li class=" text-tertiary-darker hover:text-primary-default">
+											{{categorie.nom}}</li>
+									</a>
+								{% endfor %}
+							</ul>
 						</div>
-
-						<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Promotions</a>
-						<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Contact</a>
-						<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">A propos</a>
 					</div>
-					<div class=" h-20 flex flex-col m-5 ">
-						{% if  app.user  %}
-							<span class=" h-20 flex flex-col m-5 ">
 
-								<a class="btn-cta " href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
+					<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Promotions</a>
+					<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Contact</a>
+					<a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">A propos</a>
+				</div>
+				<div class=" h-20 flex flex-col m-5 ">
+					{% if  app.user  %}
+						<span class=" h-20 flex flex-col m-5 ">
 
-								{# <a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a> #}
-								<br>
+							<a class="btn-cta " href="{{ path('app_user_show', {'uuid': app.user.uuid}) }}">Mon profil</a>
 
-								<a
-									class="lg:hidden btn-cta " href="{{path('app_logout')}}">
-									{# <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg> #}
-									Se déconnecter
-								</a>
+							{# <a class=" hidden lg:inline  text-tertiary-darker hover:text-primary-default" href="{{path('app_logout')}}">Se déconnecter</a> #}
+							<br>
 
-							</span>
-						{% else %}
-							<a class="btn-cta" href="{{path('app_login')}}">Connexion/Inscription</a>
-						{% endif %}
-					</div>
+							<a
+								class="lg:hidden btn-cta " href="{{path('app_logout')}}">
+								{# <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg> #}
+								Se déconnecter
+							</a>
+
+						</span>
+					{% else %}
+						<a class="btn-cta" href="{{path('app_login')}}">Connexion/Inscription</a>
+					{% endif %}
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
