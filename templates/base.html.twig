@@ -29,7 +29,9 @@
 		class="flex flex-col min-h-screen ">
 		{# <body class="flex flex-col min-h-screen bg-gradient-to-b from-light-default to-light-muted md:h-100"> #}
 		<header>
-			{% include '_partials/_navbar.html.twig' %}
+			{{ render(controller('App\\Controller\\NavbarController::navbar')) }}
+
+			{# {% include '_partials/_navbar.html.twig' %} #}
 		</header>
 		<main
 			class="flex-grow">
