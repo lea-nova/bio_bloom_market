@@ -29,7 +29,7 @@ class CategorieType extends AbstractType
                     new Length([
                         'min' => 2,
                         'max' => 255,
-                        'minMessage' => "Le nom de la catégorie doit être au moins de 3.",
+                        'minMessage' => "Le nom de la catégorie doit être au moins de 2.",
                         'maxMessage' => "Le nom de la catégorie est trop grand. (max 255)"
                     ]),
                 ],
@@ -38,20 +38,20 @@ class CategorieType extends AbstractType
                     'placeholder' => "Insérer nom de la catégorie",
                 ]
             ])
-            ->add('slug', TextType::class, [
-                'label' => 'Slug à afficher :',
-                'required' => false,
-                'constraints' => [
-                    new Length([
-                        'max' => 255,
-                        'maxMessage' => "Le slug de la catégorie est trop grand. (max 255)"
-                    ]),
-                ],
-                'attr' => [
-                    'maxLength' => 255,
-                    'placeholder' => "Slug pour l'URL",
-                ]
-            ])
+            // ->add('slug', TextType::class, [
+            //     'label' => 'Slug à afficher :',
+            //     'required' => false,
+            //     'constraints' => [
+            //         new Length([
+            //             'max' => 255,
+            //             'maxMessage' => "Le slug de la catégorie est trop grand. (max 255)"
+            //         ]),
+            //     ],
+            //     'attr' => [
+            //         'maxLength' => 255,
+            //         'placeholder' => "Slug pour l'URL",
+            //     ]
+            // ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description de la catégorie :',
                 'required' => false,

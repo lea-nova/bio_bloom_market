@@ -26,7 +26,8 @@
 
 			<ul class=" absolute hidden bg-light-default p-5 border-radius-2 rounded-xl shadow-[0_2px_4px_-2px_rgba(0,0,0,0.3)]" id="category-navbar">
 				{% for categorie in categories %}
-					<a href=" {{path('app_categorie_show', {'id': categorie.id})}} ">
+					{# <a href=" {{path('app_categorie_show', {'id': categorie.id})}} "> #}
+					<a href=" {{path('app_categorie_show', {'slug': categorie.slug})}} ">
 						<li class=" text-tertiary-darker hover:text-primary-default">
 							{{categorie.nom}}</li>
 					</a>
@@ -123,7 +124,7 @@
 						<div class=" hidden mt-2 space-y-2" id="list-menu">
 							<ul>
 								{% for categorie in categories %}
-									<a href=" {{path('app_categorie_show', {'id': categorie.id})}} ">
+									<a href=" {{path('app_categorie_show', {'slug': categorie.slug})}} ">
 										<li class=" text-tertiary-darker hover:text-primary-default">
 											{{categorie.nom}}</li>
 									</a>
