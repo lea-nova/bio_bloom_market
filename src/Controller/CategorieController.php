@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -68,7 +69,7 @@ final class CategorieController extends AbstractController
     }
 
     #[Route('/admin/categorie/{slug}/edit', name: 'app_categorie_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, #[MapEntity(mapping: ['slug' => "slug"])] Categorie $categorie, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity(mapping: ['slug' => "slug"])] Categorie $categorie, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
             return $this->redirectToRoute('app_main');
@@ -77,6 +78,11 @@ final class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $nomToSlug = $form->get('nom')->getData();
+            $slugNom = $slugger->slug($nomToSlug);
+            $categorie->setSlug(strtolower($slugNom));
+            $categorie->setUpdatedAt(new DateTimeImmutable());
+            $entityManager->persist($categorie);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
