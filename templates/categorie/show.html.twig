@@ -9,7 +9,7 @@
 	<table class="table">
 		<tbody>
 
-			{% if 'ROLE_ADMIN' in app.user.roles %}
+			{% if is_granted("ROLE_ADMIN") %}
 				<tr>
 					<th>Id</th>
 					<td>{{ categorie.id }}</td>
@@ -19,7 +19,7 @@
 				<th>Nom</th>
 				<td>{{ categorie.nom }}</td>
 			</tr>
-			{% if 'ROLE_ADMIN' in app.user.roles %}
+			{% if is_granted("ROLE_ADMIN") %}
 				<tr>
 					<th>Slug</th>
 					<td>{{ categorie.slug }}</td>
@@ -27,9 +27,10 @@
 			{% endif %}
 			<tr>
 				<th>Description</th>
-				<td>{{ categorie.description }}</td>
+				<td>{{ categorie.description|e }}</td>
 			</tr>
-			{% if 'ROLE_ADMIN' in app.user.roles %}
+			
+			{% if is_granted("ROLE_ADMIN") %}
 				<tr>
 					<th>CreatedAt</th>
 					<td>{{ categorie.createdAt ? categorie.createdAt|date('Y-m-d H:i:s') : '' }}</td>
@@ -41,7 +42,7 @@
 			{% endif %}
 
 
-			{% if 'ROLE_ADMIN' in app.user.roles %}
+			{% if is_granted("ROLE_ADMIN") %}
 				<tr>
 					<th>IsVisible</th>
 					<td>{{ categorie.isVisible ? 'Yes' : 'No' }}</td>
@@ -60,10 +61,11 @@
 		{% endfor %}
 	{% endif %}
 
-	{% if 'ROLE_ADMIN' in app.user.roles %}
+			{% if is_granted("ROLE_ADMIN") %}
+	
 		<a href="{{ path('app_categorie_index') }}">back to list</a>
 
-		<a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
+		<a href="{{ path('app_categorie_edit', {'slug': categorie.slug}) }}">edit</a>
 
 		{{ include('categorie/_delete_form.html.twig') }}
 	{% endif %}

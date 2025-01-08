@@ -29,8 +29,8 @@
                 <td>{{ categorie.updatedAt ? categorie.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ categorie.isVisible ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">show</a>
-                    <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
+                    <a href="{{ path('app_categorie_show', {'slug': categorie.slug}) }}">show</a>
+                    <a href="{{ path('app_categorie_edit', {'slug': categorie.slug}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
