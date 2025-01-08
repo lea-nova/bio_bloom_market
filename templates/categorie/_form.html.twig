@@ -2,10 +2,12 @@
 <div class="flex flex-col w-[20rem] ">
     {{form_label(form.nom)}}
 	{{ form_widget(form.nom) }}
+    {{ form_errors(form.nom) }}
     {# {{form_label(form.slug)}}
 	{{ form_widget(form.slug) }} #}
     {{form_label(form.description)}}
 	{{ form_widget(form.description) }}
+    {{ form_errors(form.description) }}
 </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
