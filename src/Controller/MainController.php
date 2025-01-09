@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\MarqueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +14,6 @@ class MainController extends AbstractController
     #[Route('/', name: 'app_main', methods: ['GET'])]
     public function index(): Response
     {
-
-
         return $this->render('main/index.html.twig', [
             'controller_name' => 'MainController',
         ]);

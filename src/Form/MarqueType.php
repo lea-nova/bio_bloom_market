@@ -66,6 +66,8 @@ class MarqueType extends AbstractType
             ])
             ->add('logo', FileType::class, [
                 'label' => "Logo de la marque ( jpg, jpeg, png)",
+                'data_class' => null,
+                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
