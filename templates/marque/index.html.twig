@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marque index
+{% endblock %}
+
+{% block body %}
+	<h1>Marque index</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>Slug</th>
+				<th>Description</th>
+				<th>Logo</th>
+				<th>CreatedAt</th>
+				<th>UpdatedAt</th>
+				<th>IsActive</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for marque in marques %}
+				<tr>
+					<td>{{ marque.id }}</td>
+					<td>{{ marque.nom }}</td>
+					<td>{{ marque.slug }}</td>
+					<td>{{ marque.description }}</td>
+					<td>{{ marque.logo }}</td>
+					<td>{{ marque.createdAt ? marque.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ marque.updatedAt ? marque.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ marque.isActive ? 'Yes' : 'No' }}</td>
+					<td>
+						<a href="{{ path('app_marque_show', {'slug': marque.slug}) }}">show</a>
+						<a href="{{ path('app_marque_edit', {'slug': marque.slug}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="9">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_marque_new') }}">Create new</a>
+{% endblock %}
