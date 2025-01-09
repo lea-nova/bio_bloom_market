@@ -31,7 +31,15 @@
 			</tr>
 			<tr>
 				<th>Logo</th>
-				<td>{{ marque.logo }}</td>
+				<td>
+				{# <img src="public/uploads/marques/{{marque.logo}}"> #}
+				{% if marque.logo  %}
+				
+				<img height="50" width="50" src="{{asset('uploads/marques/'~ marque.logo)}}">
+				{% else %}
+				Pas d'images
+				{% endif %}
+				</td>
 			</tr>
 			{% if is_granted('ROLE_ADMIN') %}
 

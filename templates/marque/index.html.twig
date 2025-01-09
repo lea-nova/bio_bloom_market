@@ -6,43 +6,66 @@
 {% block body %}
 	<h1>Marque index</h1>
 
+
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
+				{% if is_granted("ROLE_ADMIN") %}
+
+					<th>Id</th>
+				{% endif %}
+
 				<th>Nom</th>
-				<th>Slug</th>
+				{% if is_granted("ROLE_ADMIN") %}
+					<th>Slug</th>
+				{% endif %}
 				<th>Description</th>
 				<th>Logo</th>
-				<th>CreatedAt</th>
-				<th>UpdatedAt</th>
-				<th>IsActive</th>
-				<th>actions</th>
+				{% if is_granted("ROLE_ADMIN") %}
+					<th>CreatedAt</th>
+					<th>UpdatedAt</th>
+					<th>IsActive</th>
+					<th>actions</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
 			{% for marque in marques %}
 				<tr>
-					<td>{{ marque.id }}</td>
+					{% if is_granted("ROLE_ADMIN") %}
+						<td>{{ marque.id }}</td>
+					{% endif %}
 					<td>{{ marque.nom }}</td>
-					<td>{{ marque.slug }}</td>
+					{% if is_granted("ROLE_ADMIN") %}
+						<td>{{ marque.slug }}</td>
+					{% endif %}
 					<td>{{ marque.description }}</td>
-					<td>{{ marque.logo }}</td>
-					<td>{{ marque.createdAt ? marque.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ marque.updatedAt ? marque.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ marque.isActive ? 'Yes' : 'No' }}</td>
+
 					<td>
-						<a href="{{ path('app_marque_show', {'slug': marque.slug}) }}">show</a>
-						<a href="{{ path('app_marque_edit', {'slug': marque.slug}) }}">edit</a>
+						{% if marque.logo  %}
+
+							<img height="50" width="50" src="{{asset('uploads/marques/'~ marque.logo)}}">
+						{% else %}
+							Pas d'images
+						{% endif %}
+					</td>
+					{% if is_granted("ROLE_ADMIN") %}
+						<td>{{ marque.createdAt ? marque.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ marque.updatedAt ? marque.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ marque.isActive ? 'Yes' : 'No' }}</td>
+					{% endif %}
+					<td>
+						<a href="{{ path('app_marque_show', {'slug': marque.slug}) }}" class="btn-border ">Voir</a>
+						{% if is_granted("ROLE_ADMIN") %}
+							<a href="{{ path('app_marque_edit', {'slug': marque.slug}) }}">edit</a>
+						{% endif %}
 					</td>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="9">no records found</td>
-				</tr>
-			{% endfor %}
+			</td>
 		</tbody>
-	</table>
-
-	<a href="{{ path('app_marque_new') }}">Create new</a>
-{% endblock %}
+	</tr>
+{% else %}
+	<tr>
+		<td colspan="9">no records found</td>
+	</tr>
+{% endfor %}</tbody></table>{% if is_granted("ROLE_ADMIN") %}<a href="{{ path('app_marque_new') }}">Create new</a>{% endif %}{% endblock %}
