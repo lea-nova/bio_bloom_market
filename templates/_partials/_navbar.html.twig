@@ -13,7 +13,7 @@
 			<a class=" text-tertiary-darker hover:text-primary-default" aria-current="page" href=" {{path('app_main')}} ">Accueil</a>
 		</li>
 		<li class="">
-			<a class=" text-tertiary-darker hover:text-primary-default" href="#">Produits</a>
+			<a class=" text-tertiary-darker hover:text-primary-default" href={{path('app_produit_index')}}>Produits</a>
 
 		</li>
 		<li class=" text-tertiary-darker hover:text-primary-default">
@@ -111,7 +111,7 @@
 		<div class="mt-6 flow-root h-fit ">
 			<div class="-my-6 divide-y divide-gray-500/10  ">
 				<div class="space-y-2 py-6">
-					<a class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" href="#">Produits</a>
+					<a class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" href={{path('app_produit_index')}}>Produits</a>
 					<div class="-mx-3">
 						<button type="button" class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" aria-controls="disclosure-1" aria-expanded="false" id='btn-disclosure-1'>
 							Catégories
