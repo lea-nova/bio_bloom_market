@@ -43,7 +43,14 @@
 
 						<td>{{ produit.slug }}</td>
 					{% endif %}
-					<td>{{ produit.image ? produit.image : "Pas d'image" }}</td>
+
+					<td>
+						{% if  produit.image %}
+							<img height="50" width="50" src="{{asset('uploads/produits/'~ produit.image)}}">
+						{% else %}
+							Pas d'images
+						{% endif %}
+					</td>
 					{% if is_granted("ROLE_ADMIN") %}
 
 						<td>{{ produit.isVisible ? 'Yes' : 'No' }}</td>

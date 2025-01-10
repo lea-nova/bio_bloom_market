@@ -32,7 +32,7 @@ class Produit
     private ?bool $isVisible = true;
 
     #[ORM\Column]
-    private ?int $stock = null;
+    private ?int $stock = 0;
 
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
