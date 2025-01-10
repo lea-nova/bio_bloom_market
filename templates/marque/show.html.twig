@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marque
+{% endblock %}
+
+{% block body %}
+	<h1>Marque</h1>
+
+	<table class="table">
+		<tbody>
+			{% if is_granted('ROLE_ADMIN') %}
+				<tr>
+					<th>Id</th>
+					<td>{{ marque.id }}</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Nom</th>
+				<td>{{ marque.nom }}</td>
+			</tr>
+			{% if is_granted('ROLE_ADMIN') %}
+
+				<tr>
+					<th>Slug</th>
+					<td>{{ marque.slug }}</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<th>Description</th>
+				<td>{{ marque.description }}</td>
+			</tr>
+			<tr>
+				<th>Logo</th>
+				<td>
+				{# <img src="public/uploads/marques/{{marque.logo}}"> #}
+				{% if marque.logo  %}
+				
+				<img height="50" width="50" src="{{asset('uploads/marques/'~ marque.logo)}}">
+				{% else %}
+				Pas d'images
+				{% endif %}
+				</td>
+			</tr>
+			{% if is_granted('ROLE_ADMIN') %}
+
+				<tr>
+					<th>CreatedAt</th>
+					<td>{{ marque.createdAt ? marque.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+				</tr>
+				<tr>
+					<th>UpdatedAt</th>
+					<td>{{ marque.updatedAt ? marque.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+				</tr>
+				<tr>
+					<th>IsActive</th>
+					<td>{{ marque.isActive ? 'Yes' : 'No' }}</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a href="{{ path('app_marque_index') }}">back to list</a>
+
+		<a href="{{ path('app_marque_edit', {'slug': marque.slug}) }}">edit</a>
+
+		{{ include('marque/_delete_form.html.twig') }}
+	{% endif %}
+{% endblock %}
