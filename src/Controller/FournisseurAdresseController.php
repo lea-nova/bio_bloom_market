@@ -88,7 +88,9 @@ class FournisseurAdresseController extends AbstractController
     #[Route('admin/fournisseur/{id}/adresse/{ulid}/edit', name: 'app_adresse_fournisseur_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, #[MapEntity(mapping: ["ulid" => "ulid"])] Adresse $adresse, EntityManagerInterface $entityManager, int $id, string $ulid): Response
     {
-
+        if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
+            return $this->redirectToRoute('app_main');
+        }
         $form = $this->createForm(AdresseType::class, $adresse);
         $form->handleRequest($request);
 
