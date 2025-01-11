@@ -51,17 +51,24 @@
 			{% endif %}
 		</tbody>
 	</table>
-	<h2>Produits</h2>
-	{% if categorie.Produits is empty %}
-		<p>
-			Il n'y a pas de produits dans cette catégorie pour le moment.
-		</p>
-	{% else %}
-		{% for produit in categorie.Produits %}
-			{{produit.nom}}
-			<img src={{asset('uploads/produits/'~ produit.image)}}>
-		{% endfor %}
-	{% endif %}
+	<h2>Produits de
+		{{categorie.nom}}</h2>
+	<div class="  flex flex-row justify-around  ">
+		{% if categorie.Produits is empty %}
+			<p>
+				Il n'y a pas de produits dans cette catégorie pour le moment.
+			</p>
+		{% else %}
+			<div class=" h-screen flex flex-row justify-around w-5/6">
+				{% for produit in categorie.Produits %}
+					<div class="h-[20rem] w-[20rem] flex flex-col justify-evenly">
+						<h3 class=" text-center">{{produit.nom}}</h3>
+						<img class="h-[15rem] object-contain" src={{asset('uploads/produits/'~ produit.image)}}>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
 
 	{% if is_granted("ROLE_ADMIN") %}
 

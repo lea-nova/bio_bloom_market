@@ -58,7 +58,6 @@
 			{% endif %}
 		</tbody>
 	</table>
-	<h2>Produits</h2>
 
 
 	{% if is_granted('ROLE_ADMIN') %}
@@ -68,14 +67,20 @@
 
 		{{ include('marque/_delete_form.html.twig') }}
 	{% endif %}
-	{% if marque.Produits is empty %}
-		<p>
-			Il n'y a pas de produits dans cette catégorie pour le moment.
-		</p>
-	{% else %}
-		{% for produit in marque.Produits %}
-			{{produit.nom}}
-			<img src={{asset('uploads/produits/'~ produit.image)}}>
-		{% endfor %}
-	{% endif %}
+	<h2>Produits de
+		{{marque.nom}}</2>
+	<div class="  flex flex-row justify-around ">
+		{% if marque.Produits is empty %}
+			<p>
+				Il n'y a pas de produits dans cette catégorie pour le moment.
+			</p>
+		{% else %}
+			{% for produit in marque.Produits %}
+				<div class="h-[20rem] w-[20rem]">
+					{{produit.nom}}
+					<img class="h-[15rem] object-contain" src={{asset('uploads/produits/'~ produit.image)}}>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
 {% endblock %}
