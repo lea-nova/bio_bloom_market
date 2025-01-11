@@ -37,6 +37,9 @@ final class MarqueController extends AbstractController
         #[Autowire('%kernel.project_dir%/public/uploads/marques')] string $marquesDirectory,
         UploadFileService $uploadFileService
     ): Response {
+        if (!$this->isGranted("ROLE_ADMIN")) {
+            return $this->redirectToRoute('app_marque_index');
+        }
         $marque = new Marque();
         $form = $this->createForm(MarqueType::class, $marque);
         $form->handleRequest($request);
@@ -95,6 +98,9 @@ final class MarqueController extends AbstractController
         #[Autowire('%kernel.project_dir%/public/uploads/marques')] string $marquesDirectory,
         UploadFileService $uploadFileService
     ): Response {
+        if (!$this->isGranted("ROLE_ADMIN")) {
+            return $this->redirectToRoute("app_marque_index");
+        }
         $logoMarque = $marque->getLogo();
         $form = $this->createForm(MarqueType::class, $marque);
         $form->handleRequest($request);
@@ -147,6 +153,9 @@ final class MarqueController extends AbstractController
     #[Route('/admin/marque/{id}', name: 'app_marque_delete', methods: ['POST'])]
     public function delete(Request $request, Marque $marque, EntityManagerInterface $entityManager, UploadFileService $uploadFileService): Response
     {
+        if (!$this->isGranted("ROLE_ADMIN")) {
+            return $this->redirectToRoute('app_marque_index', [], Response::HTTP_SEE_OTHER);
+        }
         if ($this->isCsrfTokenValid('delete' . $marque->getId(), $request->getPayload()->getString('_token'))) {
             $marqueFilePath = 'uploads/marques/' . $marque->getLogo();
             $fileToRemove = $uploadFileService->removeFile($marqueFilePath);

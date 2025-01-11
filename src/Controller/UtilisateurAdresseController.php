@@ -27,6 +27,10 @@ class UtilisateurAdresseController extends AbstractController
         UserRepository $userRepository,
         #[MapEntity(mapping: ['uuid' => 'uuid'])] User $user,
     ): Response {
+        if (empty($this->getUser()) || $user->getUuid() !== $this->getUser()->getUuid()) {
+
+            return $this->redirectToRoute("app_main");
+        }
         $currentUser = $this->getUser();
 
         $userAdresses = $user->getUserAdresses();
@@ -50,10 +54,13 @@ class UtilisateurAdresseController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
         $currentUser = $this->getUser();
+        if (empty($this->getUser()) || $user->getUuid() !== $this->getUser()->getUuid()) {
 
-        if (!$currentUser) {
-            throw $this->createNotFoundException('Utilisateur non connecté');
+            return $this->redirectToRoute("app_main");
         }
+        // if (!$currentUser) {
+        //     throw $this->createNotFoundException('Utilisateur non connecté');
+        // }
 
 
         // Créer une nouvelle instance d'Adresse
@@ -107,6 +114,10 @@ class UtilisateurAdresseController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response {
         // $adresse = $entityManager->getRepository(Adresse::class)->find(['id' => $adresse->getId()]);
+        if (empty($this->getUser())) {
+
+            return $this->redirectToRoute("app_main");
+        }
         $currentUser = $this->getUser();
         if (!$adresse) {
             throw $this->createNotFoundException('Adresse non trouvée');
@@ -217,6 +228,10 @@ class UtilisateurAdresseController extends AbstractController
         AdresseRepository $adresseRepository,
         EntityManagerInterface $entityManager
     ): Response {
+        if (empty($this->getUser()) || $user->getUuid() !== $this->getUser()->getUuid()) {
+
+            return $this->redirectToRoute("app_main");
+        }
         $currentUser = $this->getUser();
         $uuidFromUser = Uuid::fromString($user->getUuid());
         $uuidFromUrl = Uuid::fromString($uuid);
@@ -314,7 +329,10 @@ class UtilisateurAdresseController extends AbstractController
         UserAdresseRepository $userAdresseRepository,
         EntityManagerInterface $entityManager
     ): Response {
+        if (empty($this->getUser()) || $user->getUuid() !== $this->getUser()->getUuid()) {
 
+            return $this->redirectToRoute("app_main");
+        }
 
         $userAdresse = $userAdresseRepository->findBy([
             'user' => $user,

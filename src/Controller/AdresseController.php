@@ -19,6 +19,7 @@ class AdresseController extends AbstractController
     #[Route('admin/adresse', name: 'app_adresse_index', methods: ['GET', 'POST'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
+
         if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
             return $this->redirectToRoute('app_main');
         }
