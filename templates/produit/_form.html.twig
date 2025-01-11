@@ -1,4 +1,38 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<div class="flex flex-col w-[20rem]">
+	{{ form_start(form) }}
+	{{form_label(form.nom)}}
+	{{ form_widget(form.nom) }}
+	{{ form_errors(form.nom)}}
+	<br>
+	{{form_label(form.description)}}
+	{{ form_widget(form.description) }}
+	{{ form_errors(form.description) }}
+	<br>
+	{{form_label(form.image)}}
+	{{ form_widget(form.image) }}
+	{{ form_errors(form.image) }}
+	<br>
+	{{form_label(form.stock)}}
+	{{ form_widget(form.stock) }}
+	{{ form_errors(form.stock) }}
+	<br>
+	{{form_label(form.marque)}}
+	{{ form_widget(form.marque) }}
+	{{ form_errors(form.marque) }}
+	<br>
+	{{form_label(form.fournisseur)}}
+	{{ form_widget(form.fournisseur) }}
+	{{ form_errors(form.fournisseur) }}
+	<br>
+	{{form_label(form.categorie)}}
+	<br>
+	{% for checkbox in form.categorie %}
+		{{ form_widget(checkbox) }}
+		{{form_label(checkbox)}}
+		{{ form_errors(checkbox) }}
+		<br>
+	{% endfor %}
+	<br>
+	<button class="btn">{{ button_label|default('Save') }}</button>
+</div>
 {{ form_end(form) }}
