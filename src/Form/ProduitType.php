@@ -109,6 +109,7 @@ class ProduitType extends AbstractType
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
                 'multiple' => true,
+                'expanded' => true
             ])
         ;
     }

@@ -142,15 +142,21 @@ final class ProduitController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute("app_produit_index");
         }
+
         if ($this->isCsrfTokenValid('delete' . $produit->getId(), $request->getPayload()->getString('_token'))) {
             $produitFilePath = 'uploads/produits/' . $produit->getImage();
-            $fileToRemove = $uploadFileService->removeFile($produitFilePath);
-            if ($fileToRemove) {
+            if ($produit->getImage()) {
 
-                $entityManager->remove($produit);
-                $entityManager->flush();
+                // $fileToRemove =
+                $uploadFileService->removeFile($produitFilePath);
             }
+
+            $entityManager->remove($produit);
+            $entityManager->flush();
+            // }
+            $this->addFlash('fail', 'Le fichier ne s\'est pas supprimé correctement');
         }
+
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
