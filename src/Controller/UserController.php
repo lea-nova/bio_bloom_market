@@ -32,6 +32,9 @@ class UserController extends AbstractController
     #[Route('admin/user/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
+        if (empty($this->getUser) || !$this->isGranted("ROLE_ADMIN")) {
+            return $this->redirectToRoute("app_main");
+        }
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
@@ -90,6 +93,10 @@ class UserController extends AbstractController
         Security $security
     ): Response {
 
+        if (empty($this->getUser()) || $user->getUuid() !== $this->getUser()->getUuid()) {
+
+            return $this->redirectToRoute("app_main");
+        }
         $currentUser = $this->getUser();
         if ($user !== $currentUser && !($security->isGranted("ROLE_ADMIN"))) {
             return $this->redirectToRoute('app_main');
@@ -124,6 +131,9 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         Security $security
     ): Response {
+        if (empty($this->getUser()) || $user->getUuid() !== $this->getUser()->getUuid()) {
+            return $this->redirectToRoute("app_main");
+        }
         $currentUser = $this->getUser();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -151,7 +161,10 @@ class UserController extends AbstractController
     #[Route('user/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, #[MapEntity(id: "id")] User $user, EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
     {
+        if (empty($this->getUser()) || $user->getUuid() !== $this->getUser()->getUuid()) {
 
+            return $this->redirectToRoute("app_main");
+        }
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             // Vérifiez si l'utilisateur à supprimer est l'utilisateur actuellement connecté
             $currentUser = $tokenStorage->getToken()->getUser();
@@ -179,6 +192,10 @@ class UserController extends AbstractController
         Security $security,
         HasherUserPasswordHasherInterface $userPasswordHasher
     ): Response {
+        if (empty($this->getUser()) || $user->getUuid() !== $this->getUser()->getUuid()) {
+
+            return $this->redirectToRoute("app_main");
+        }
         $currentUser = $this->getUser();
         $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
