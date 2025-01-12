@@ -32,7 +32,7 @@ class UserController extends AbstractController
     #[Route('admin/user/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        if (empty($this->getUser) || !$this->isGranted("ROLE_ADMIN")) {
+        if (!$this->isGranted("ROLE_ADMIN")) {
             return $this->redirectToRoute("app_main");
         }
         return $this->render('user/index.html.twig', [
