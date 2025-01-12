@@ -1,13 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Produit{% endblock %}
+{% block title %}Edit Produit
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Produit</h1>
+	<h1>Modifier
+		{{produit.nom}}</h1>
 
-    {{ include('produit/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('produit/_form.html.twig', {'button_label': 'Modifier'}) }}
+	<div class="hover:transition hover:-translate-x-6 hover:duration-500 hover:ease-in-out duration-500 lg:ml-5  ">
+		<a href="{{ path('app_produit_index') }}" class="text-secondary-dark font-bold flex flex-row justify-evenly w-[15%]">
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left w-[1.5rem] h-[1.5rem] hover:stroke-secondary-dark "><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+			<p class="hover:font-extrabold">
+				Retourner au produit
+			</p>
+		</a>
+	</div>
 
-    <a href="{{ path('app_produit_index') }}">back to list</a>
-
-    {{ include('produit/_delete_form.html.twig') }}
+	{{ include('produit/_delete_form.html.twig',{'button_label':"Supprimer"}) }}
 {% endblock %}

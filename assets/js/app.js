@@ -5,7 +5,8 @@
  * This file will be included onto the page via the importmap() Twig function,
  * which should already be in your base.html.twig.
  */
-import './styles/app.css';
+import '../styles/app.css';
+import './produit/produit_categorie_form';
 // import '../templates/_partials/navbar';
 // console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 // Variable pour récupérer les éléments du bouton pour le menu.
