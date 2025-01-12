@@ -20,7 +20,7 @@ module.exports = {
         },
         secondary: {
           default: '#553d35',
-          light: '#D7CCC8',
+          light: '#D7CCC8', // marron clair
           dark: '#5D4037',
           accent: '#A1887F',
         },

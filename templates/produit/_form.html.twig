@@ -1,34 +1,48 @@
-<div class="flex flex-col w-[20rem]">
+<div class="flex flex-col w-[25rem]">
 	{{ form_start(form) }}
-	{{form_label(form.nom)}}
-	{{ form_widget(form.nom) }}
-	{{ form_errors(form.nom)}}
+	<span class="flex flex-col">
+		{{form_label(form.nom)}}
+		{{ form_widget(form.nom) }}
+		{{ form_errors(form.nom)}}
+	</span>
 	<br>
 	{{form_label(form.description)}}
+	<br>
 	{{ form_widget(form.description) }}
 	{{ form_errors(form.description) }}
 	<br>
-	{{form_label(form.image)}}
-	{{ form_widget(form.image) }}
-	{{ form_errors(form.image) }}
+	<div class=" flex flex-col justify-center">
+		{% if produit.image %}
+			<img class="h-52 m-auto object-fit " src="{{asset('uploads/produits/'~ produit.image)}} ">
+		{% else %}
+			<small>Pas d'images</small>
+		{% endif %}
+
+
+		<span class="flex flex-col m-auto w-full">
+			{{form_label(form.image)}}
+			{{ form_widget(form.image,{'attr':{'class':'block w-full text-sm     '}}) }}
+			{{ form_errors(form.image) }}
+		</span>
+	</div>
 	<br>
 	{{form_label(form.stock)}}
-	{{ form_widget(form.stock) }}
+	{{ form_widget(form.stock, {"attr":{"class":" text-gray-900 text-sm focus:ring-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"}}) }}
 	{{ form_errors(form.stock) }}
 	<br>
 	{{form_label(form.marque)}}
-	{{ form_widget(form.marque) }}
+	{{ form_widget(form.marque,{"attr":{"class":"block py-2.5 px-0 w-full text-sm   peer"}}) }}
 	{{ form_errors(form.marque) }}
 	<br>
 	{{form_label(form.fournisseur)}}
-	{{ form_widget(form.fournisseur) }}
+	{{ form_widget(form.fournisseur,{"attr":{"class":"block py-2.5 px-0 w-full text-sm   peer"}}) }}
 	{{ form_errors(form.fournisseur) }}
 	<br>
-	{{form_label(form.categorie)}}
+	{# {{form_label(form.categorie)}} #}
 	<br>
-	<button id="dropdown-categorie" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+	<button id="dropdown-categorie" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center  bg-light-accent rounded-lg hover:bg-tertiary-accent  focus:ring-1 focus:outline-none focus:ring-blue-100 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
 
-		Catégories
+		{{form_label(form.categorie)}}
 		<svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 10 6">
 			<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
 		</svg>
@@ -36,7 +50,8 @@
 
 	<!-- Dropdown menu -->
 	<div id="dropdown-body" class="z-10 hidden  bg-white rounded-lg shadow w-60 dark:bg-gray-700">
-		<ul class=" h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200">
+		<ul class=" h-48 px-3 pb-3  overflow-y-auto text-sm text-gray-700 dark:text-gray-200">
+
 			{% for checkbox in form.categorie %}
 				<li
 					class="flex flex-row  p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
@@ -57,9 +72,8 @@
 	</div>
 
 	<br>
-	<button class="btn">
+	<button class="btn-border hover:text-white hover:bg-primary-dark">
 		{{ button_label|default('Save') }}</button>
-</div>
 
 
-{{ form_end(form) }}
+	{{ form_end(form) }}</div>
