@@ -5,11 +5,12 @@
  * This file will be included onto the page via the importmap() Twig function,
  * which should already be in your base.html.twig.
  */
-import '../styles/app.css';
-import './produit/produit_categorie_form';
+import './styles/app.css';
+// import './js/produit/produit_categorie_form';
 // import '../templates/_partials/navbar';
 // console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 // Variable pour récupérer les éléments du bouton pour le menu.
+
 let btnNavbar = document.getElementById('navbar-toggle');
 let navbar = document.getElementById('navbar-right');
 let btnCloseNavbar = document.getElementById('btn-close');
@@ -25,6 +26,7 @@ btnNavbar.addEventListener('click', () => {
     firstListMenuMobile.classList.add('hidden')
 })
 btnCloseNavbar.addEventListener('click', () => {
+    console.log("Clic");
     navbar.classList.toggle('hidden');
 })
 
@@ -33,6 +35,7 @@ btnFirstListMenuMobile.addEventListener('click', () => {
 
 })
 btnNavbarCategory.addEventListener('click', () => {
+    navbar.classList.toggle('hidden');
     categoryList.classList.toggle('hidden')
 })
 //
