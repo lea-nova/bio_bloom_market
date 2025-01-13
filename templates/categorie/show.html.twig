@@ -53,17 +53,18 @@
 	</table>
 	<h2>Produits de
 		{{categorie.nom}}</h2>
-	<div class="  flex flex-row justify-around  ">
+	<div class=" w-[95%] m-auto">
 		{% if categorie.Produits is empty %}
 			<p>
 				Il n'y a pas de produits dans cette catégorie pour le moment.
 			</p>
 		{% else %}
-			<div class=" h-screen flex flex-row justify-around w-5/6">
+			<div class=" grid grid-cols-3  place-items-center">
 				{% for produit in categorie.Produits %}
-					<div class="h-[20rem] w-[20rem] flex flex-col justify-evenly">
+					<div class="h-[20rem] w-[20rem] flex flex-col items-center ">
 						<h3 class=" text-center">{{produit.nom}}</h3>
-						<img class="h-[15rem] object-contain" src={{asset('uploads/produits/'~ produit.image)}}>
+						<img class="h-[15rem] object-fit rounded-lg" src={{asset('uploads/produits/'~ produit.image)}}>
+
 					</div>
 				{% endfor %}
 			</div>
