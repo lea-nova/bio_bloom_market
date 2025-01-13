@@ -7,37 +7,38 @@
 	{# <h1>Produit </h1> #}
 
 	<div class="  hover:duration-500 hover:ease-in-out duration-500 lg:ml-5  ">
-	<a title="Retourner à la liste des produits" class="text-tertiary-dark hover:text-primary-dark font-semibold  flex flex-row justify-evenly w-[20rem]" href="{{ path('app_produit_index') }}" ><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
-	Retourner à la liste des produits
-	</a>
-</div>
-	<h1 class="text-center">{{produit.nom}} </h1>
-	<section class="flex flex-col justify-center items-center h-[45rem]">
-<div class="grid  grid-cols-2">
-<div >
-	{% if produit.image %}
-					<td>
-					<div>
-						<img class="h-[20rem] object-contain" src="{{asset('uploads/produits/'~ produit.image)}}">
-					</div>
-					{% else %}
-						<p>Pas d'image</p>
-					</td>
-				{% endif %}
-</div>
-<div class="flex flex-col">
-<h2>{{ produit.nom }}</h2>
-<p>{{ produit.description }}</p>
-<p>{{ produit.marque.nom }}</p>
-<ul>
-{% for categorie in produit.categorie %}
-	<li>{{categorie.nom}}</li>
-{% endfor %}
-</ul>
-</div>
-	</section>
+		<a title="Retourner à la liste des produits" class="text-tertiary-dark hover:text-primary-dark font-semibold  flex flex-row justify-evenly w-[20rem]" href="{{ path('app_produit_index') }}">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
+			Retourner à la liste des produits
+		</a>
+	</div>
+	<h1 class="text-center">{{produit.nom}}
+	</h1>
 
-</div>
+	<section class="flex flex-col justify-center  h-[40rem] ">
+		<div class="grid  grid-cols-2 ">
+			<div class=" w-full">
+				{% if produit.image %}
+					<div class=" ">
+						<img class="  object-contain h-[25rem] m-auto" src="{{asset('uploads/produits/'~ produit.image)}}">
+					</div>
+				{% else %}
+					<p>Pas d'image</p>
+				{% endif %}
+			</div>
+			<div class="flex flex-col justify-center ">
+				<h2>{{ produit.nom }}</h2>
+				<p>{{ produit.description }}</p>
+				<p>{{ produit.marque.nom }}</p>
+				<ul>
+					{% for categorie in produit.categorie %}
+						<li>{{categorie.nom}}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</section>
+
+	</div>
 	<table class="table">
 		<tbody>
 			<tr>
@@ -46,31 +47,13 @@
 					<td>{{ produit.id }}</td>
 				{% endif %}
 			</tr>
-			{# <tr>
-				<th>Nom</th>
-				<td>{{ produit.nom }}</td>
-			</tr> #}
-			{# <tr>
-				<th>Description</th>
-				<td>{{ produit.description }}</td>
-			</tr> #}
 			<tr>
 				{% if is_granted("ROLE_ADMIN") %}
 					<th>Slug</th>
 					<td>{{ produit.slug }}</td>
 				{% endif %}
 			</tr>
-			{# <tr>
-				<th>Image</th>
-				{% if produit.image %}
-					<td>
-						<img height="50" width="50" src="{{asset('uploads/produits/'~ produit.image)}}">
-					{% else %}
-						<p>Pas d'image</p>
-					</td>
-				{% endif %}
-				<td>{{ produit.image ? produit.image : "Pas d'image" }}</td> 
-			</tr> #}
+
 			<tr>
 				{% if is_granted("ROLE_ADMIN") %}
 					<th>IsVisible</th>
@@ -97,7 +80,7 @@
 		</tbody>
 	</table>
 
-	{# <a href="{{ path('app_produit_index') }}">back to list</a> #}
+
 	{% if is_granted("ROLE_ADMIN") %}
 
 		<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
