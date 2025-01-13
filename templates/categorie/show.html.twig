@@ -4,7 +4,9 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Categorie</h1>
+
+	<h1 class="text-center">{{categorie.nom}}</h1>
+	<p class="text-center">{{categorie.description}}</p>
 
 	<table class="table">
 		<tbody>
@@ -15,20 +17,20 @@
 					<td>{{ categorie.id }}</td>
 				</tr>
 			{% endif %}
-			<tr>
-				<th>Nom</th>
-				<td>{{ categorie.nom }}</td>
-			</tr>
+			{# <tr>
+																																																																												<th>Nom</th>
+																																																																												<td>{{ categorie.nom }}</td>
+																																																																											</tr> #}
 			{% if is_granted("ROLE_ADMIN") %}
 				<tr>
 					<th>Slug</th>
 					<td>{{ categorie.slug }}</td>
 				</tr>
 			{% endif %}
-			<tr>
-				<th>Description</th>
-				<td>{{ categorie.description|e }}</td>
-			</tr>
+			{# <tr>
+																																																																												<th>Description</th>
+																																																																												<td>{{ categorie.description|e }}</td>
+																																																																											</tr> #}
 
 
 			{% if is_granted("ROLE_ADMIN") %}
@@ -51,26 +53,28 @@
 			{% endif %}
 		</tbody>
 	</table>
-	<h2>Produits de
-		{{categorie.nom}}</h2>
-	<div class=" w-[95%] m-auto">
-		{% if categorie.Produits is empty %}
-			<p>
-				Il n'y a pas de produits dans cette catégorie pour le moment.
-			</p>
-		{% else %}
-			<div class=" grid grid-cols-3  place-items-center">
-				{% for produit in categorie.Produits %}
-					<div class="h-[20rem] w-[20rem] flex flex-col items-center ">
-						<h3 class=" text-center">{{produit.nom}}</h3>
-						<img class="h-[15rem] object-fit rounded-lg" src={{asset('uploads/produits/'~ produit.image)}}>
 
-					</div>
-				{% endfor %}
-			</div>
-		{% endif %}
+	<div class="flex flex-col justify-center place-items-center">
+		<h2>Produits présents dans la catégorie
+			{{categorie.nom}}</h2>
+		<div class=" w-[95%] m-auto ">
+			{% if categorie.Produits is empty %}
+				<p>
+					Il n'y a pas de produits dans cette catégorie pour le moment.
+				</p>
+			{% else %}
+				<div class=" grid grid-cols-3  place-items-center">
+					{% for produit in categorie.Produits %}
+						<div class="h-[20rem] w-[20rem] flex flex-col items-center ">
+							<h3 class=" text-center">{{produit.nom}}</h3>
+							<img class="h-[15rem] object-fit rounded-lg" src={{asset('uploads/produits/'~ produit.image)}}>
+
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
 	</div>
-
 	{% if is_granted("ROLE_ADMIN") %}
 
 		<a href="{{ path('app_categorie_index') }}">back to list</a>
