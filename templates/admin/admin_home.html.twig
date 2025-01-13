@@ -1,20 +1,20 @@
 {% extends "base.html.twig" %}
 {% block body %}
-	<div class="flex flex-row justify-between">
-		<aside class="bg-primary-default h-screen">
+	<div class="flex lg:flex-row justify-between">
+		<aside class="max-lg:hidden bg-primary-default h-screen">
 			<h2>Navbar Dashboard</h2>
 			<ul>
 				<li>STP Fonctionne</li>
 			</ul>
 		</aside>
-		<section class=" w-full">
+		<section class="max-md:w-full">
 			<h1 class="text-center">Dashboard</h1>
 
 
 			<h2 class="text-center">Content
 			</h2>
 <h3 class="text-center">Les différents dashboards </h3>
-<div class="grid grid-cols-3 gap-4  w-[95%] m-auto">
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4  p-2 lg:w-[95%] m-auto">
 {# <div class="flex flex-row flex-wrap justify-around bg-slate-500 "> #}
 
 			<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -129,7 +129,7 @@
 </div>
 
 		</section>
-		<aside class="bg-secondary-light h-screen w-[10rem]">
+		<aside class="bg-secondary-light h-screen w-[10rem] max-lg:hidden ">
 			<h2>Notif</h2>
 			<small>A modifier, on peut le cacher et le faire apparaître à la demande</small>
 		</aside>
