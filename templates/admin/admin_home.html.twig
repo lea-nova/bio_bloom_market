@@ -1,25 +1,28 @@
 {% extends "base.html.twig" %}
 {% block body %}
-	<div class="flex flex-row justify-between">
-		<aside class="bg-primary-default h-screen">
+	<div class="flex lg:flex-row justify-between">
+		<aside class="max-lg:hidden bg-primary-default h-screen">
 			<h2>Navbar Dashboard</h2>
 			<ul>
 				<li>STP Fonctionne</li>
 			</ul>
 		</aside>
-		<section>
-			<h1>Dashboard</h1>
+		<section class="max-md:w-full">
+			<h1 class="text-center">Dashboard</h1>
 
 
-			<h2>Content
+			<h2 class="text-center">Content
 			</h2>
+<h3 class="text-center">Les différents dashboards </h3>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4  p-2 lg:w-[95%] m-auto">
+{# <div class="flex flex-row flex-wrap justify-around bg-slate-500 "> #}
 
 			<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 				<a
 					href="#">{# <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt=""/> #}
 				</a>
 				<div class="p-5">
-					<a href={{path('app_fournisseur_index')}}>
+					<a href={{path('app_user_index')}}>
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Utilisateurs</h5>
 					</a>
 					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des utilisateurs de BioBloomMarket</p>
@@ -32,6 +35,7 @@
 				</div>
 
 			</div>
+			
 			<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 				<a
 					href="#">{# <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt=""/> #}
@@ -40,8 +44,8 @@
 					<a href={{path('app_fournisseur_index')}}>
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Fournisseurs</h5>
 					</a>
-					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des fournisseurs pour BioBloomMarket</p>
-					<a href={{path('app_fournisseur_index')}} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des fournisseurs de BioBloomMarket</p>
+					<a href={{ path('app_fournisseur_index') }} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 						Voir plus
 						<svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 10">
 							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
@@ -55,11 +59,11 @@
 					href="#">{# <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt=""/> #}
 				</a>
 				<div class="p-5">
-					<a href={{path('app_adresse_index' )}}>
+					<a href={{path('app_adresse_index')}}>
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Adresses</h5>
 					</a>
-					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des Adresses  pour BioBloomMarket</p>
-					<a href={{path('app_adresse_index')}} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des adresses de BioBloomMarket</p>
+					<a href={{ path('app_adresse_index') }} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 						Voir plus
 						<svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 10">
 							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
@@ -73,32 +77,59 @@
 					href="#">{# <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt=""/> #}
 				</a>
 				<div class="p-5">
-					<a href={{path('app_categorie_index' )}}>
+					<a href={{path('app_categorie_index')}}>
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Catégories</h5>
 					</a>
-					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des Catégories  pour BioBloomMarket</p>
-					<a href={{path('app_categorie_index')}} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des catégories de BioBloomMarket</p>
+					<a href={{ path('app_categorie_index') }} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 						Voir plus
 						<svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 10">
 							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
 						</svg>
 					</a>
 				</div>
-				<div class="p-5">
-					<a href={{path('app_marque_index' )}}>
-						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Marque</h5>
-					</a>
-					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des Marques  pour BioBloomMarket</p>
-					<a href={{path('app_marque_index')}} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-						Voir plus
-						<svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 10">
-							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-						</svg>
-					</a>
-				</div>
+
 			</div>
+			<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+				<a
+					href="#">{# <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt=""/> #}
+				</a>
+				<div class="p-5">
+					<a href={{path('app_marque_index')}}>
+						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Marques</h5>
+					</a>
+					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des marques de BioBloomMarket</p>
+					<a href={{ path('app_marque_index') }} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+						Voir plus
+						<svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 10">
+							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+						</svg>
+					</a>
+				</div>
+
+			</div>
+			<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+				<a
+					href="#">{# <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt=""/> #}
+				</a>
+				<div class="p-5">
+					<a href={{path('app_produit_index')}}>
+						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Produits</h5>
+					</a>
+					<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Liste des produits de BioBloomMarket</p>
+					<a href={{ path('app_produit_index') }} class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+						Voir plus
+						<svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 14 10">
+							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+						</svg>
+					</a>
+				</div>
+
+			</div>
+</div>
+
 		</section>
-		<aside class="bg-secondary-light h-screen w-[10rem]">
+		<aside class="bg-secondary-light h-screen w-[10rem] max-lg:hidden ">
 			<h2>Notif</h2>
 			<small>A modifier, on peut le cacher et le faire apparaître à la demande</small>
 		</aside>

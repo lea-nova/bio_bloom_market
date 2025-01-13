@@ -98,18 +98,23 @@ class ProduitType extends AbstractType
                 'required' => false,
                 'class' => Marque::class,
                 'choice_label' => 'nom',
+                'placeholder' => 'Si la marque présent dans la liste, sélectionner',
             ])
             ->add('fournisseur', EntityType::class, [
                 'required' => false,
                 'class' => Fournisseur::class,
                 'choice_label' => 'nom',
+                'placeholder' => 'Si fournisseur présent dans la liste, sélectionner',
+
+
             ])
             ->add('categorie', EntityType::class, [
                 'required' => false,
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
                 'multiple' => true,
-                'expanded' => true
+                'expanded' => true,
+
             ])
         ;
     }
