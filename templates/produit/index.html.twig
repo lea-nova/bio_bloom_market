@@ -5,16 +5,16 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Tous les produits BioBloomMarket</h1>
+	<h1 class="text-center">Tous les produits BioBloomMarket</h1>
 
 	<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:ml-32 min-h-screen ">
 
 		{% for produit in produits %}
-			<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[22rem] my-5">
+			<div class="w-full max-w-sm  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[22rem] my-5 ">
 				<a href="{{path('app_produit_show', {'id': produit.id})}}">
-					<div class="h-[15rem]  ">
+					<div class="h-[15rem] w-full p-8  ">
 						{% if  produit.image %}
-							<img class="p-8 m-auto object-contain rounded-t-lg h-[95%]" src="{{asset('uploads/produits/'~ produit.image)}}" alt="product image"/>
+							<img class=" m-auto  rounded-lg object-contain  h-[95%] " src="{{asset('uploads/produits/'~ produit.image)}}" alt="product image"/>
 						{% else %}
 							<small>Pas d'images</small>
 						{% endif %}
@@ -24,9 +24,9 @@
 					<a href="#">
 						<h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{produit.nom}}</h5>
 					</a>
-					<div class="flex items-center justify-between">
-						<a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn-border">Voir le produit</a>
-						<a href="#" class="btn-cta">Ajouter au panier</a>
+					<div class="flex items-center justify-between py-5">
+						<a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn-border m-auto">Voir le produit</a>
+						{# <a href="#" class="btn-cta">Ajouter au panier</a> #}
 					</div>
 				</div>
 			</div>

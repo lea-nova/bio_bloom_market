@@ -8,7 +8,7 @@
 {% block body %}
 
 	<div
-		class="flex flex-col sm:justify-center items-center ">
+		class="flex flex-col sm:justify-center justify-evenly items-center ">
 		{# <h1 class="text-center w-5/6 mt-2 mb-5">BIO BLOOM MARKET</h1> #}
 
 
@@ -17,16 +17,18 @@
 				{{app.user.prenom}}
 			</small>
 		{% endif %}
-		<div class="w-full flex max-sm:flex-col  bg-secondary-default text-center max-sm:align-middle  md:flex-row items-center max-sm:justify-around justify-around md:flex p-8 ">
-			<span class="md:ml-7 lg:ml-7 px-5 max-sm:pb-5 text-left max-sm:w-5/6 md:w-3/6 md:h-4/6  lg:h-3/6 lg:w-3/6  ">
-				<h1 class="font-bold  max-md:text-center text-tertiary-light text-sm sm:text-md md:text-md xl:text-3xl mb-5  ">Notre engagement pour une planète verte et florissante</h1>
+		<div class="w-full flex max-sm:flex-col  bg-secondary-default text-center max-sm:align-middle  md:flex-row items-center max-sm:justify-around md:justify-between lg:justify-evenly md:flex sm:p-1 max-md:p-6">
+			<span
+				class=" md:ml-7 lg:ml-16 max-sm:pb-5 max-sm:text-center text-left  md:h-5/6 lg:h-3/6 lg:w-3/6  w-full  ">
+				{# <span class="md:ml-7 lg:ml-7 px-5 max-sm:pb-5 max-sm:text-center text-left max-sm:w-5/6 md:w-3/6 md:h-4/6  lg:h-3/6 lg:w-3/6 bg-red-500 w-full"> #}
+				<h1 class="font-bold  max-md:text-center text-tertiary-light text-sm sm:text-md md:text-md xl:text-3xl mb-5  w-full ">Notre engagement pour une planète verte et florissante</h1>
 				<a class=" btn-cta" type="button" href={{path('app_produit_index')}}>
 					Explorez notre boutique
 				</a>
 			</span>
-			<span class=" flex flex-row justify-center md:ml-7">
+			<span class=" flex flex-row justify-center p-5  ">
 				<img
-				class="rounded-2xl md:w-4/6 md:h-4/6  lg:h-4/6 lg:w-5/6   " src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes.">
+				class="rounded-2xl md:h-2/6  lg:h-4/6 lg:w-4/6   " src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes.">
 			{# <img class="rounded-2xl md:w-5/6 md:h-5/6 lg:h-3/6 lg:w-3/6" src="{{asset('images/banner-1.jpg')}}" alt="cagettes de fruits et de légumes."> #}
 			</span>
 		</div>
