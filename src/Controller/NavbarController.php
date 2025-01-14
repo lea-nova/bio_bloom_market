@@ -18,8 +18,11 @@ class NavbarController extends AbstractController
         } else {
             $categories = $categorieService->getAllCategoriesVisible();
         }
+
+
         return $this->render('_partials\_navbar.html.twig', [
             "categories" => $categories,
+
         ]);
     }
 }

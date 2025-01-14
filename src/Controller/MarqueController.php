@@ -89,7 +89,16 @@ final class MarqueController extends AbstractController
     #[Route('/marque/{slug}', name: 'app_marque_show', methods: ['GET'])]
     public function show(#[MapEntity(mapping: ['slug' => 'slug'])] Marque $marque): Response
     {
+        $produitVisible = [];
+        if ($marque->getProduits()) {
+            foreach ($marque->getProduits() as $produit) {
+                if ($produit->isVisible()) {
+                    $produitVisible = $produit->isVisible();
+                }
+            }
+        }
         return $this->render('marque/show.html.twig', [
+            'produitVisible' => $produitVisible,
             'marque' => $marque,
         ]);
     }
