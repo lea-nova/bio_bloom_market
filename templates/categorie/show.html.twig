@@ -4,10 +4,13 @@
 {% endblock %}
 
 {% block body %}
-
 	<h1 class="text-center">{{categorie.nom}}</h1>
 	<p class="text-center">{{categorie.description}}</p>
-
+	<div class="  hover:duration-500 hover:ease-in-out duration-500 lg:ml-5  ">
+		<a title="Retourner à la liste des produits" class="text-tertiary-dark hover:text-primary-dark font-semibold  flex flex-row justify-evenly w-[20rem]" href="{{ path('app_produit_index') }}">
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
+			Retour aux produits</a>
+	</div>
 	<table class="table">
 		<tbody>
 
@@ -17,20 +20,12 @@
 					<td>{{ categorie.id }}</td>
 				</tr>
 			{% endif %}
-			{# <tr>
-																																																																												<th>Nom</th>
-																																																																												<td>{{ categorie.nom }}</td>
-																																																																											</tr> #}
 			{% if is_granted("ROLE_ADMIN") %}
 				<tr>
 					<th>Slug</th>
 					<td>{{ categorie.slug }}</td>
 				</tr>
 			{% endif %}
-			{# <tr>
-																																																																												<th>Description</th>
-																																																																												<td>{{ categorie.description|e }}</td>
-																																																																											</tr> #}
 
 
 			{% if is_granted("ROLE_ADMIN") %}

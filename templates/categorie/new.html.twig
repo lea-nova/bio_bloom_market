@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Categorie{% endblock %}
+{% block title %}New Categorie
+{% endblock %}
 
 {% block body %}
-    <h1>Nouvelle catégorie pour les produits</h1>
 
-    {{ include('categorie/_form.html.twig') }}
+	<h1>Nouvelle catégorie pour les produits</h1>
+	<a href="{{ path('app_categorie_index') }}" class="hover:text-primary-dark font-semibold  flex flex-row justify-evenly w-[20rem]">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-undo-2"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>
+		Toutes les catégories</a>
+	{{ include('categorie/_form.html.twig') }}
 
-    <a href="{{ path('app_categorie_index') }}">back to list</a>
+
 {% endblock %}
