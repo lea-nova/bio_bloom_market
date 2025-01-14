@@ -33,7 +33,7 @@ class Categorie
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(nullable: false)]
-    private ?bool $isVisible = true;
+    private ?bool $visible = true;
 
     /**
      * @var Collection<int, Produit>
@@ -116,12 +116,12 @@ class Categorie
 
     public function isVisible(): ?bool
     {
-        return $this->isVisible;
+        return $this->visible;
     }
 
     public function setVisible(bool $isVisible): static
     {
-        $this->isVisible = $isVisible;
+        $this->visible = $isVisible;
 
         return $this;
     }

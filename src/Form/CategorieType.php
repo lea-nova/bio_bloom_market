@@ -82,7 +82,7 @@ class CategorieType extends AbstractType
             // ->add('updatedAt', null, [
             //     'widget' => 'single_text',
             // ])
-            // ->add('isVisible')
+            ->add('visible')
             // ->add('produits', EntityType::class, [
             //     'class' => Produit::class,
             //     'choice_label' => 'id',

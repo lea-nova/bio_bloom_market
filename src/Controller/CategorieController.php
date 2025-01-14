@@ -80,6 +80,7 @@ final class CategorieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $nomToSlug = $form->get('nom')->getData();
             $slugNom = $slugger->slug($nomToSlug);
+            $categorie->setVisible($form->get('visible')->getData());
             $categorie->setSlug(strtolower($slugNom));
             $categorie->setUpdatedAt(new DateTimeImmutable());
             $entityManager->persist($categorie);

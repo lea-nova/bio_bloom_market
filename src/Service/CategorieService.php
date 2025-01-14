@@ -17,4 +17,8 @@ class CategorieService
     {
         return $this->categorieRepository->findAll();
     }
+    public function getAllCategoriesVisible(): array
+    {
+        return $this->categorieRepository->findBy(['visible' => true]);
+    }
 }
