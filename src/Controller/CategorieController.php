@@ -58,13 +58,21 @@ final class CategorieController extends AbstractController
     #[Route('/categorie/{slug}', name: 'app_categorie_show', methods: ['GET'])]
     public function show(#[MapEntity(mapping: ['slug' => "slug"])] Categorie $categorie, SluggerInterface $slugger): Response
     {
-        // $slugCategorie = $slugger->slug($categorie->getNom());
-        // $categorie->setSlug(strtolower($slugCategorie));
-        // dump($slugCategorie);
-        // dd($categorie);
+
+        $produitVisible = [];
+
+        if ($categorie->getProduits()) {
+            foreach ($categorie->getProduits() as $produit) {
+                if ($produit->isVisible()) {
+                    $produitVisible = $produit->isVisible();
+                }
+            }
+        }
 
         return $this->render('categorie/show.html.twig', [
             'categorie' => $categorie,
+            'produitVisible' => $produitVisible,
+
         ]);
     }
 
@@ -80,6 +88,7 @@ final class CategorieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $nomToSlug = $form->get('nom')->getData();
             $slugNom = $slugger->slug($nomToSlug);
+            $categorie->setVisible($form->get('visible')->getData());
             $categorie->setSlug(strtolower($slugNom));
             $categorie->setUpdatedAt(new DateTimeImmutable());
             $entityManager->persist($categorie);

@@ -11,12 +11,18 @@ use Symfony\Component\Routing\Attribute\Route;
 class NavbarController extends AbstractController
 {
     // #[Route('/navbar', name: 'app_navbar')]
-    public function navbar(CategorieService $categorieService): Response
+    public function navbar(CategorieService $categorieService, CategorieRepository $categorieRepository): Response
     {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $categories = $categorieService->getAllCategories();
+        } else {
+            $categories = $categorieService->getAllCategoriesVisible();
+        }
 
-        $categories = $categorieService->getAllCategories();
+
         return $this->render('_partials\_navbar.html.twig', [
             "categories" => $categories,
+
         ]);
     }
 }

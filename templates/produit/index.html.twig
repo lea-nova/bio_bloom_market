@@ -8,29 +8,45 @@
 	<h1 class="text-center">Tous les produits BioBloomMarket</h1>
 
 	<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:ml-32 min-h-screen ">
+		{% if produits %}
 
-		{% for produit in produits %}
-			<div class="w-full max-w-sm  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[22rem] my-5 ">
-				<a href="{{path('app_produit_show', {'id': produit.id})}}">
-					<div class="h-[15rem] w-full p-8  ">
-						{% if  produit.image %}
-							<img class=" m-auto  rounded-lg object-contain  h-[95%] " src="{{asset('uploads/produits/'~ produit.image)}}" alt="product image"/>
-						{% else %}
-							<small>Pas d'images</small>
-						{% endif %}
-					</div>
-				</a>
-				<div class="px-5 pb-5">
-					<a href="#">
-						<h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{produit.nom}}</h5>
+
+			{% for produit in produits %}
+
+				<div class="w-full max-w-sm  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[22rem] my-5 ">
+					<a href="{{path('app_produit_show', {'id': produit.id})}}">
+						<div class="h-[15rem] w-full p-8  ">
+							{% if  produit.image %}
+								<img class=" m-auto  rounded-lg object-contain  h-[95%] " src="{{asset('uploads/produits/'~ produit.image)}}" alt="product image"/>
+							{% else %}
+								<small>Pas d'images</small>
+							{% endif %}
+						</div>
 					</a>
-					<div class="flex items-center justify-between py-5">
-						<a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn-border m-auto">Voir le produit</a>
-						{# <a href="#" class="btn-cta">Ajouter au panier</a> #}
+					<div class="px-5 pb-5">
+						<a href="#">
+							<h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{produit.nom}}</h5>
+						</a>
+						<div class="flex items-center justify-between py-5">
+							<a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn-border m-auto">Voir le produit</a>
+							{# <a href="#" class="btn-cta">Ajouter au panier</a> #}
+							{% if is_granted("ROLE_ADMIN") %}
+								{% if produit.isVisible  %}
+
+									<small class="  border border-green-700 rounded-lg font-semibold p-2 bg-green-300 text-green-700">Visible</small>
+
+								{% else %}
+									<small class="border border-red-700 p-2 rounded-lg font-semibold bg-red-300 text-red-700">Non visible</small>
+								{% endif %}
+							{% endif %}
+						</div>
+
 					</div>
 				</div>
-			</div>
-		{% endfor %}
+			{% endfor %}
+		{% else %}
+			<p class="text-center">Pas de produits</p>
+		{% endif %}
 	</section>
 
 	<table class="table">

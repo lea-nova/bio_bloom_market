@@ -28,8 +28,17 @@
 				{% for categorie in categories %}
 					{# <a href=" {{path('app_categorie_show', {'id': categorie.id})}} "> #}
 					<a href=" {{path('app_categorie_show', {'slug': categorie.slug})}} ">
-						<li class=" text-tertiary-darker hover:text-primary-default">
-							{{categorie.nom}}</li>
+
+						{% if categorie.isVisible %}
+							<li class=" text-tertiary-darker hover:text-primary-default">
+								{{categorie.nom}}
+							</li>
+						{% else %}
+
+							<li class=" text-tertiary-darker hover:text-red-500">
+								{{categorie.nom}}
+							</li>
+						{% endif %}
 					</a>
 				{% endfor %}
 			</ul>
