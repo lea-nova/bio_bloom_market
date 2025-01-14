@@ -21,8 +21,13 @@ final class ProduitController extends AbstractController
     #[Route('/produit', name: 'app_produit_index', methods: ['GET'])]
     public function index(ProduitRepository $produitRepository): Response
     {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $produits = $produitRepository->findAll();
+        } else {
+            $produits = $produitRepository->findBy(['visible' => true]);
+        }
         return $this->render('produit/index.html.twig', [
-            'produits' => $produitRepository->findAll(),
+            'produits' => $produits,
         ]);
     }
 
@@ -89,6 +94,7 @@ final class ProduitController extends AbstractController
         UploadFileService $uploadFileService,
         SluggerInterface $slugger
     ): Response {
+        // dd($request);
         if (!$this->isGranted("ROLE_ADMIN")) {
             return $this->redirectToRoute('app_produit_show', ['id' => $produit->getId()]);
         }
@@ -119,6 +125,9 @@ final class ProduitController extends AbstractController
             if ($imageProduitInDb) {
                 $produit->setImage($imageProduitInDb);
             }
+
+            $produit->setVisible($form->get('visible')->getData());
+
             $produit->setUpdatedAt(new DateTimeImmutable());
             $entityManager->persist($produit);
             $entityManager->flush();
@@ -160,4 +169,5 @@ final class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
+    public function toggleVisibleProduct() {}
 }

@@ -29,7 +29,7 @@ class Produit
     private ?string $image = null;
 
     #[ORM\Column]
-    private ?bool $isVisible = true;
+    private ?bool $visible = true;
 
     #[ORM\Column]
     private ?int $stock = 0;
@@ -115,12 +115,12 @@ class Produit
 
     public function isVisible(): ?bool
     {
-        return $this->isVisible;
+        return $this->visible;
     }
 
-    public function setVisible(bool $isVisible): static
+    public function setVisible(bool $visible): static
     {
-        $this->isVisible = $isVisible;
+        $this->visible = $visible;
 
         return $this;
     }

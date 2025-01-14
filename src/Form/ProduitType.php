@@ -79,7 +79,7 @@ class ProduitType extends AbstractType
                     ]),
                 ],
             ])
-            // ->add('isVisible')
+            ->add('visible')
             ->add('stock', IntegerType::class, [
                 'required' => false,
                 'attr' => [
