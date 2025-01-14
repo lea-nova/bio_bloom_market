@@ -86,7 +86,7 @@ class MarqueType extends AbstractType
             // ->add('updatedAt', null, [
             //     'widget' => 'single_text',
             // ])c 
-            // ->add('isActive')
+            ->add('active')
         ;
     }
 

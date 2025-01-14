@@ -16,10 +16,22 @@
 						<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">{{marque.nom}}</h5>
 						<p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-center">{{marque.description}}</p>
 					</a>
-					<a href={{ path('app_marque_show', {'slug': marque.slug} ) }} class="btn-cta m-auto">
-						Afficher les produits
+					<span class="flex flex-rox justify-beetw">
+						<a href={{ path('app_marque_show', {'slug': marque.slug} ) }} class="btn-cta m-auto">
+							Afficher les produits
 
-					</a>
+						</a>
+
+						{% if is_granted("ROLE_ADMIN") %}
+							{% if marque.isActive  %}
+
+								<small class="  border border-green-700 rounded-lg font-semibold p-2 bg-green-300 text-green-700">Visible</small>
+
+							{% else %}
+								<small class="border border-red-700 p-2 rounded-lg font-semibold bg-red-300 text-red-700">Non visible</small>
+							{% endif %}
+						{% endif %}
+					</span>
 				</div>
 
 			</div>

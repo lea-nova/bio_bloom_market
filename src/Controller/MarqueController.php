@@ -24,8 +24,13 @@ final class MarqueController extends AbstractController
     #[Route('/marque', name: 'app_marque_index', methods: ['GET'])]
     public function index(MarqueRepository $marqueRepository): Response
     {
+        if ($this->isGranted("ROLE_ADMIN")) {
+            $marques = $marqueRepository->findAll();
+        } else {
+            $marques = $marqueRepository->findBy(['active' => true]);
+        }
         return $this->render('marque/index.html.twig', [
-            'marques' => $marqueRepository->findAll(),
+            'marques' => $marques,
         ]);
     }
 
@@ -133,6 +138,7 @@ final class MarqueController extends AbstractController
             } else {
                 $marque->setLogo($logoMarque);
             }
+            $marque->setActive($form->get('active')->getData());
             $nomMarque = $form->get('nom')->getData();
             $nomSlugMarque = $slugger->slug($nomMarque);
             $marque->setSlug(strtolower($nomSlugMarque));

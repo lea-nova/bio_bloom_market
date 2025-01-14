@@ -36,7 +36,7 @@ class Marque
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
-    private ?bool $isActive = true;
+    private ?bool $active = true;
 
     /**
      * @var Collection<int, Produit>
@@ -130,12 +130,12 @@ class Marque
 
     public function isActive(): ?bool
     {
-        return $this->isActive;
+        return $this->active;
     }
 
     public function setActive(bool $isActive): static
     {
-        $this->isActive = $isActive;
+        $this->active = $isActive;
 
         return $this;
     }
