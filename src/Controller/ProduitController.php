@@ -80,7 +80,9 @@ final class ProduitController extends AbstractController
     #[Route('/produit/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
-
+        if (!$this->isGranted('ROLE_ADMIN') && $produit->isVisible() === false) {
+            return $this->redirectToRoute("app_produit_index");
+        }
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
         ]);

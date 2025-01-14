@@ -89,6 +89,10 @@ final class MarqueController extends AbstractController
     #[Route('/marque/{slug}', name: 'app_marque_show', methods: ['GET'])]
     public function show(#[MapEntity(mapping: ['slug' => 'slug'])] Marque $marque): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN') && $marque->isActive() === false) {
+            return $this->redirectToRoute("app_marque_index");
+        }
+
         $produitVisible = [];
         if ($marque->getProduits()) {
             foreach ($marque->getProduits() as $produit) {

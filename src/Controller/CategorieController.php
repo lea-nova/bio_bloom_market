@@ -34,6 +34,7 @@ final class CategorieController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
             return $this->redirectToRoute('app_main');
         }
+
         $categorie = new Categorie();
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
@@ -58,7 +59,9 @@ final class CategorieController extends AbstractController
     #[Route('/categorie/{slug}', name: 'app_categorie_show', methods: ['GET'])]
     public function show(#[MapEntity(mapping: ['slug' => "slug"])] Categorie $categorie, SluggerInterface $slugger): Response
     {
-
+        if (!$this->isGranted('ROLE_ADMIN') && $categorie->isVisible() === false) {
+            return $this->redirectToRoute("app_main");
+        }
         $produitVisible = [];
 
         if ($categorie->getProduits()) {
