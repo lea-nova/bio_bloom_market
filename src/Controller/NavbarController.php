@@ -13,6 +13,7 @@ class NavbarController extends AbstractController
     // #[Route('/navbar', name: 'app_navbar')]
     public function navbar(CategorieService $categorieService, CategorieRepository $categorieRepository): Response
     {
+
         if ($this->isGranted('ROLE_ADMIN')) {
             $categories = $categorieService->getAllCategories();
         } else {

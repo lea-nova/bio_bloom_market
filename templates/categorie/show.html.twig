@@ -49,27 +49,27 @@
 		</tbody>
 	</table>
 
-	<div class="flex flex-col justify-center place-items-center">
+	<div class="flex flex-col justify-center place-items-center ">
 		<h2>Produits présents dans la catégorie
 			{{categorie.nom}}</h2>
 		{% if produitVisible is empty %}
 			<p>Pas de produits dans cette catégorie</p>
 		{% endif %}
 
-		<div class=" w-[95%] m-auto ">
+		<div class=" w-[95%] m-auto  ">
 			{% if categorie.Produits is empty %}
 				<p>
 					Il n'y a pas de produits dans cette catégorie pour le moment.
 				</p>
 			{% else %}
-				<div class=" grid grid-cols-3  place-items-center">
+				<div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  place-items-center gap-5  max-h-full">
 					{% for produit in categorie.Produits %}
 						{% if produit.isVisible %}
 
 
-							<div class="h-[20rem] w-[20rem] flex flex-col items-center ">
+							<div class=" lg:w-[16rem] flex flex-col items-center">
 								<h3 class=" text-center">{{produit.nom}}</h3>
-								<img class="h-[15rem] object-fit rounded-lg" src={{asset('uploads/produits/'~ produit.image)}}>
+								<img class="max-sm:h-[10rem] max-sm:w-[10rem] md:h-[10rem] lg:h-[10rem] object-contain rounded-lg" src={{asset('uploads/produits/'~ produit.image)}}>
 								{% if is_granted("ROLE_ADMIN") %}
 									<small class=" text-xs  border border-green-700 rounded-lg font-semibold p-2 w-fit bg-green-300 text-green-700">Visible</small>
 								{% endif %}
@@ -77,9 +77,9 @@
 							</div>
 						{% else %}
 							{% if is_granted("ROLE_ADMIN") %}
-								<div class="h-[20rem] w-[20rem] flex flex-col items-center ">
+								<div class=" flex flex-col items-center">
 									<h3 class=" text-center">{{produit.nom}}</h3>
-									<img class="h-[15rem] object-fit rounded-lg" src={{asset('uploads/produits/'~ produit.image)}}>
+									<img class="max-sm:h-[10rem] max-sm:w-[10rem] md:h-[10rem] lg:h-[10rem] object-contain rounded-lg" src={{asset('uploads/produits/'~ produit.image)}}>
 									<small class=" text-xs  border border-red-700 rounded-lg font-semibold p-2 w-fit bg-red-300 text-red-700">Non visible</small>
 								</div>
 							{% endif %}

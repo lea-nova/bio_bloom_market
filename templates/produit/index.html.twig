@@ -7,7 +7,7 @@
 {% block body %}
 	<h1 class="text-center">Tous les produits BioBloomMarket</h1>
 
-	<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:ml-32 min-h-screen ">
+	<section class="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4 place-items-center lg:grid-cols-3   min-h-screen  max-md:w-[90%] md:w-[90%] lg:w-[85%] xl:w-[70%] m-auto">
 		{% if produits %}
 
 
@@ -15,7 +15,7 @@
 
 				<div class="w-full max-w-sm  border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[22rem] my-5 ">
 					<a href="{{path('app_produit_show', {'id': produit.id})}}">
-						<div class="h-[15rem] w-full p-8  ">
+						<div class="h-[15rem] lg:w-full p-8  ">
 							{% if  produit.image %}
 								<img class=" m-auto  rounded-lg object-contain  h-[95%] " src="{{asset('uploads/produits/'~ produit.image)}}" alt="product image"/>
 							{% else %}
@@ -28,7 +28,7 @@
 							<h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{produit.nom}}</h5>
 						</a>
 						<div class="flex items-center justify-between py-5">
-							<a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn-border m-auto">Voir le produit</a>
+							<a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn-border m-auto max-lg:w-fit">Voir le produit</a>
 							{# <a href="#" class="btn-cta">Ajouter au panier</a> #}
 							{% if is_granted("ROLE_ADMIN") %}
 								{% if produit.isVisible  %}
@@ -49,64 +49,37 @@
 		{% endif %}
 	</section>
 
-	<table class="table">
-		<thead>
-			<tr>
-				{% if is_granted("ROLE_ADMIN") %}
 
-					<th>Id</th>
-				{% endif %}
+	{% for produit in produits %}
 
-				{% if is_granted("ROLE_ADMIN") %}
+		{% if is_granted("ROLE_ADMIN") %}
 
-					<th>Slug</th>
-				{% endif %}
+			{{ produit.id }}
+		{% endif %}
 
-				{% if is_granted("ROLE_ADMIN") %}
+		{% if is_granted("ROLE_ADMIN") %}
 
-					<th>IsVisible</th>
-					<th>Stock</th>
-					<th>CreatedAt</th>
-					<th>UpdatedAt</th>
-					<th>actions</th>
-				{% endif %}
-			</tr>
-		</thead>
-		<tbody>
-			{% for produit in produits %}
-				<tr>
-					{% if is_granted("ROLE_ADMIN") %}
+			{{ produit.slug }}
+		{% endif %}
 
-						<td>{{ produit.id }}</td>
-					{% endif %}
 
-					{% if is_granted("ROLE_ADMIN") %}
+		{% if is_granted("ROLE_ADMIN") %}
 
-						<td>{{ produit.slug }}</td>
-					{% endif %}
+			IsVisible :{{ produit.isVisible ? 'Yes' : 'No' }}
+			Stock{{ produit.stock }}
+			CreatedAt{{ produit.createdAt ? produit.createdAt|date('Y-m-d H:i:s') : '' }}
+			UpdatedAt{{ produit.updatedAt ? produit.updatedAt|date('Y-m-d H:i:s') : '' }}
+		{% endif %}
 
-					{% if is_granted("ROLE_ADMIN") %}
 
-						<td>{{ produit.isVisible ? 'Yes' : 'No' }}</td>
-						<td>{{ produit.stock }}</td>
-						<td>{{ produit.createdAt ? produit.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-						<td>{{ produit.updatedAt ? produit.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-					{% endif %}
-					<td>
+		{% if is_granted("ROLE_ADMIN") %}
 
-						{% if is_granted("ROLE_ADMIN") %}
+			<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
+		{% endif %}
+	{% else %}
+		no records found
 
-							<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-						{% endif %}
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="10">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+	{% endfor %}
 	{% if is_granted("ROLE_ADMIN") %}
 		<a href="{{ path('app_produit_new') }}">Create new</a>
 	{% endif %}

@@ -5,7 +5,7 @@
 
 {% block body %}
 	<h1 class="text-center">Toutes les marques BioBloomMarket</h1>
-	<div class="grid grid-cols-2 m-auto   place-items-center h-screen">
+	<div class="lg:grid lg:grid-cols-2 m-auto  w-[95%] lg:place-content-center place-items-center lg:h-screen">
 		{% for marque in marques %}
 			<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[25rem] p-5">
 				<a class="" href="{{path("app_marque_show", {"slug": marque.slug})}}">
