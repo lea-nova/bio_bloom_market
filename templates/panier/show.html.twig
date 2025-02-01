@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier
+{% endblock %}
+
+{% block body %}
+	<h1>Panier</h1>
+
+	<table class="table">
+		<tbody>
+			{% if panier.getItems is empty %}
+				<p>
+					Pas encore de produit dans le panier
+				</p>
+			{% endif %}
+
+			{# <tr>
+															                <th>Id</th>
+															                <td>{{ panier.id }}</td>
+															            </tr>
+															            <tr>
+															                <th>CreatedAt</th>
+															                <td>{{ panier.createdAt ? panier.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+															            </tr>
+															            <tr>
+															                <th>UpdatedAt</th>
+															                <td>{{ panier.updatedAt ? panier.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+															            </tr> #}
+		</tbody>
+	</table>
+
+	{# <a href="{{ path('app_panier_index') }}">back to list</a> #}
+
+{# <a href="{{ path('app_panier_edit', {'id': panier.id}) }}">edit</a> #}
+
+	{# {{ include('panier/_delete_form.html.twig') }} #}
+{% endblock %}
