@@ -4,36 +4,49 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Panier</h1>
+<h1 class="text-center">Panier</h1>
 
-	<table class="table">
+{% if panier.getItems is empty %}
+	<p>
+		Pas encore de produit dans le panier
+	</p>
+
+{% else %}
+
+	<table class="table  my-1 m-auto">
+		<thead>
+			<tr>
+				<th class="w-[20rem] text-left " scope="col">Produit</th>
+				<th class="w-[10rem]" scope="col">Quantité</th>
+				<th class="w-[20rem]" scope="col">Actions</th>
+				{# <th scope="col">Age</th> #}
+			</tr>
+		</thead>
 		<tbody>
-			{% if panier.getItems is empty %}
-				<p>
-					Pas encore de produit dans le panier
-				</p>
+			{% for item in panier.getItems %}
 
-			{% else %}
-				<ul class=" flex flex-col items-center">
-					{% for item in panier.getItems %}
-						<li class="flex flex-row justify-around w-[50%] m-5 ">
-							<b>Produit:
-							</b>
-							{{item.produit.nom}}
-							<b>Quantité:
-							</b>
-							{{item.quantite}}
+				<tr class=" lg:h-[5rem ">
 
+					<td>
+						{{item.produit.nom}}
+					</td>
+					<td class="text-center">
+						{{item.quantite}}
+					</td>
+					<td class="flex  flex-col md:flex-row py-5 justify-around md:justify-around md:items-center  h-[10rem] lg:h-[5rem] ">
+						<span>
+							<a class="btn-border text-sm" href="{{path('app_produit_show', {id : item.produit.id })}}">Voir produit</a>
+						</span>
+						<span>
 							{{ include('ligne_panier/_delete_form.html.twig') }}
+						</span>
+					</td>
+				</tr>
 
-						</li>
-					{% endfor %}
-				</ul>
 
-			{% endif %}
+			{% endfor %}
 		</tbody>
-	</table>
 
 
-	{# {{ include('panier/_delete_form.html.twig') }} #}
-{% endblock %}
+	</tbody>
+</table>{% endif %}{# {{ include('panier/_delete_form.html.twig') }} #}{% endblock %}
