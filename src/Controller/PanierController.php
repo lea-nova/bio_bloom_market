@@ -66,6 +66,7 @@ final class PanierController extends AbstractController
         ]);
     }
 
+
     // #[Route('/{id}/edit', name: 'app_panier_edit', methods: ['GET', 'POST'])]
     // public function edit(Request $request, Panier $panier, EntityManagerInterface $entityManager): Response
     // {
