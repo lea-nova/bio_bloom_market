@@ -1,6 +1,6 @@
 <form method="POST" action="{{path('panier_update_quantite', {id: item.id})}} ">
 	{{form_start(formQuantite[item.id])}}
-	<span class="w-[4rem] flex flex-row">
+	<span class="w-[10rem] flex flex-row justify-around ">
 		<span class="hidden">
 			{{ form_label(formQuantite[item.id]) }}
 
@@ -8,7 +8,9 @@
 		{{form_widget(formQuantite[item.id])}}
 
 
-		<button type="submit" class="btn-border">OK</button>
+		<button type="submit text-xs" class="border-2 rounded-md hover:bg-primary-dark hover:font-bold hover:text-white hover:border-white border-primary-dark px-2 w-[3rem] ">
+			OK
+		</button>
 	</span>
 	{{form_end(formQuantite[item.id])}}
 </form>
