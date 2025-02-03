@@ -30,6 +30,12 @@
 				<h2>{{ produit.nom }}</h2>
 				<p>{{ produit.description }}</p>
 				<p>{{ produit.marque.nom }}</p>
+
+				<form
+					action="{{ path('app_ligne_panier_new', { produitId: produit.id }) }}" method="GET">
+					{# <input type="number" name="quantity" value="1" min="1"> #}
+					<button class="btn-cta" type="submit">Ajouter au panier</button>
+				</form>
 				<ul>
 					{% for categorie in produit.categorie %}
 						<li>{{categorie.nom}}</li>
