@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\LignePanier;
 use App\Entity\Panier;
+use App\Form\PanierQuantiteType;
 use App\Form\PanierType;
+use App\Repository\LignePanierRepository;
 use App\Repository\PanierRepository;
 use DateTime;
 use DateTimeImmutable;
@@ -60,12 +63,45 @@ final class PanierController extends AbstractController
             $entityManager->persist($panier);
         }
         $entityManager->flush();
-
+        $formQuantite = [];
+        foreach ($panier->getItems() as $item) {
+            // dd($item->getQuantite());
+            $formQuantite[$item->getId()] = $this->createForm(PanierQuantiteType::class, ['quantite' => $item->getQuantite()])->createView();
+        }
         return $this->render('panier/show.html.twig', [
             'panier' => $panier,
+            'formQuantite' => $formQuantite
         ]);
     }
 
+
+    #[Route('/panier/update/{id}', name: 'panier_update_quantite', methods: ['POST'])]
+    public function updateQuantite(Request $request, int $id, LignePanierRepository $lignePanierRepository, EntityManagerInterface $entityManager): Response
+    {
+        // dd($id);
+        $lignePanier = $lignePanierRepository->find($id);
+        // dump($lignePanier);
+        $form = $this->createForm(PanierQuantiteType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $valeurQuantite = $form->get('quantite')->getData();
+            $panier = $lignePanier->getPanier();
+            if ($valeurQuantite === 0) {
+                $panier->removeItem($lignePanier);
+                // $entityManager->remove($lignePanier);
+            } else {
+
+                $lignePanier->setQuantite($valeurQuantite);
+                $lignePanier->getPanier();
+                $panier->setUpdatedAt(new DateTimeImmutable());
+                $entityManager->persist($panier);
+                $entityManager->persist($lignePanier);
+            }
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('app_panier_show');
+    }
 
     // #[Route('/{id}/edit', name: 'app_panier_edit', methods: ['GET', 'POST'])]
     // public function edit(Request $request, Panier $panier, EntityManagerInterface $entityManager): Response

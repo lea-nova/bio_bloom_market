@@ -7,6 +7,21 @@
 @import "./components/buttons.css";
 @import "./components/input_text.css";
 
+
+/* Ajouté le 03/02 fleche a l'intérieur des input number peut être les récup par une classe plutôt pour ne pas le faire à tous les inputs. */
+/* Supprimer les flèches des input number pour Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Supprimer les flèches pour Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+
 body {
   font-family: Poppins;
   /* font-family: Raleway; */

@@ -1,0 +1,14 @@
+<form method="POST" action="{{path('panier_update_quantite', {id: item.id})}} ">
+	{{form_start(formQuantite[item.id])}}
+	<span class="w-[4rem] flex flex-row">
+		<span class="hidden">
+			{{ form_label(formQuantite[item.id]) }}
+
+		</span>
+		{{form_widget(formQuantite[item.id])}}
+
+
+		<button type="submit" class="btn-border">OK</button>
+	</span>
+	{{form_end(formQuantite[item.id])}}
+</form>
