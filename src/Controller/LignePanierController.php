@@ -43,6 +43,7 @@ final class LignePanierController extends AbstractController
         // dump($produit);
 
         $lignesPanier = $panier->getItems();
+
         $produitPanierId = [];
         $produitPanier = [];
 
@@ -50,17 +51,18 @@ final class LignePanierController extends AbstractController
         // Si le produit est absent de la collection. 
         foreach ($lignesPanier as $produitByLigne) {
             $produitPanierId[] = $produitByLigne->getProduit()->getId();
+
             // $produitPanier[] = $produitRepository->find($produitByLigne->getProduit()->getId());
         }
         // dd(in_array($produit->getId(), $produitPanierId));
         if (!in_array($produit->getId(), $produitPanierId)) {
             $lignePanier = new LignePanier();
 
-            // $lignePanier->setQuantite(1);
+            $lignePanier->setQuantite(1);
             $lignePanier->setPrixTotal(); // Pour l'instant, tant que j'ai pas les prix pour chaque produit.
             $lignePanier->setPanier($panier);
             $lignePanier->setProduit($produit);
-            // $lignePanier->setPrixTotal(00.00);
+            // $lignePanier->setPrixTotal);
             $entityManager->persist($lignePanier);
             $entityManager->flush();
         } else {
@@ -68,6 +70,7 @@ final class LignePanierController extends AbstractController
                 if ($produit->getId() === $item->getProduit()->getId()) {
 
                     $item->setQuantite($item->getQuantite() + 1);
+                    $item->setPrixTotal();
                     $entityManager->persist($item);
                     $entityManager->flush();
                     // return $this->redirectToRoute('app_produit_show', ['id' => $produit->getId()], Response::HTTP_SEE_OTHER);

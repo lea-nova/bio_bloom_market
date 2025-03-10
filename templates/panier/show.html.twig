@@ -7,68 +7,87 @@
 	{# {{ encore_entry_script_tags('panier') }} #}
 {% endblock %}
 {% block body %}
-<h1 class="text-center">Panier</h1>
+	<h1 class="text-center">Panier</h1>
 
-{% if panier.getItems is empty %}
-	<p>
-		Pas encore de produit dans le panier
-	</p>
+	{% if panier.getItems is empty %}
+		<p>
+			Pas encore de produit dans le panier
+		</p>
 
-{% else %}
+	{% else %}
 
-	<table class="table  my-1 m-auto">
-		<thead>
-			<tr>
-				<th class="w-[20rem] text-left " scope="col">Produit</th>
-				<th class="w-[20rem] text-left " scope="col">Prix</th>
-				<th class="w-[10rem]" scope="col">Quantité</th>
-				<th class="w-[10rem]" scope="col">Modifier quantité</th>
-				<th class="w-[10rem]" scope="col">Prix Total</th>
-				<th class="w-[20rem]" scope="col">Actions</th>
-				{# <th scope="col">Age</th> #}
-			</tr>
-		</thead>
-		<tbody>
-			{% for item in panier.getItems %}
+		<table class="table  my-1 m-auto">
+			<thead>
+				<tr>
+					<th class="w-[20rem] text-left " scope="col">Produit</th>
+					<th class="w-[5rem] text-left " scope="col">Prix</th>
+					<th class="w-[10rem]" scope="col">Quantité</th>
+					<th class="w-[5rem]" scope="col">Modifier quantité</th>
+					<th class="w-[10rem]" scope="col">Prix Total HT</th>
+					<th class="w-[10rem]" scope="col">Prix TVA</th>
+					<th class="w-[10rem]" scope="col">Taux TVA</th>
+					<th class="w-[10rem]" scope="col">Prix TTC</th>
+					<th class="w-[20rem]" scope="col">Actions</th>
 
-				<tr class=" lg:h-[5rem ">
-
-					<td>
-						{{item.produit.nom}}
-					</td>
-					<td>
-						{{item.produit.prix|number_format(2, '.', ',')}}
-						€
-					</td>
-					<td class="text-center">
-						{{item.quantite}}
-					</td>
-					<td class="text-center ">
-						<div class="relative flex items-center w-fit ">
-
-							<span class="ligne-panier item-{{item.id}} text-xs h-9.5 ">
-								{{ include('panier/_update_quantite_form.html.twig') }}
-							</span>
-
-						</div>
-					</td>
-					<td class="text-center">
-						{{item.prixTotal|number_format(2, '.', ',')}}
-					</td>
-					<td class="flex  flex-col md:flex-row py-5 justify-around md:justify-around md:items-center  h-[10rem] lg:h-[5rem] ">
-						<span>
-							<a class="btn-border text-sm" href="{{path('app_produit_show', {id : item.produit.id })}}">Voir produit</a>
-						</span>
-						<span>
-							{{ include('ligne_panier/_delete_form.html.twig') }}
-						</span>
-					</td>
 				</tr>
+			</thead>
+			<tbody>
+				{% for item in panier.getItems %}
+
+					<tr class=" lg:h-[5rem ">
+
+						<td>
+							{{item.produit.nom}}
+						</td>
+						<td>
+							{{item.produit.prix|number_format(2, '.', ',')}}
+							€
+						</td>
+						<td class="text-center">
+							{{item.quantite}}
+						</td>
+						<td class="text-center ">
+							<div class="relative flex items-center  ">
+
+								<span class="ligne-panier item-{{item.id}} text-xs h-9.5 ">
+									{{ include('panier/_update_quantite_form.html.twig') }}
+								</span>
+
+							</div>
+						</td>
+						<td class="text-center">
+							{{item.prixTotal|number_format(2, '.', ',')}}€
+						</td>
+						<td class="text-center">
+							{{item.getPrixTTC|number_format(2, '.', ',') - item.prixTotal}}€
+
+						</td>
+						<td class="text-center">
+							{{item.produit.tauxTVA|number_format(1, '.', ',')}}%
+						</td>
+						<td class="text-center">
+							{{item.getPrixTTC|number_format(2, '.', ',')}}€
+						</td>
+						<td class="flex  flex-col md:flex-row py-5 justify-around md:justify-around md:items-center  h-[10rem] lg:h-[5rem] ">
+							<span>
+								<a class="btn-border text-sm" href="{{path('app_produit_show', {id : item.produit.id })}}">Voir produit</a>
+							</span>
+							<span>
+								{{ include('ligne_panier/_delete_form.html.twig') }}
+							</span>
+						</td>
+
+					</tr>
+					<p></p>
+				{% endfor %}
 
 
-			{% endfor %}
-		</tbody>
-
-
-	</tbody>
-</table>{% endif %}{# {{ include('panier/_delete_form.html.twig') }} #}{% endblock %}
+			</tbody>
+		</table>
+		Total Panier =
+		{% set sum = 0 %}
+		{% for item in panier.getItems %}
+			{% set sum = sum + item.getPrixTTC %}
+		{% endfor %}
+		{{sum|number_format(2,'.',',')}}€
+	{% endif %}{# {{ include('panier/_delete_form.html.twig') }} #}{% endblock %}

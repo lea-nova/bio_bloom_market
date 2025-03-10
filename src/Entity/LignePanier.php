@@ -82,4 +82,9 @@ class LignePanier
 
         return $this;
     }
+
+    public function getPrixTTC(): float
+    {
+        return $this->prixTotal * (1 + $this->produit->getTauxTVA() / 100);
+    }
 }

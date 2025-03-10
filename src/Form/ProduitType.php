@@ -126,6 +126,15 @@ class ProduitType extends AbstractType
                 'required' => true,
 
             ])
+            ->add('tauxTVA', NumberType::class, [
+                'label' => 'taux TVA en %',
+                'scale' => 2,
+                'attr' => [
+                    'step' => '0.01',
+                ],
+                'required' => true,
+
+            ])
         ;
     }
 
