@@ -30,6 +30,7 @@
 				<h2>{{ produit.nom }}</h2>
 				<p>{{ produit.description }}</p>
 				<p>{{ produit.marque.nom }}</p>
+				<p>{{produit.prix|number_format(2, '.', ',')}}</p>
 
 				<form
 					action="{{ path('app_ligne_panier_new', { produitId: produit.id }) }}" method="GET">

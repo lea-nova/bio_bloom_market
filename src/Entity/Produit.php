@@ -53,6 +53,12 @@ class Produit
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'produits')]
     private Collection $categorie;
 
+    #[ORM\Column(nullable: false)]
+    private ?float $prix = null;
+
+    #[ORM\Column]
+    private ?float $tauxTVA = null;
+
 
     public function __construct()
     {
@@ -207,6 +213,30 @@ class Produit
     public function removeCategorie(Categorie $categorie): static
     {
         $this->categorie->removeElement($categorie);
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): static
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getTauxTVA(): ?float
+    {
+        return $this->tauxTVA;
+    }
+
+    public function setTauxTVA(float $tauxTVA): static
+    {
+        $this->tauxTVA = $tauxTVA;
 
         return $this;
     }

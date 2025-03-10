@@ -34,12 +34,16 @@ final class LignePanierController extends AbstractController
         ProduitRepository $produitRepository,
         PanierRepository $panierRepository
     ): Response {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $produit = $produitRepository->find($produitId);
         $user = $this->getUser();
         $panier = $panierRepository->findOneBy(['user' => $this->getUser()]);
         // dump($produit);
 
         $lignesPanier = $panier->getItems();
+
         $produitPanierId = [];
         $produitPanier = [];
 
@@ -47,6 +51,7 @@ final class LignePanierController extends AbstractController
         // Si le produit est absent de la collection. 
         foreach ($lignesPanier as $produitByLigne) {
             $produitPanierId[] = $produitByLigne->getProduit()->getId();
+
             // $produitPanier[] = $produitRepository->find($produitByLigne->getProduit()->getId());
         }
         // dd(in_array($produit->getId(), $produitPanierId));
@@ -54,10 +59,10 @@ final class LignePanierController extends AbstractController
             $lignePanier = new LignePanier();
 
             $lignePanier->setQuantite(1);
-            $lignePanier->setPrixTotal(00.00); // Pour l'instant, tant que j'ai pas les prix pour chaque produit.
+            $lignePanier->setPrixTotal(); // Pour l'instant, tant que j'ai pas les prix pour chaque produit.
             $lignePanier->setPanier($panier);
             $lignePanier->setProduit($produit);
-            $lignePanier->setPrixTotal(00.00);
+            // $lignePanier->setPrixTotal);
             $entityManager->persist($lignePanier);
             $entityManager->flush();
         } else {
@@ -65,6 +70,7 @@ final class LignePanierController extends AbstractController
                 if ($produit->getId() === $item->getProduit()->getId()) {
 
                     $item->setQuantite($item->getQuantite() + 1);
+                    $item->setPrixTotal();
                     $entityManager->persist($item);
                     $entityManager->flush();
                     // return $this->redirectToRoute('app_produit_show', ['id' => $produit->getId()], Response::HTTP_SEE_OTHER);

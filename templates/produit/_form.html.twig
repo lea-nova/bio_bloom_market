@@ -70,7 +70,13 @@
 
 
 	</div>
-
+	<br>
+	{{form_label(form.prix)}}
+	{{ form_widget(form.prix,{"attr":{"class":"block py-2.5 px-0 w-full text-sm   peer"}}) }}
+	{{ form_errors(form.prix) }}
+	{{form_label(form.tauxTVA)}}
+	{{ form_widget(form.tauxTVA,{"attr":{"class":"block py-2.5 px-0 w-full text-sm   peer"}}) }}
+	{{ form_errors(form.tauxTVA) }}
 	<br>
 	<button class="btn-border hover:text-white hover:bg-primary-dark">
 		{{ button_label|default('Save') }}</button>

@@ -79,6 +79,9 @@ final class PanierController extends AbstractController
     public function updateQuantite(Request $request, int $id, LignePanierRepository $lignePanierRepository, EntityManagerInterface $entityManager): Response
     {
         // dd($id);
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $lignePanier = $lignePanierRepository->find($id);
         // dump($lignePanier);
         $form = $this->createForm(PanierQuantiteType::class);
@@ -87,13 +90,18 @@ final class PanierController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $valeurQuantite = $form->get('quantite')->getData();
             $panier = $lignePanier->getPanier();
+            // $lignePanier->setPrixTotal();
             if ($valeurQuantite === 0) {
                 $panier->removeItem($lignePanier);
+                $lignePanier->setPrixTotal();
+
                 // $entityManager->remove($lignePanier);
             } else {
 
                 $lignePanier->setQuantite($valeurQuantite);
+                $lignePanier->setPrixTotal();
                 $lignePanier->getPanier();
+                $lignePanier->getPrixTTC();
                 $panier->setUpdatedAt(new DateTimeImmutable());
                 $entityManager->persist($panier);
                 $entityManager->persist($lignePanier);

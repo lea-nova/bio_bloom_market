@@ -17,12 +17,17 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 // #[Route('/categorie')]
 final class CategorieController extends AbstractController
 {
-    #[Route('admin/categorie', name: 'app_categorie_index', methods: ['GET'])]
+    // #[Route('admin/categorie', name: 'app_categorie_index', methods: ['GET'])]
+    #[Route('/categorie', name: 'app_categorie_index', methods: ['GET'])]
     public function index(CategorieRepository $categorieRepository): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) { // Redirige vers la route de la page d'accueil 
-            return $this->redirectToRoute('app_main');
+            $categories = $categorieRepository->findBy(['visible' => true]);
+        } else {
+            $categories = $categorieRepository->findAll();
         }
+
+
         return $this->render('categorie/index.html.twig', [
             'categories' => $categorieRepository->findAll(),
         ]);
