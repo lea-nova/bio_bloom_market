@@ -37,22 +37,13 @@
 					<td class="text-center">
 						{{item.quantite}}
 					</td>
-					<td class="text-center">
-						<div
-							class="relative flex items-center ">
-							{# <button type="button" id="decrement-button-{{item.id}}" data-input-counter-decrement="panier_quantite_quantite" class=" btn-panier bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg px-3 h-9 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none" disabled>
-																						<svg class="w-2 h-2 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 18 2">
-																							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
-																						</svg>
-																					</button> #}
+					<td class="text-center ">
+						<div class="relative flex items-center w-fit ">
+
 							<span class="ligne-panier item-{{item.id}} text-xs h-9.5 ">
 								{{ include('panier/_update_quantite_form.html.twig') }}
 							</span>
-							{# <button type="button" id="increment-button-{{item.id}}" data-input-counter-increment="panier_quantite_quantite" class="btn-panier bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-9  focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none" disabled>
-																						<svg class="w-2 h-2 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 18 18">
-																							<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-																						</svg>
-																					</button> #}
+
 						</div>
 					</td>
 					<td class="flex  flex-col md:flex-row py-5 justify-around md:justify-around md:items-center  h-[10rem] lg:h-[5rem] ">

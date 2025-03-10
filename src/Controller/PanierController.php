@@ -79,6 +79,9 @@ final class PanierController extends AbstractController
     public function updateQuantite(Request $request, int $id, LignePanierRepository $lignePanierRepository, EntityManagerInterface $entityManager): Response
     {
         // dd($id);
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $lignePanier = $lignePanierRepository->find($id);
         // dump($lignePanier);
         $form = $this->createForm(PanierQuantiteType::class);

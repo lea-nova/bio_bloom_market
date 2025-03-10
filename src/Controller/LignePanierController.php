@@ -34,6 +34,9 @@ final class LignePanierController extends AbstractController
         ProduitRepository $produitRepository,
         PanierRepository $panierRepository
     ): Response {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $produit = $produitRepository->find($produitId);
         $user = $this->getUser();
         $panier = $panierRepository->findOneBy(['user' => $this->getUser()]);
