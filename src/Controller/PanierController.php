@@ -90,12 +90,14 @@ final class PanierController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $valeurQuantite = $form->get('quantite')->getData();
             $panier = $lignePanier->getPanier();
+            $lignePanier->setPrixTotal();
             if ($valeurQuantite === 0) {
                 $panier->removeItem($lignePanier);
                 // $entityManager->remove($lignePanier);
             } else {
 
                 $lignePanier->setQuantite($valeurQuantite);
+                $lignePanier->setPrixTotal();
                 $lignePanier->getPanier();
                 $panier->setUpdatedAt(new DateTimeImmutable());
                 $entityManager->persist($panier);

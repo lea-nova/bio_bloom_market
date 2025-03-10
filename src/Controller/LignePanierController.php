@@ -56,11 +56,11 @@ final class LignePanierController extends AbstractController
         if (!in_array($produit->getId(), $produitPanierId)) {
             $lignePanier = new LignePanier();
 
-            $lignePanier->setQuantite(1);
-            $lignePanier->setPrixTotal(00.00); // Pour l'instant, tant que j'ai pas les prix pour chaque produit.
+            // $lignePanier->setQuantite(1);
+            $lignePanier->setPrixTotal(); // Pour l'instant, tant que j'ai pas les prix pour chaque produit.
             $lignePanier->setPanier($panier);
             $lignePanier->setProduit($produit);
-            $lignePanier->setPrixTotal(00.00);
+            // $lignePanier->setPrixTotal(00.00);
             $entityManager->persist($lignePanier);
             $entityManager->flush();
         } else {

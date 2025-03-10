@@ -40,7 +40,7 @@ class LignePanier
     public function setProduit(?Produit $produit): static
     {
         $this->produit = $produit;
-
+        $this->setPrixTotal();
         return $this;
     }
 
@@ -73,9 +73,12 @@ class LignePanier
         return $this->prixTotal;
     }
 
-    public function setPrixTotal(float $prixTotal): static
+    public function setPrixTotal(): static
     {
-        $this->prixTotal = $prixTotal;
+        // $this->prixTotal = $prixTotal;
+        if ($this->produit !== null) {
+            $this->prixTotal = $this->quantite * $this->produit->getPrix();
+        }
 
         return $this;
     }

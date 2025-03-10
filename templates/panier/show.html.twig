@@ -20,8 +20,10 @@
 		<thead>
 			<tr>
 				<th class="w-[20rem] text-left " scope="col">Produit</th>
+				<th class="w-[20rem] text-left " scope="col">Prix</th>
 				<th class="w-[10rem]" scope="col">Quantité</th>
 				<th class="w-[10rem]" scope="col">Modifier quantité</th>
+				<th class="w-[10rem]" scope="col">Prix Total</th>
 				<th class="w-[20rem]" scope="col">Actions</th>
 				{# <th scope="col">Age</th> #}
 			</tr>
@@ -34,6 +36,10 @@
 					<td>
 						{{item.produit.nom}}
 					</td>
+					<td>
+						{{item.produit.prix|number_format(2, '.', ',')}}
+						€
+					</td>
 					<td class="text-center">
 						{{item.quantite}}
 					</td>
@@ -45,6 +51,9 @@
 							</span>
 
 						</div>
+					</td>
+					<td class="text-center">
+						{{item.prixTotal|number_format(2, '.', ',')}}
 					</td>
 					<td class="flex  flex-col md:flex-row py-5 justify-around md:justify-around md:items-center  h-[10rem] lg:h-[5rem] ">
 						<span>
