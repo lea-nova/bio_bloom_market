@@ -59,6 +59,9 @@ class Produit
     #[ORM\Column]
     private ?float $tauxTVA = null;
 
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    private ?UnitesMesures $uniteMesure = null;
+
 
     public function __construct()
     {
@@ -237,6 +240,18 @@ class Produit
     public function setTauxTVA(float $tauxTVA): static
     {
         $this->tauxTVA = $tauxTVA;
+
+        return $this;
+    }
+
+    public function getUniteMesure(): ?UnitesMesures
+    {
+        return $this->uniteMesure;
+    }
+
+    public function setUniteMesure(?UnitesMesures $uniteMesure): static
+    {
+        $this->uniteMesure = $uniteMesure;
 
         return $this;
     }
