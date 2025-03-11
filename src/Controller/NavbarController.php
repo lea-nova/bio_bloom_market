@@ -23,7 +23,6 @@ class NavbarController extends AbstractController
 
         return $this->render('_partials\_navbar.html.twig', [
             "categories" => $categories,
-
         ]);
     }
 }

@@ -30,7 +30,9 @@
 				<h2>{{ produit.nom }}</h2>
 				<p>{{ produit.description }}</p>
 				<p>{{ produit.marque.nom }}</p>
-				<p>{{produit.prix|number_format(2, '.', ',')}}</p>
+				<p>{{produit.prix|number_format(2, '.', ',')}}€ Hors Taxes</p>
+				<small>{{(produit.prix|number_format(2, '.', ',') * (produit.tauxTVA)/100)|number_format(2,'.',',') }}€ de TVA
+				</small>
 
 				<form
 					action="{{ path('app_ligne_panier_new', { produitId: produit.id }) }}" method="GET">
@@ -44,7 +46,6 @@
 				</ul>
 			</div>
 		</section>
-
 	</div>
 	<table class="table">
 		<tbody>
@@ -86,8 +87,6 @@
 			{% endif %}
 		</tbody>
 	</table>
-
-
 	{% if is_granted("ROLE_ADMIN") %}
 
 		<a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
